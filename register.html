@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" class="css" />
+    <title>Arabatu Bloco</title>
+  </head>
+  <body>
+    <!-- Navbar Menu -->
+    <header class="header">
+      <img src="./assets/header/logo.png" alt="logo" class="logo" />
+      <nav class="navbar">
+        <input type="checkbox" id="toggle-menu" />
+        <label for="toggle-menu" class="bars-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <ul class="navbar-list">
+          <li><a href="./index.html" class="navbar-link">Inicio</a></li>
+          <li><a href="./about.html" class="navbar-link">Conócenos</a></li>
+          <li><a href="./contacto.html" class="navbar-link">Contacto</a></li>
+          <li><a href="./login.html" class="navbar-link">Login</a></li>
+        </ul>
+      </nav>
+    </header>
+    <!-- Main -->
+    <main>
+      <section class="container-login">
+        <h2>Registro</h2>
+        <form class="login">
+          <div class="container-login-inputs register-inputs">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" />
+            <label for="apellido">Apellido:</label>
+            <input type="text" id="apellido" />
+            <label for="email">Ingrese su email:</label>
+            <input type="email" id="email" />
+            <label for="password">Ingrese su contraseña:</label>
+            <input type="password" id="password" />
+          </div>
+          <button class="enviar cta-button">Registrarse</button>
+        </form>
+        <div class="to-login-container login">
+          ¿Todavia no estas registrado?
+          <button class="to-login cta-button">
+            <a href="./login.html">Volver al login</a>
+          </button>
+        </div>
+      </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+      <p>
+        &copy; 2025 Arabatu — Todos los derechos reservados.
+        <a href="https://www.instagram.com/arabatu.bloco/"
+          ><i class="fa-brands fa-instagram"></i
+        ></a>
+      </p>
+    </footer>
+  </body>
+</html>

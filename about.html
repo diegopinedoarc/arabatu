@@ -4,13 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Conócenos · Arabatu Bloco</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/style.css" />
   </head>
   <body>
-
     <!-- Navbar -->
     <header class="header" id="header">
       <a href="./index.html" class="logo-link">
@@ -25,22 +27,34 @@
         </label>
         <ul class="navbar-list">
           <li><a href="./index.html" class="navbar-link">Inicio</a></li>
-          <li><a href="./about.html" class="navbar-link active">Conócenos</a></li>
           <li>
-            <a href="https://www.instagram.com/arabatu.bloco/" class="navbar-link navbar-cta" target="_blank">
+            <a href="./about.html" class="navbar-link active">Conócenos</a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/arabatu.bloco/"
+              class="navbar-link navbar-cta"
+              target="_blank"
+            >
               Contacto
             </a>
+          </li>
+          <li>
+            <a href="./login.html" class="navbar-link">Sala de estudio</a>
           </li>
         </ul>
       </nav>
     </header>
 
     <main>
-
       <!-- About Hero -->
       <section class="about-hero">
         <div class="about-hero-overlay"></div>
-        <img src="./assets/images/01-58.jpg" alt="Arabatu Bloco" class="about-hero-img" />
+        <img
+          src="./assets/images/01-58.jpg"
+          alt="Arabatu Bloco"
+          class="about-hero-img"
+        />
         <div class="about-hero-content">
           <p class="hero-eyebrow">Nuestra historia</p>
           <h1 class="hero-title">CONÓCENOS</h1>
@@ -52,13 +66,17 @@
         <div class="about-grid">
           <div class="about-text-block">
             <p class="section-label">Quiénes somos</p>
-            <h2 class="section-title">Del parque al corazón<br>de Buenos Aires</h2>
+            <h2 class="section-title">
+              Del parque al corazón<br />de Buenos Aires
+            </h2>
             <p class="about-body">
-              Somos un bloco de Percusión de Samba Reggae y ritmos Afro. Del parque Arata, 
-              del compartir la pasión por el tambor surgió una familia que dio vida al proyecto.
+              Somos un bloco de Percusión de Samba Reggae y ritmos Afro. Del
+              parque Arata, del compartir la pasión por el tambor surgió una
+              familia que dio vida al proyecto.
             </p>
             <p class="about-body">
-              Buscamos compartir el género con mucho amor y respeto por la cultura afrobrasilera.
+              Buscamos compartir el género con mucho amor y respeto por la
+              cultura afrobrasilera.
             </p>
           </div>
           <div class="about-values">
@@ -85,39 +103,56 @@
       <section class="about-cta">
         <div class="about-cta-inner">
           <h2 class="section-title">¿Querés sumarte o contratarnos?</h2>
-          <a href="https://www.instagram.com/arabatu.bloco/" class="btn btn-primary" target="_blank">
+          <a
+            href="https://www.instagram.com/arabatu.bloco/"
+            class="btn btn-primary"
+            target="_blank"
+          >
             <img src="./assets/images/logo-ig.png" alt="" class="btn-icon" />
             Escribinos en Instagram
           </a>
         </div>
       </section>
-
     </main>
 
     <!-- Footer -->
     <footer class="footer">
       <div class="footer-inner">
         <a href="./index.html">
-          <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo-footer" />
+          <img
+            src="./assets/images/logo.png"
+            alt="Arabatu Bloco"
+            class="logo-footer"
+          />
         </a>
         <div class="footer-center">
-          <p class="footer-text">Bloco de Percusión · Samba Reggae · Ritmos Afro</p>
+          <p class="footer-text">
+            Bloco de Percusión · Samba Reggae · Ritmos Afro
+          </p>
           <p class="footer-copy">© 2025 Arabatu Bloco · Buenos Aires</p>
         </div>
         <div class="footer-social">
-          <a href="https://www.instagram.com/arabatu.bloco/" class="social-link" target="_blank" aria-label="Instagram">
-            <img src="./assets/images/logo-ig.png" alt="Instagram" class="logo-ig-footer" />
+          <a
+            href="https://www.instagram.com/arabatu.bloco/"
+            class="social-link"
+            target="_blank"
+            aria-label="Instagram"
+          >
+            <img
+              src="./assets/images/logo-ig.png"
+              alt="Instagram"
+              class="logo-ig-footer"
+            />
           </a>
         </div>
       </div>
     </footer>
 
     <script>
-      const header = document.getElementById('header');
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
+      const header = document.getElementById("header");
+      window.addEventListener("scroll", () => {
+        header.classList.toggle("scrolled", window.scrollY > 50);
       });
     </script>
-
   </body>
 </html>

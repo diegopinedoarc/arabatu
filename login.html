@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ingresar · Arabatu Bloco</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --yellow: #ffe739;
+        --yellow-dim: rgba(255, 231, 57, 0.12);
+        --yellow-border: rgba(255, 231, 57, 0.25);
+        --orange: #f09819;
+        --dark: #0d0d0d;
+        --dark-2: #141414;
+        --dark-3: #1c1c1c;
+        --white: #ffffff;
+        --gray: #888;
+        --gray-light: #bbb;
+        --error: #ff4f4f;
+        --success: #4ade80;
+        --font-display: "Bebas Neue", sans-serif;
+        --font-body: "DM Sans", sans-serif;
+        --radius: 14px;
+        --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: var(--font-body);
+        background: var(--dark);
+        color: var(--white);
+        display: flex;
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* ---- SPLIT LAYOUT ---- */
+      .auth-left {
+        display: none;
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+      }
+      .auth-left-bg {
+        position: absolute;
+        inset: 0;
+        background: url("./assets/images/hero.jpg") center/cover no-repeat;
+      }
+      .auth-left-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.7) 0%,
+          rgba(13, 13, 13, 0.9) 100%
+        );
+      }
+      .auth-left-content {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 56px 48px;
+      }
+      .auth-left-logo {
+        position: absolute;
+        top: 40px;
+        left: 48px;
+        height: 48px;
+        filter: drop-shadow(0 0 12px rgba(255, 231, 57, 0.5));
+      }
+      .auth-left-title {
+        font-family: var(--font-display);
+        font-size: 5rem;
+        line-height: 0.9;
+        color: var(--white);
+        margin-bottom: 8px;
+      }
+      .auth-left-title span {
+        color: var(--yellow);
+        display: block;
+      }
+      .auth-left-sub {
+        font-size: 0.85rem;
+        color: var(--gray-light);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-top: 20px;
+        border-top: 1px solid var(--yellow-border);
+        padding-top: 20px;
+      }
+
+      /* ---- RIGHT PANEL ---- */
+      .auth-right {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 24px;
+        background: var(--dark-2);
+        min-height: 100vh;
+        width: 100%;
+      }
+      .auth-mobile-logo {
+        display: block;
+        height: 44px;
+        margin-bottom: 40px;
+        filter: drop-shadow(0 0 10px rgba(255, 231, 57, 0.4));
+      }
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+      }
+      .auth-tabs {
+        display: flex;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 36px;
+      }
+      .auth-tab {
+        flex: 1;
+        padding: 12px 0;
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray);
+        cursor: pointer;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition:
+          color var(--transition),
+          border-color var(--transition);
+      }
+      .auth-tab.active {
+        color: var(--yellow);
+        border-bottom-color: var(--yellow);
+      }
+
+      .auth-form {
+        display: none;
+        flex-direction: column;
+        gap: 18px;
+      }
+      .auth-form.active {
+        display: flex;
+        animation: fadeUp 0.4s ease;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .auth-form h2 {
+        font-family: var(--font-display);
+        font-size: 2.2rem;
+        color: var(--white);
+        margin-bottom: 4px;
+      }
+      .auth-form p.auth-desc {
+        font-size: 0.9rem;
+        color: var(--gray);
+        margin-bottom: 8px;
+        line-height: 1.5;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .field label {
+        font-size: 0.78rem;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-light);
+      }
+      .field input {
+        background: var(--dark-3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 14px 16px;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        color: var(--white);
+        outline: none;
+        transition:
+          border-color var(--transition),
+          box-shadow var(--transition);
+        width: 100%;
+      }
+      .field input::placeholder {
+        color: rgba(255, 255, 255, 0.2);
+      }
+      .field input:focus {
+        border-color: var(--yellow);
+        box-shadow: 0 0 0 3px rgba(255, 231, 57, 0.12);
+      }
+
+      .btn-submit {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(135deg, var(--yellow), var(--orange));
+        color: var(--dark);
+        border: none;
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all var(--transition);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(255, 231, 57, 0.3);
+      }
+      .btn-submit:active {
+        transform: scale(0.98);
+      }
+      .btn-submit:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 2px solid rgba(0, 0, 0, 0.3);
+        border-top-color: var(--dark);
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+        display: none;
+      }
+      .btn-submit.loading .spinner {
+        display: block;
+      }
+      .btn-submit.loading .btn-text {
+        opacity: 0.7;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .auth-message {
+        padding: 12px 16px;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        display: none;
+        line-height: 1.5;
+      }
+      .auth-message.error {
+        display: block;
+        background: rgba(255, 79, 79, 0.1);
+        border: 1px solid rgba(255, 79, 79, 0.3);
+        color: #ff8080;
+      }
+      .auth-message.success {
+        display: block;
+        background: rgba(74, 222, 128, 0.1);
+        border: 1px solid rgba(74, 222, 128, 0.3);
+        color: #4ade80;
+      }
+      .auth-message.pending {
+        display: block;
+        background: rgba(255, 231, 57, 0.1);
+        border: 1px solid rgba(255, 231, 57, 0.3);
+        color: var(--yellow);
+      }
+
+      .auth-switch {
+        text-align: center;
+        font-size: 0.85rem;
+        color: var(--gray);
+        margin-top: 4px;
+      }
+      .auth-switch a {
+        color: var(--yellow);
+        cursor: pointer;
+        font-weight: 500;
+      }
+      .auth-switch a:hover {
+        text-decoration: underline;
+      }
+
+      /* Back link */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.8rem;
+        color: var(--gray);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+        transition: color var(--transition);
+      }
+      .back-link:hover {
+        color: var(--yellow);
+      }
+      .back-link svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      @media (min-width: 900px) {
+        body {
+          overflow: hidden;
+          height: 100vh;
+        }
+        .auth-left {
+          display: flex;
+          flex-direction: column;
+        }
+        .auth-right {
+          min-height: auto;
+          width: auto;
+        }
+        .auth-mobile-logo {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Left panel (decorative, desktop only) -->
+    <div class="auth-left">
+      <div class="auth-left-bg"></div>
+      <div class="auth-left-overlay"></div>
+      <div class="auth-left-content">
+        <img
+          src="./assets/images/logo.png"
+          alt="Arabatu Bloco"
+          class="auth-left-logo"
+        />
+        <div>
+          <p class="auth-left-sub">Sala de estudio · Miembros</p>
+          <div class="auth-left-title">ARA<span>BATU</span></div>
+          <p class="auth-left-sub" style="margin-top: 16px">
+            Accedé al material exclusivo del bloco: videos, audios y recursos
+            para seguir creciendo.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel (forms) -->
+    <div class="auth-right">
+      <img
+        src="./assets/images/logo.png"
+        alt="Arabatu Bloco"
+        class="auth-mobile-logo"
+      />
+
+      <div class="auth-card">
+        <a href="./index.html" class="back-link">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M19 12H5M12 5l-7 7 7 7" />
+          </svg>
+          Volver al inicio
+        </a>
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+          <div class="auth-tab active" data-tab="login">Ingresar</div>
+          <div class="auth-tab" data-tab="register">Registrarse</div>
+        </div>
+
+        <!-- LOGIN FORM -->
+        <form class="auth-form active" id="form-login" novalidate>
+          <div>
+            <h2>Bienvenido</h2>
+            <p class="auth-desc">Ingresá con tu cuenta de miembro.</p>
+          </div>
+          <div class="field">
+            <label for="login-email">Email</label>
+            <input
+              type="email"
+              id="login-email"
+              placeholder="tu@email.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="login-pass">Contraseña</label>
+            <input
+              type="password"
+              id="login-pass"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+          </div>
+          <div class="auth-message" id="login-msg"></div>
+          <button type="submit" class="btn-submit" id="login-btn">
+            <span class="spinner"></span>
+            <span class="btn-text">Ingresar</span>
+          </button>
+          <p class="auth-switch">
+            ¿No tenés cuenta? <a data-tab="register">Registrate</a>
+          </p>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form class="auth-form" id="form-register" novalidate>
+          <div>
+            <h2>Registrarse</h2>
+            <p class="auth-desc">
+              Creá tu cuenta. Un admin la tiene que aprobar antes de que puedas
+              entrar.
+            </p>
+          </div>
+          <div class="field">
+            <label for="reg-name">Nombre completo</label>
+            <input
+              type="text"
+              id="reg-name"
+              placeholder="Tu nombre"
+              autocomplete="name"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="reg-email">Email</label>
+            <input
+              type="email"
+              id="reg-email"
+              placeholder="tu@email.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="field">
+            <label for="reg-pass">Contraseña</label>
+            <input
+              type="password"
+              id="reg-pass"
+              placeholder="Mínimo 6 caracteres"
+              autocomplete="new-password"
+              required
+            />
+          </div>
+          <div class="auth-message" id="register-msg"></div>
+          <button type="submit" class="btn-submit" id="register-btn">
+            <span class="spinner"></span>
+            <span class="btn-text">Enviar solicitud</span>
+          </button>
+          <p class="auth-switch">
+            ¿Ya tenés cuenta? <a data-tab="login">Ingresá</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+        getDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+      // =============================================
+      // 🔧 REEMPLAZÁ ESTO CON TU CONFIGURACIÓN DE FIREBASE
+      // Conseguila en: console.firebase.google.com
+      // =============================================
+      const firebaseConfig = {
+        apiKey: "AIzaSyBEn3XcZ8y1M-HPVTUFOjjZMWGY66OplqU",
+
+        authDomain: "arabatuweb-1ee65.firebaseapp.com",
+
+        projectId: "arabatuweb-1ee65",
+
+        storageBucket: "arabatuweb-1ee65.firebasestorage.app",
+
+        messagingSenderId: "676384856570",
+
+        appId: "1:676384856570:web:967cab2e35a39986836c43",
+      };
+
+      // =============================================
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+
+      // Si ya está logueado y aprobado → redirigir directo
+      onAuthStateChanged(auth, async (user) => {
+        if (user) {
+          const snap = await getDoc(doc(db, "users", user.uid));
+          if (snap.exists() && snap.data().approved) {
+            window.location.href = "./sala-estudio.html";
+          }
+        }
+      });
+
+      // ---- Tab switching ----
+      document.querySelectorAll(".auth-tab, .auth-switch a").forEach((el) => {
+        el.addEventListener("click", () => {
+          const target = el.dataset.tab;
+          if (!target) return;
+          document
+            .querySelectorAll(".auth-tab")
+            .forEach((t) =>
+              t.classList.toggle("active", t.dataset.tab === target),
+            );
+          document
+            .querySelectorAll(".auth-form")
+            .forEach((f) =>
+              f.classList.toggle("active", f.id === `form-${target}`),
+            );
+        });
+      });
+
+      // ---- Helpers ----
+      function setLoading(btn, loading) {
+        btn.disabled = loading;
+        btn.classList.toggle("loading", loading);
+      }
+      function showMsg(el, text, type) {
+        el.textContent = text;
+        el.className = `auth-message ${type}`;
+      }
+      function firebaseError(code) {
+        const map = {
+          "auth/user-not-found": "No existe una cuenta con ese email.",
+          "auth/wrong-password": "Contraseña incorrecta.",
+          "auth/invalid-credential": "Email o contraseña incorrectos.",
+          "auth/email-already-in-use": "Ya existe una cuenta con ese email.",
+          "auth/weak-password":
+            "La contraseña debe tener al menos 6 caracteres.",
+          "auth/invalid-email": "El email no es válido.",
+          "auth/too-many-requests": "Demasiados intentos. Esperá unos minutos.",
+        };
+        return map[code] || "Ocurrió un error. Intentá de nuevo.";
+      }
+
+      // ---- LOGIN ----
+      document
+        .getElementById("form-login")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("login-email").value.trim();
+          const pass = document.getElementById("login-pass").value;
+          const btn = document.getElementById("login-btn");
+          const msg = document.getElementById("login-msg");
+
+          if (!email || !pass)
+            return showMsg(msg, "Completá todos los campos.", "error");
+          setLoading(btn, true);
+          msg.className = "auth-message";
+
+          try {
+            const cred = await signInWithEmailAndPassword(auth, email, pass);
+            const snap = await getDoc(doc(db, "users", cred.user.uid));
+
+            if (!snap.exists()) {
+              await auth.signOut();
+              return showMsg(
+                msg,
+                "Tu cuenta no tiene datos. Contactá al admin.",
+                "error",
+              );
+            }
+            if (!snap.data().approved) {
+              await auth.signOut();
+              return showMsg(
+                msg,
+                "⏳ Tu cuenta todavía no fue aprobada. Avisale al admin.",
+                "pending",
+              );
+            }
+            // ✅ Aprobado → ir a la sala
+            window.location.href = "./sala-estudio.html";
+          } catch (err) {
+            showMsg(msg, firebaseError(err.code), "error");
+          } finally {
+            setLoading(btn, false);
+          }
+        });
+
+      // ---- REGISTRO ----
+      document
+        .getElementById("form-register")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const name = document.getElementById("reg-name").value.trim();
+          const email = document.getElementById("reg-email").value.trim();
+          const pass = document.getElementById("reg-pass").value;
+          const btn = document.getElementById("register-btn");
+          const msg = document.getElementById("register-msg");
+
+          if (!name || !email || !pass)
+            return showMsg(msg, "Completá todos los campos.", "error");
+          if (pass.length < 6)
+            return showMsg(
+              msg,
+              "La contraseña debe tener al menos 6 caracteres.",
+              "error",
+            );
+          setLoading(btn, true);
+          msg.className = "auth-message";
+
+          try {
+            const cred = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              pass,
+            );
+            // Guardar en Firestore con approved: false
+            await setDoc(doc(db, "users", cred.user.uid), {
+              name,
+              email,
+              approved: false, // ← admin cambia esto a true
+              role: "member",
+              createdAt: serverTimestamp(),
+            });
+            await auth.signOut(); // no dejar entrar hasta aprobación
+            showMsg(
+              msg,
+              "✅ ¡Solicitud enviada! El admin la va a revisar y te va a avisar cuando esté lista.",
+              "success",
+            );
+            document.getElementById("form-register").reset();
+          } catch (err) {
+            showMsg(msg, firebaseError(err.code), "error");
+          } finally {
+            setLoading(btn, false);
+          }
+        });
+    </script>
+  </body>
+</html>

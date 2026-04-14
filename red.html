@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tambores en Red · Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css" />
+  <style>
+    /* ---- PAGE SPECIFIC ---- */
+    .page-hero {
+      position: relative;
+      height: 55vh;
+      min-height: 380px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      margin-top: var(--header-h, 80px);
+    }
+    .page-hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('./assets/images/hero.jpg') center/cover no-repeat;
+    }
+    .page-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.92));
+    }
+    .page-hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 48px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .page-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .page-hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      line-height: 0.9;
+      color: #fff;
+    }
+    .page-hero-title span { color: var(--primary); display: block; }
+    .page-hero-desc {
+      margin-top: 16px;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+    }
+
+    /* ---- MAIN CONTENT ---- */
+    .red-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 24px 80px;
+    }
+
+    /* ---- SECTION HEADER ---- */
+    .red-section { margin-bottom: 72px; }
+    .red-section-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,231,57,0.2);
+    }
+    .red-section-icon { font-size: 2rem; line-height: 1; }
+    .red-section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: #fff;
+      line-height: 1;
+    }
+    .red-section-count {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(255,231,57,0.1);
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    /* ---- GRUPOS GRID ---- */
+    .grupos-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .grupo-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+    .grupo-card:hover {
+      border-color: rgba(255,231,57,0.3);
+      transform: translateY(-4px);
+    }
+    .grupo-img {
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .grupo-img img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+    }
+    .grupo-img-placeholder {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,231,57,0.1);
+      border: 1px solid rgba(255,231,57,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .grupo-info { padding: 16px 20px; }
+    .grupo-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .grupo-ciudad {
+      font-size: 0.8rem;
+      color: #888;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .grupo-desc {
+      font-size: 0.85rem;
+      color: #bbb;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+    .grupo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+    }
+    .grupo-link svg { width: 14px; height: 14px; }
+
+    /* ---- ENTREVISTAS ---- */
+    .entrevistas-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .entrevista-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.3s ease;
+    }
+    .entrevista-card:hover { border-color: rgba(255,231,57,0.3); }
+    .entrevista-video {
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      position: relative;
+    }
+    .entrevista-video iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .entrevista-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: #444;
+    }
+    .entrevista-placeholder-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,231,57,0.08);
+      border: 1px solid rgba(255,231,57,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .entrevista-placeholder p { font-size: 0.82rem; font-family: 'DM Sans', sans-serif; color: #555; }
+    .entrevista-info { padding: 20px 24px; }
+    .entrevista-tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(255,231,57,0.1);
+      padding: 3px 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .entrevista-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .entrevista-desc {
+      font-size: 0.88rem;
+      color: #999;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+    }
+
+    /* ---- SHOWS ---- */
+    .shows-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .show-card {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 20px 24px;
+      transition: border-color 0.3s ease, background 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .show-card:hover {
+      border-color: rgba(255,231,57,0.3);
+      background: rgba(255,231,57,0.04);
+    }
+    .show-fecha {
+      text-align: center;
+      min-width: 56px;
+      flex-shrink: 0;
+    }
+    .show-dia {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .show-mes {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .show-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+    .show-info { flex: 1; }
+    .show-nombre {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .show-lugar {
+      font-size: 0.82rem;
+      color: #888;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .show-badge {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-family: 'DM Sans', sans-serif;
+      flex-shrink: 0;
+    }
+    .badge-proximo { background: rgba(255,231,57,0.12); color: var(--primary); }
+    .badge-pasado { background: rgba(255,255,255,0.06); color: #666; }
+    .show-arrow { color: rgba(255,231,57,0.4); font-size: 1.1rem; transition: transform 0.3s ease, color 0.3s ease; }
+    .show-card:hover .show-arrow { transform: translateX(4px); color: var(--primary); }
+
+    /* ---- EMPTY CARD ---- */
+    .empty-card {
+      border: 1px dashed rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 48px 24px;
+      text-align: center;
+      color: #444;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .empty-card p { font-size: 0.88rem; margin-top: 8px; }
+
+    /* ---- CTA BOTTOM ---- */
+    .red-cta {
+      background: rgba(255,231,57,0.05);
+      border: 1px solid rgba(255,231,57,0.15);
+      border-radius: 20px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+    .red-cta h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .red-cta p {
+      font-size: 0.95rem;
+      color: #888;
+      font-family: 'DM Sans', sans-serif;
+      margin-bottom: 28px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-red {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, var(--primary), #F09819);
+      color: #111;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .btn-red:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,231,57,0.3); }
+    .btn-red img { width: 20px; height: 20px; object-fit: contain; }
+
+    @media (min-width: 640px) {
+      .grupos-grid { grid-template-columns: repeat(2, 1fr); }
+      .entrevistas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .grupos-grid { grid-template-columns: repeat(4, 1fr); }
+      .entrevistas-grid { grid-template-columns: repeat(2, 1fr); }
+      .red-main { padding: 80px 48px; }
+      .entrevista-card { grid-template-columns: 1fr 1fr; }
+      .entrevista-card:nth-child(even) { direction: rtl; }
+      .entrevista-card:nth-child(even) > * { direction: ltr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="header" id="header">
+    <a href="./index.html" class="logo-link">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo" />
+    </a>
+    <nav class="navbar">
+      <input type="checkbox" id="toggle-menu" />
+      <label for="toggle-menu" class="bars-menu" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </label>
+      <ul class="navbar-list">
+        <li><a href="./index.html" class="navbar-link">Inicio</a></li>
+        <li><a href="./about.html" class="navbar-link">Conócenos</a></li>
+        <li><a href="./red.html" class="navbar-link active">Tambores en Red</a></li>
+        <li><a href="./login.html" class="navbar-link">Sala de estudio</a></li>
+        <li><a href="https://www.instagram.com/arabatu.bloco/" class="navbar-link navbar-cta" target="_blank">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <div class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <span class="page-eyebrow">Comunidad · Percusión · Cultura</span>
+      <h1 class="page-hero-title">Tambores<span>en Red</span></h1>
+      <p class="page-hero-desc">Una ventana a la comunidad global de la percusión afrobrasilera. Grupos, entrevistas y encuentros.</p>
+    </div>
+  </div>
+
+  <div class="red-main">
+
+    <!-- GRUPOS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🥁</span>
+        <h2 class="red-section-title">Grupos</h2>
+        <span class="red-section-count">Próximamente</span>
+      </div>
+      <div class="grupos-grid">
+
+        <!-- EJEMPLO — reemplazá con datos reales -->
+        <a class="grupo-card" href="#" target="_blank">
+          <div class="grupo-img">
+            <div class="grupo-img-placeholder">🥁</div>
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nombre del grupo</p>
+            <p class="grupo-ciudad">📍 Ciudad, País</p>
+            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <span class="grupo-link">
+              Ver Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="#" target="_blank">
+          <div class="grupo-img">
+            <div class="grupo-img-placeholder">🥁</div>
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nombre del grupo</p>
+            <p class="grupo-ciudad">📍 Ciudad, País</p>
+            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <span class="grupo-link">
+              Ver Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="#" target="_blank">
+          <div class="grupo-img">
+            <div class="grupo-img-placeholder">🥁</div>
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nombre del grupo</p>
+            <p class="grupo-ciudad">📍 Ciudad, País</p>
+            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <span class="grupo-link">
+              Ver Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="#" target="_blank">
+          <div class="grupo-img">
+            <div class="grupo-img-placeholder">🥁</div>
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nombre del grupo</p>
+            <p class="grupo-ciudad">📍 Ciudad, País</p>
+            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <span class="grupo-link">
+              Ver Instagram
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- ENTREVISTAS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🎙</span>
+        <h2 class="red-section-title">Entrevistas</h2>
+        <span class="red-section-count">Próximamente</span>
+      </div>
+      <div class="entrevistas-grid">
+
+        <!-- EJEMPLO — reemplazá el iframe con tu video de YouTube -->
+        <div class="entrevista-card">
+          <div class="entrevista-video">
+            <div class="entrevista-placeholder">
+              <div class="entrevista-placeholder-icon">🎙</div>
+              <p>Video próximamente</p>
+            </div>
+            <!-- Cuando tengas el video, reemplazá el div de arriba con:
+            <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID" allowfullscreen></iframe>
+            -->
+          </div>
+          <div class="entrevista-info">
+            <span class="entrevista-tag">Entrevista</span>
+            <h3 class="entrevista-title">Nombre del entrevistado</h3>
+            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
+          </div>
+        </div>
+
+        <div class="entrevista-card">
+          <div class="entrevista-video">
+            <div class="entrevista-placeholder">
+              <div class="entrevista-placeholder-icon">🎙</div>
+              <p>Video próximamente</p>
+            </div>
+          </div>
+          <div class="entrevista-info">
+            <span class="entrevista-tag">Entrevista</span>
+            <h3 class="entrevista-title">Nombre del entrevistado</h3>
+            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SHOWS & EVENTOS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🎪</span>
+        <h2 class="red-section-title">Shows & Eventos</h2>
+        <span class="red-section-count">Próximamente</span>
+      </div>
+      <div class="shows-list">
+
+        <!-- EJEMPLO — reemplazá con datos reales -->
+        <a class="show-card" href="#" target="_blank">
+          <div class="show-fecha">
+            <div class="show-dia">15</div>
+            <div class="show-mes">Jun</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <p class="show-nombre">Nombre del evento</p>
+            <p class="show-lugar">📍 Lugar, Ciudad</p>
+          </div>
+          <span class="show-badge badge-proximo">Próximo</span>
+          <span class="show-arrow">→</span>
+        </a>
+
+        <a class="show-card" href="#" target="_blank">
+          <div class="show-fecha">
+            <div class="show-dia">28</div>
+            <div class="show-mes">May</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <p class="show-nombre">Nombre del evento</p>
+            <p class="show-lugar">📍 Lugar, Ciudad</p>
+          </div>
+          <span class="show-badge badge-pasado">Pasado</span>
+          <span class="show-arrow">→</span>
+        </a>
+
+        <a class="show-card" href="#" target="_blank">
+          <div class="show-fecha">
+            <div class="show-dia">10</div>
+            <div class="show-mes">May</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <p class="show-nombre">Nombre del evento</p>
+            <p class="show-lugar">📍 Lugar, Ciudad</p>
+          </div>
+          <span class="show-badge badge-pasado">Pasado</span>
+          <span class="show-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="red-cta">
+      <h2>¿Tu grupo quiere estar en la red?</h2>
+      <p>Si sos parte de un bloco, escuela de percusión o proyecto afrobrasilero y querés aparecer acá, escribinos.</p>
+      <a href="https://www.instagram.com/arabatu.bloco/" class="btn-red" target="_blank">
+        <img src="./assets/images/logo-ig.png" alt="Instagram" />
+        Contactanos por Instagram
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="./index.html">
+        <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo-footer" />
+      </a>
+      <div class="footer-center">
+        <p class="footer-text">Bloco de Percusión · Samba Reggae · Ritmos Afro</p>
+        <p class="footer-copy">© 2025 Arabatu Bloco · Buenos Aires</p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/arabatu.bloco/" class="social-link" target="_blank">
+          <img src="./assets/images/logo-ig.png" alt="Instagram" class="logo-ig-footer" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    document.querySelectorAll('.navbar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('toggle-menu').checked = false;
+      });
+    });
+  </script>
+
+</body>
+</html>

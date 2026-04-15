@@ -42,6 +42,10 @@
       body {
         font-family: var(--font-body);
         background: var(--dark);
+        background-image: url("./assets/images/fondobody.jpg");
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
         color: var(--white);
         min-height: 100svh;
         overflow-x: hidden;
@@ -337,12 +341,40 @@
       .video-card {
         border-radius: var(--radius);
         overflow: hidden;
-        background: var(--dark-3);
+        background: rgba(24, 24, 24, 0.85);
+        backdrop-filter: blur(8px);
         border: 1px solid rgba(255, 255, 255, 0.05);
         transition:
-          border-color 0.3s,
-          transform 0.3s var(--ease);
+          border-color 0.35s,
+          transform 0.35s var(--ease),
+          box-shadow 0.35s;
         -webkit-tap-highlight-color: transparent;
+        position: relative;
+      }
+      .video-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--radius);
+        background: linear-gradient(
+          135deg,
+          rgba(255, 229, 0, 0.06),
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.35s;
+        pointer-events: none;
+        z-index: 1;
+      }
+      .video-card:hover {
+        border-color: rgba(255, 229, 0, 0.35);
+        transform: translateY(-4px);
+        box-shadow:
+          0 8px 40px rgba(255, 229, 0, 0.12),
+          0 0 0 1px rgba(255, 229, 0, 0.1);
+      }
+      .video-card:hover::before {
+        opacity: 1;
       }
       .video-card.hidden {
         display: none;
@@ -365,6 +397,8 @@
         align-items: flex-start;
         justify-content: space-between;
         gap: 10px;
+        position: relative;
+        z-index: 2;
       }
       .video-info-left {
         flex: 1;
@@ -568,6 +602,7 @@
         .filter-chips {
           width: auto;
           flex-wrap: wrap;
+          gap: 10px;
         }
         .videos-grid {
           display: grid;
@@ -578,7 +613,7 @@
         /* Desktop top tabs */
         .desktop-tabs {
           display: flex;
-          gap: 4px;
+          gap: 0;
           padding: 0 40px;
           border-bottom: 1px solid rgba(255, 229, 0, 0.08);
           max-width: 1200px;
@@ -586,18 +621,24 @@
           position: sticky;
           top: 70px;
           z-index: 50;
-          background: rgba(8, 8, 8, 0.95);
+          background: rgba(8, 8, 8, 0.92);
           backdrop-filter: blur(16px);
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+        .desktop-tabs::-webkit-scrollbar {
+          display: none;
         }
         .desktop-tab {
-          padding: 14px 22px;
+          padding: 16px 28px;
           font-family: var(--font-display);
-          font-size: 1rem;
-          letter-spacing: 0.06em;
+          font-size: 1.05rem;
+          letter-spacing: 0.08em;
           cursor: pointer;
           border: none;
           background: transparent;
           color: var(--gray-light);
+          white-space: nowrap;
           border-bottom: 2px solid transparent;
           margin-bottom: -1px;
           transition:

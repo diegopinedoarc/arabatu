@@ -1,179 +1,369 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Arabatu Bloco</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/style.css" />
-  </head>
-  <body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Passero+One&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/style.css" />
+  <style>
+    /* ---- LIGHTBOX ---- */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(4,4,4,0.96);
+      cursor: pointer;
+    }
+    .lightbox-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+    }
+    .lightbox-img-wrap {
+      max-width: 88vw;
+      max-height: 80vh;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255,229,0,0.15);
+      box-shadow: 0 0 120px rgba(0,0,0,0.8);
+    }
+    .lightbox-img-wrap img {
+      max-width: 88vw;
+      max-height: 80vh;
+      object-fit: contain;
+      display: block;
+      transform: scale(0.94);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.18s ease;
+    }
+    .lightbox.open .lightbox-img-wrap img { transform: scale(1); }
+    .lightbox-close {
+      position: fixed;
+      top: 24px; right: 28px;
+      z-index: 2;
+      background: rgba(255,229,0,0.1);
+      border: 1px solid rgba(255,229,0,0.3);
+      color: #FFE500;
+      font-size: 1.1rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.3s;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .lightbox-close:hover { background: rgba(255,229,0,0.22); transform: rotate(90deg); }
+    .lightbox-nav {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      z-index: 2;
+      background: rgba(255,229,0,0.08);
+      border: 1px solid rgba(255,229,0,0.2);
+      color: #FFE500;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .lightbox-nav:hover { background: rgba(255,229,0,0.18); }
+    .lightbox-prev { left: 16px; }
+    .lightbox-prev:hover { transform: translateY(-50%) translateX(-3px); }
+    .lightbox-next { right: 16px; }
+    .lightbox-next:hover { transform: translateY(-50%) translateX(3px); }
+    .lightbox-counter {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      color: rgba(255,229,0,0.45);
+    }
 
-    <!-- Navbar -->
-    <header class="header" id="header">
-      <a href="./index.html" class="logo-link">
-        <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo" />
-      </a>
-      <nav class="navbar">
-        <input type="checkbox" id="toggle-menu" />
-        <label for="toggle-menu" class="bars-menu" aria-label="Menú">
-          <span></span>
-          <span></span>
-          <span></span>
-        </label>
-        <ul class="navbar-list">
-          <li><a href="./index.html" class="navbar-link active">Inicio</a></li>
-          <li><a href="./about.html" class="navbar-link">Conócenos</a></li>
-          <li><a href="./red.html" class="navbar-link">Tambores en Red</a></li>
-          <li><a href="./login.html" class="navbar-link">Sala de estudio</a></li>
-          <li>
-            <a href="https://www.instagram.com/arabatu.bloco/" class="navbar-link navbar-cta" target="_blank">
-              Contacto
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+    /* ---- GALLERY OVERLAY ---- */
+    .item { cursor: pointer; position: relative; overflow: hidden; }
+    .item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(8,8,8,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .item:hover .item-overlay { opacity: 1; }
+    .item-overlay span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.2em;
+      color: #FFE500;
+      border: 1px solid rgba(255,229,0,0.5);
+      padding: 6px 18px;
+      border-radius: 100px;
+    }
+  </style>
+</head>
+<body>
 
-    <main>
+  <header class="header" id="header">
+    <a href="./index.html" class="logo-link">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo" />
+    </a>
+    <nav class="navbar">
+      <input type="checkbox" id="toggle-menu" />
+      <label for="toggle-menu" class="bars-menu" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </label>
+      <ul class="navbar-list">
+        <li><a href="./index.html" class="navbar-link active">Inicio</a></li>
+        <li><a href="./about.html" class="navbar-link">Conócenos</a></li>
+        <li><a href="./red.html" class="navbar-link">Tambores en Red</a></li>
+        <li><a href="./login.html" class="navbar-link">Sala de estudio</a></li>
+        <li><a href="https://www.instagram.com/arabatu.bloco/" class="navbar-link navbar-cta" target="_blank">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
 
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-overlay"></div>
-        <img src="./assets/images/hero.jpg" alt="Arabatu Bloco tocando" class="img-hero" />
-        <div class="hero-content">
-          <p class="hero-eyebrow">Buenos Aires · Samba Reggae · Ritmos Afro</p>
-          <h1 class="hero-title">ARABATU<br><span>BLOCO</span></h1>
-          <p class="hero-sub">El tambor nos une. Nos mueve. Nos transforma.</p>
-          <div class="hero-actions">
-            <a href="./about.html" class="btn btn-primary">Conócenos</a>
-            <a href="https://www.instagram.com/arabatu.bloco/" class="btn btn-outline" target="_blank">
-              <img src="./assets/images/logo-ig.png" alt="" class="btn-icon" />
-              Instagram
-            </a>
-          </div>
-        </div>
-        <div class="hero-scroll-indicator">
-          <span></span>
-        </div>
-      </section>
+  <main>
 
-      <!-- Manifesto -->
-      <section class="manifesto">
-        <div class="manifesto-inner">
-          <div class="manifesto-line">
-            <span>El tambor nos une</span>
-            <span class="dot">✦</span>
-            <span>Nos mueve</span>
-            <span class="dot">✦</span>
-            <span>Nos transforma</span>
-            <span class="dot">✦</span>
-            <span>El tambor nos une</span>
-            <span class="dot">✦</span>
-            <span>Nos mueve</span>
-            <span class="dot">✦</span>
-            <span>Nos transforma</span>
-            <span class="dot">✦</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA Eventos -->
-      <section class="eventos">
-        <div class="eventos-grid">
-          <div class="eventos-text">
-            <p class="section-label">Shows & Eventos</p>
-            <h2 class="section-title">¿Querés llevar el ritmo a tu evento?</h2>
-            <p class="section-body">
-              Llevamos la energía del Samba Reggae y los ritmos afrobrasileros a festivales, 
-              eventos corporativos, murgas y celebraciones. Una experiencia que se siente en el cuerpo.
-            </p>
-            <a href="https://www.instagram.com/arabatu.bloco/" class="btn btn-primary" target="_blank">
-              <img src="./assets/images/logo-ig.png" alt="" class="btn-icon" />
-              ¡Escribinos!
-            </a>
-          </div>
-          <div class="eventos-card">
-            <div class="eventos-card-inner">
-              <div class="eventos-badge">Modo Show</div>
-              <h3 class="eventos-card-title">Arabatu<br>#ModoShow</h3>
-              <p>Percusión en vivo · Batucada · Samba Reggae</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Galería -->
-      <section class="galeria">
-        <div class="galeria-header">
-          <p class="section-label">Galería</p>
-          <h2 class="section-title">El ritmo en imágenes</h2>
-        </div>
-        <div class="container-galeria">
-          <div class="item item-1"></div>
-          <div class="item item-2"></div>
-          <div class="item item-3"></div>
-          <div class="item item-4"></div>
-          <div class="item item-5"></div>
-          <div class="item item-6"></div>
-          <div class="item item-7"></div>
-          <div class="item item-8"></div>
-        </div>
-      </section>
-
-      <!-- Video -->
-      <section class="video-section">
-        <div class="video-inner">
-          <p class="section-label">En Acción</p>
-          <h2 class="section-title info-h2">¡Cierre de año!</h2>
-          <div class="video-wrapper">
-            <iframe
-              src="https://www.youtube.com/embed/oqkrgo8vwfQ?si=-5Cthzh87Myb5lbx"
-              title="Arabatu Bloco - Cierre de Año"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            ></iframe>
-          </div>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <a href="./index.html">
-          <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo-footer" />
-        </a>
-        <div class="footer-center">
-          <p class="footer-text">Bloco de Percusión · Samba Reggae · Ritmos Afro</p>
-          <p class="footer-copy">© 2025 Arabatu Bloco · Buenos Aires</p>
-        </div>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/arabatu.bloco/" class="social-link" target="_blank" aria-label="Instagram">
-            <img src="./assets/images/logo-ig.png" alt="Instagram" class="logo-ig-footer" />
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <img src="./assets/images/hero.jpg" alt="Arabatu Bloco tocando" class="img-hero" />
+      <div class="hero-content">
+        <p class="hero-eyebrow">Buenos Aires · Samba Reggae · Ritmos Afro</p>
+        <h1 class="hero-title">
+          <span class="line-1">ARABATU</span>
+          <span class="line-2">BLOCO</span>
+        </h1>
+        <p class="hero-sub">El tambor nos une. Nos mueve. Nos transforma.</p>
+        <div class="hero-actions">
+          <a href="./about.html" class="btn btn-primary">Conócenos</a>
+          <a href="https://www.instagram.com/arabatu.bloco/" class="btn btn-outline" target="_blank">
+            <img src="./assets/images/logo-ig.png" alt="" class="btn-icon" />
+            Instagram
           </a>
         </div>
       </div>
-    </footer>
+      <div class="hero-side-text">Percusión Afrobrasilera · Buenos Aires · 2024</div>
+      <div class="hero-scroll-indicator">
+        <span></span>
+        <p>Scroll</p>
+      </div>
+    </section>
 
-    <script>
-      // Header scroll effect
-      const header = document.getElementById('header');
-      window.addEventListener('scroll', () => {
-        header.classList.toggle('scrolled', window.scrollY > 50);
-      });
-      // Close menu on link click
-      document.querySelectorAll('.navbar-link').forEach(link => {
-        link.addEventListener('click', () => {
-          document.getElementById('toggle-menu').checked = false;
-        });
-      });
-    </script>
+    <!-- MANIFESTO TICKER -->
+    <section class="manifesto">
+      <div class="manifesto-inner">
+        <div class="manifesto-line">
+          <span>El tambor nos une</span><span class="dot">✦</span>
+          <span>Nos mueve</span><span class="dot">✦</span>
+          <span>Nos transforma</span><span class="dot">✦</span>
+          <span>Samba Reggae</span><span class="dot">✦</span>
+          <span>Ritmos Afro</span><span class="dot">✦</span>
+          <span>Buenos Aires</span><span class="dot">✦</span>
+          <span>El tambor nos une</span><span class="dot">✦</span>
+          <span>Nos mueve</span><span class="dot">✦</span>
+          <span>Nos transforma</span><span class="dot">✦</span>
+          <span>Samba Reggae</span><span class="dot">✦</span>
+          <span>Ritmos Afro</span><span class="dot">✦</span>
+          <span>Buenos Aires</span><span class="dot">✦</span>
+        </div>
+      </div>
+    </section>
 
-  </body>
+    <!-- EVENTOS CTA -->
+    <section class="eventos">
+      <div class="eventos-grid">
+        <div class="eventos-text">
+          <p class="section-label">Shows & Eventos</p>
+          <h2 class="section-title">¿Querés llevar el ritmo a tu evento?</h2>
+          <p class="section-body">
+            Llevamos la energía del Samba Reggae y los ritmos afrobrasileros a festivales,
+            eventos corporativos, murgas y celebraciones. Una experiencia que se siente en el cuerpo.
+          </p>
+          <a href="https://www.instagram.com/arabatu.bloco/" class="btn btn-primary" target="_blank">
+            <img src="./assets/images/logo-ig.png" alt="" class="btn-icon" />
+            ¡Escribinos!
+          </a>
+        </div>
+        <div class="eventos-card">
+          <div>
+            <div class="eventos-badge">Modo Show</div>
+            <h3 class="eventos-card-title">Arabatu<br>#ModoShow</h3>
+            <p>Percusión en vivo · Batucada · Samba Reggae</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="galeria">
+      <div class="galeria-header">
+        <p class="section-label">Galería</p>
+        <h2 class="section-title">El ritmo en imágenes</h2>
+      </div>
+      <div class="container-galeria">
+        <div class="item item-1" data-index="0"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-2" data-index="1"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-3" data-index="2"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-4" data-index="3"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-5" data-index="4"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-6" data-index="5"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-7" data-index="6"><div class="item-overlay"><span>Ver foto</span></div></div>
+        <div class="item item-8" data-index="7"><div class="item-overlay"><span>Ver foto</span></div></div>
+      </div>
+
+      <!-- LIGHTBOX -->
+      <div class="lightbox" id="lightbox">
+        <div class="lightbox-backdrop" id="lb-backdrop"></div>
+        <button class="lightbox-close" id="lb-close">✕</button>
+        <button class="lightbox-nav lightbox-prev" id="lb-prev">←</button>
+        <button class="lightbox-nav lightbox-next" id="lb-next">→</button>
+        <div class="lightbox-content">
+          <div class="lightbox-img-wrap">
+            <img src="" alt="Arabatu Bloco" id="lb-img" />
+          </div>
+          <div class="lightbox-counter" id="lb-counter">1 / 8</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEO -->
+    <section class="video-section">
+      <div class="video-inner">
+        <p class="section-label">En Acción</p>
+        <h2 class="section-title info-h2">¡Cierre de año!</h2>
+        <div class="video-wrapper">
+          <iframe
+            src="https://www.youtube.com/embed/oqkrgo8vwfQ?si=-5Cthzh87Myb5lbx"
+            title="Arabatu Bloco - Cierre de Año"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a href="./index.html">
+        <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="logo-footer" />
+      </a>
+      <div class="footer-center">
+        <p class="footer-text">Bloco de Percusión · Samba Reggae · Ritmos Afro</p>
+        <p class="footer-copy">© 2025 Arabatu Bloco · Buenos Aires</p>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" aria-label="Instagram">
+          <img src="./assets/images/logo-ig.png" alt="Instagram" class="logo-ig-footer" />
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Header scroll
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    document.querySelectorAll('.navbar-link').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('toggle-menu').checked = false;
+      });
+    });
+
+    // Lightbox
+    const images = [
+      './assets/images/grilla/rodri.jpeg',
+      './assets/images/grilla/gise.jpg',
+      './assets/images/grilla/01-112.jpg',
+      './assets/images/grilla/01-86.jpg',
+      './assets/images/grilla/IMG-20240623-WA0171.jpg',
+      './assets/images/grilla/01-74.jpg',
+      './assets/images/grilla/IMG-20240623-WA0016.jpg',
+      './assets/images/grilla/01-102.jpg',
+    ];
+
+    let current = 0;
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const lbCounter = document.getElementById('lb-counter');
+
+    function openLightbox(index) {
+      current = index;
+      lbImg.src = images[current];
+      lbCounter.textContent = `${current + 1} / ${images.length}`;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function navigate(dir) {
+      current = (current + dir + images.length) % images.length;
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = `scale(0.96) translateX(${dir * 20}px)`;
+      setTimeout(() => {
+        lbImg.src = images[current];
+        lbCounter.textContent = `${current + 1} / ${images.length}`;
+        lbImg.style.opacity = '1';
+        lbImg.style.transform = 'scale(1) translateX(0)';
+      }, 180);
+    }
+
+    lbImg.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+
+    document.querySelectorAll('.item').forEach(item => {
+      item.addEventListener('click', () => openLightbox(parseInt(item.dataset.index)));
+    });
+
+    document.getElementById('lb-close').addEventListener('click', closeLightbox);
+    document.getElementById('lb-backdrop').addEventListener('click', closeLightbox);
+    document.getElementById('lb-prev').addEventListener('click', () => navigate(-1));
+    document.getElementById('lb-next').addEventListener('click', () => navigate(1));
+
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigate(-1);
+      if (e.key === 'ArrowRight') navigate(1);
+    });
+
+    // Swipe mobile
+    let touchStartX = 0;
+    lightbox.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+    lightbox.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+    });
+  </script>
+
+</body>
 </html>

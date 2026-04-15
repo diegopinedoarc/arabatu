@@ -119,33 +119,24 @@
       transform: translateY(-4px);
     }
     .grupo-img {
-      aspect-ratio: 16/9;
-      background: #1a1a1a;
+      aspect-ratio: 1/1;
+      background: #111;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
-      position: relative;
-      overflow: hidden;
+      padding: 24px;
     }
-    .grupo-img img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.8;
-    }
-    .grupo-img-placeholder {
-      width: 60px;
-      height: 60px;
+    .grupo-logo-circle {
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      background: rgba(255,231,57,0.1);
-      border: 1px solid rgba(255,231,57,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
+      object-fit: cover;
+      border: 2px solid rgba(255,231,57,0.2);
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+    .grupo-card:hover .grupo-logo-circle {
+      border-color: rgba(255,231,57,0.6);
+      transform: scale(1.06);
     }
     .grupo-info { padding: 16px 20px; }
     .grupo-name {
@@ -445,67 +436,104 @@
     <div class="red-section">
       <div class="red-section-header">
         <span class="red-section-icon">🥁</span>
-        <h2 class="red-section-title">Grupos</h2>
+        <h2 class="red-section-title">La escena del tambor</h2>
         <span class="red-section-count">Próximamente</span>
       </div>
       <div class="grupos-grid">
 
-        <!-- EJEMPLO — reemplazá con datos reales -->
-        <a class="grupo-card" href="#" target="_blank">
+        <a class="grupo-card" href="https://www.instagram.com/cafundo.ok/" target="_blank">
           <div class="grupo-img">
-            <div class="grupo-img-placeholder">🥁</div>
+            <img src="./assets/images/blocos/cafundo.jpg" alt="Cafundo" class="grupo-logo-circle" />
           </div>
           <div class="grupo-info">
-            <p class="grupo-name">Nombre del grupo</p>
-            <p class="grupo-ciudad">📍 Ciudad, País</p>
-            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <p class="grupo-name">Cafundo</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
             <span class="grupo-link">
-              Ver Instagram
+              @cafundo.ok
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             </span>
           </div>
         </a>
 
-        <a class="grupo-card" href="#" target="_blank">
+        <a class="grupo-card" href="https://www.instagram.com/vibra.bloco/" target="_blank">
           <div class="grupo-img">
-            <div class="grupo-img-placeholder">🥁</div>
+            <img src="./assets/images/blocos/vibra.jpg" alt="Vibra" class="grupo-logo-circle" />
           </div>
           <div class="grupo-info">
-            <p class="grupo-name">Nombre del grupo</p>
-            <p class="grupo-ciudad">📍 Ciudad, País</p>
-            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <p class="grupo-name">Vibra</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
             <span class="grupo-link">
-              Ver Instagram
+              @vibra.bloco
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             </span>
           </div>
         </a>
 
-        <a class="grupo-card" href="#" target="_blank">
+        <a class="grupo-card" href="https://www.instagram.com/oswingoficial/" target="_blank">
           <div class="grupo-img">
-            <div class="grupo-img-placeholder">🥁</div>
+            <img src="./assets/images/blocos/oswing.jpg" alt="Oswing" class="grupo-logo-circle" />
           </div>
           <div class="grupo-info">
-            <p class="grupo-name">Nombre del grupo</p>
-            <p class="grupo-ciudad">📍 Ciudad, País</p>
-            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <p class="grupo-name">Oswing</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
             <span class="grupo-link">
-              Ver Instagram
+              @oswingoficial
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             </span>
           </div>
         </a>
 
-        <a class="grupo-card" href="#" target="_blank">
+        <a class="grupo-card" href="https://www.instagram.com/zonkopercusion/" target="_blank">
           <div class="grupo-img">
-            <div class="grupo-img-placeholder">🥁</div>
+            <img src="./assets/images/blocos/zonko.jpg" alt="Zonko Percusión" class="grupo-logo-circle" />
           </div>
           <div class="grupo-info">
-            <p class="grupo-name">Nombre del grupo</p>
-            <p class="grupo-ciudad">📍 Ciudad, País</p>
-            <p class="grupo-desc">Descripción breve del grupo, su estilo y su historia.</p>
+            <p class="grupo-name">Zonko Percusión</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
             <span class="grupo-link">
-              Ver Instagram
+              @zonkopercusion
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="https://www.instagram.com/aswingueira/" target="_blank">
+          <div class="grupo-img">
+            <img src="./assets/images/blocos/aswingueira.jpg" alt="Aswingueira" class="grupo-logo-circle" />
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Aswingueira</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">
+              @aswingueira
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="https://www.instagram.com/repiqueteandolascalles/" target="_blank">
+          <div class="grupo-img">
+            <img src="./assets/images/blocos/repiqueteando.jpg" alt="Repiqueteando las Calles" class="grupo-logo-circle" />
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Repiqueteando las Calles</p>
+            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
+            <span class="grupo-link">
+              @repiqueteandolascalles
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="grupo-card" href="https://www.instagram.com/estacatto/" target="_blank">
+          <div class="grupo-img">
+            <img src="./assets/images/blocos/estacatto.jpg" alt="Estacatto" class="grupo-logo-circle" />
+          </div>
+          <div class="grupo-info">
+            <p class="grupo-name">Estacatto</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">
+              @estacatto
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
             </span>
           </div>

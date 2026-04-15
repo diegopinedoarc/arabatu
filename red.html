@@ -457,14 +457,14 @@
     .show-fecha-bloque { display: flex; align-items: baseline; gap: 6px; }
     .show-dia { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--primary); line-height: 1; }
     .show-mes { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: #888; font-family: 'DM Sans', sans-serif; }
-    .show-evento-nombre { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; color: #fff; line-height: 1.1; }
-    .show-evento-lugar { font-size: 0.85rem; color: #888; font-family: 'DM Sans', sans-serif; }
-    .show-evento-blocos { font-size: 0.78rem; color: #555; font-family: 'DM Sans', sans-serif; }
+    .show-evento-nombre { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #fff; line-height: 1.1; letter-spacing: 0.03em; }
+    .show-evento-lugar { font-size: 0.9rem; color: #ccc; font-family: 'DM Sans', sans-serif; font-weight: 400; }
+    .show-evento-blocos { font-size: 0.82rem; color: rgba(255,229,0,0.6); font-family: 'DM Sans', sans-serif; letter-spacing: 0.03em; }
     .show-evento-link {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      font-size: 0.78rem;
+      font-size: 0.82rem;
       font-weight: 500;
       letter-spacing: 0.06em;
       color: var(--primary);
@@ -657,56 +657,11 @@
       </div>
     </div>
 
-    <!-- ENTREVISTAS -->
-    <div class="red-section">
-      <div class="red-section-header">
-        <span class="red-section-icon">🎙</span>
-        <h2 class="red-section-title">Entrevistas</h2>
-        <span class="red-section-count">Próximamente</span>
-      </div>
-      <div class="entrevistas-grid">
-
-        <!-- EJEMPLO — reemplazá el iframe con tu video de YouTube -->
-        <div class="entrevista-card">
-          <div class="entrevista-video">
-            <div class="entrevista-placeholder">
-              <div class="entrevista-placeholder-icon">🎙</div>
-              <p>Video próximamente</p>
-            </div>
-            <!-- Cuando tengas el video, reemplazá el div de arriba con:
-            <iframe src="https://www.youtube.com/embed/TU_VIDEO_ID" allowfullscreen></iframe>
-            -->
-          </div>
-          <div class="entrevista-info">
-            <span class="entrevista-tag">Entrevista</span>
-            <h3 class="entrevista-title">Nombre del entrevistado</h3>
-            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
-          </div>
-        </div>
-
-        <div class="entrevista-card">
-          <div class="entrevista-video">
-            <div class="entrevista-placeholder">
-              <div class="entrevista-placeholder-icon">🎙</div>
-              <p>Video próximamente</p>
-            </div>
-          </div>
-          <div class="entrevista-info">
-            <span class="entrevista-tag">Entrevista</span>
-            <h3 class="entrevista-title">Nombre del entrevistado</h3>
-            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
     <!-- SHOWS & EVENTOS -->
     <div class="red-section">
       <div class="red-section-header">
         <span class="red-section-icon">🎪</span>
         <h2 class="red-section-title">Shows & Eventos</h2>
-        <span class="red-section-count">Próximamente</span>
       </div>
       <div class="shows-list">
 
@@ -741,6 +696,46 @@
         <div class="flyer-lightbox-content">
           <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
         </div>
+      </div>
+    </div>
+
+    <!-- ENTREVISTAS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🎙</span>
+        <h2 class="red-section-title">Entrevistas</h2>
+        <span class="red-section-count">Próximamente</span>
+      </div>
+      <div class="entrevistas-grid">
+
+        <div class="entrevista-card">
+          <div class="entrevista-video">
+            <div class="entrevista-placeholder">
+              <div class="entrevista-placeholder-icon">🎙</div>
+              <p>Video próximamente</p>
+            </div>
+          </div>
+          <div class="entrevista-info">
+            <span class="entrevista-tag">Entrevista</span>
+            <h3 class="entrevista-title">Nombre del entrevistado</h3>
+            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
+          </div>
+        </div>
+
+        <div class="entrevista-card">
+          <div class="entrevista-video">
+            <div class="entrevista-placeholder">
+              <div class="entrevista-placeholder-icon">🎙</div>
+              <p>Video próximamente</p>
+            </div>
+          </div>
+          <div class="entrevista-info">
+            <span class="entrevista-tag">Entrevista</span>
+            <h3 class="entrevista-title">Nombre del entrevistado</h3>
+            <p class="entrevista-desc">Descripción de la entrevista, de qué hablan, quién es la persona y por qué es interesante para la comunidad.</p>
+          </div>
+        </div>
+
       </div>
     </div>
 

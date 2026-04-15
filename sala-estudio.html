@@ -12,7 +12,7 @@
     <style>
       :root {
         --yellow: #ffe500;
-        --yellow-dim: rgba(255, 229, 0, 0.1);
+        --yellow-dim: rgba(255, 229, 0, 0.08);
         --yellow-border: rgba(255, 229, 0, 0.2);
         --orange: #f09819;
         --dark: #080808;
@@ -20,13 +20,13 @@
         --dark-3: #181818;
         --dark-4: #222;
         --white: #f5f0e8;
-        --gray: #555;
-        --gray-light: #999;
+        --gray: #444;
+        --gray-light: #888;
         --font-display: "Bebas Neue", sans-serif;
         --font-body: "DM Sans", sans-serif;
-        --bottom-nav-h: 72px;
-        --top-bar-h: 60px;
-        --radius: 14px;
+        --bottom-h: 74px;
+        --top-h: 62px;
+        --radius: 16px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
       }
       *,
@@ -43,10 +43,9 @@
         font-family: var(--font-body);
         background: var(--dark);
         color: var(--white);
-        min-height: 100vh;
         min-height: 100svh;
         overflow-x: hidden;
-        padding-bottom: var(--bottom-nav-h);
+        padding-bottom: calc(var(--bottom-h) + 16px);
       }
       a {
         text-decoration: none;
@@ -114,59 +113,42 @@
         left: 0;
         right: 0;
         z-index: 100;
-        height: var(--top-bar-h);
+        height: var(--top-h);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 16px;
+        padding: 0 20px;
         background: rgba(8, 8, 8, 0.97);
-        border-bottom: 1px solid rgba(255, 229, 0, 0.1);
-        backdrop-filter: blur(16px);
-      }
-      .top-bar-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        border-bottom: 1px solid rgba(255, 229, 0, 0.08);
+        backdrop-filter: blur(20px);
       }
       .top-bar-logo {
-        height: 34px;
-        width: auto;
+        height: 36px;
         filter: drop-shadow(0 0 8px rgba(255, 229, 0, 0.3));
-      }
-      .top-bar-badge {
-        font-size: 0.62rem;
-        font-weight: 500;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--dark);
-        background: var(--yellow);
-        padding: 3px 8px;
-        border-radius: 100px;
-        display: none;
       }
       .top-bar-right {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
       }
-      .user-greeting {
-        font-size: 0.78rem;
+      .user-name-pill {
+        font-size: 0.75rem;
         color: var(--gray-light);
+        background: var(--dark-3);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 5px 12px;
+        border-radius: 100px;
         display: none;
-        max-width: 120px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
       .btn-logout {
         font-size: 0.72rem;
         font-weight: 500;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--gray-light);
-        padding: 7px 14px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 10px;
         cursor: pointer;
         background: none;
         font-family: var(--font-body);
@@ -181,34 +163,38 @@
        PAGE HEADER
        ============================================ */
       .page-top {
-        padding: calc(var(--top-bar-h) + 24px) 16px 20px;
+        padding: calc(var(--top-h) + 28px) 20px 0;
+        margin-bottom: 28px;
       }
       .page-eyebrow {
-        font-size: 0.65rem;
+        font-size: 0.62rem;
         font-weight: 500;
-        letter-spacing: 0.25em;
+        letter-spacing: 0.28em;
         text-transform: uppercase;
         color: var(--yellow);
-        margin-bottom: 6px;
+        margin-bottom: 8px;
+        display: block;
       }
       .page-heading {
         font-family: var(--font-display);
-        font-size: clamp(2.2rem, 10vw, 4rem);
-        line-height: 0.95;
+        font-size: clamp(2.8rem, 12vw, 5rem);
+        line-height: 0.92;
         color: var(--white);
+        margin-bottom: 10px;
       }
       .page-heading span {
         color: var(--yellow);
+        display: block;
       }
       .page-sub {
-        font-size: 0.82rem;
+        font-size: 0.83rem;
         color: var(--gray-light);
-        margin-top: 8px;
-        line-height: 1.5;
+        line-height: 1.55;
+        max-width: 300px;
       }
 
       /* ============================================
-       BOTTOM NAV (mobile app style)
+       BOTTOM NAV
        ============================================ */
       .bottom-nav {
         position: fixed;
@@ -216,57 +202,62 @@
         left: 0;
         right: 0;
         z-index: 100;
-        height: var(--bottom-nav-h);
+        height: var(--bottom-h);
         background: rgba(10, 10, 10, 0.98);
-        border-top: 1px solid rgba(255, 229, 0, 0.12);
-        backdrop-filter: blur(20px);
-        display: flex;
-        align-items: stretch;
+        border-top: 1px solid rgba(255, 229, 0, 0.1);
+        backdrop-filter: blur(24px);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        padding-bottom: env(safe-area-inset-bottom, 0);
       }
       .nav-item {
-        flex: 1;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 4px;
+        gap: 5px;
         cursor: pointer;
         border: none;
         background: transparent;
         font-family: var(--font-body);
-        transition: all 0.2s;
         position: relative;
-        padding-bottom: env(safe-area-inset-bottom, 0px);
+        transition: all 0.2s;
+        -webkit-tap-highlight-color: transparent;
       }
-      .nav-item::before {
+      .nav-item::after {
         content: "";
         position: absolute;
         top: 0;
-        left: 20%;
-        right: 20%;
+        left: 25%;
+        right: 25%;
         height: 2px;
         background: var(--yellow);
-        border-radius: 0 0 4px 4px;
+        border-radius: 0 0 6px 6px;
         transform: scaleX(0);
+        transform-origin: center;
         transition: transform 0.3s var(--ease);
       }
-      .nav-item.active::before {
+      .nav-item.active::after {
         transform: scaleX(1);
       }
-      .nav-icon {
-        font-size: 1.3rem;
-        line-height: 1;
-        transition: transform 0.2s var(--ease);
+      .nav-svg {
+        width: 22px;
+        height: 22px;
+        transition:
+          transform 0.25s var(--ease),
+          filter 0.25s;
+        filter: grayscale(1) opacity(0.4);
       }
-      .nav-item.active .nav-icon {
-        transform: scale(1.15);
+      .nav-item.active .nav-svg {
+        transform: scale(1.1);
+        filter: grayscale(0) drop-shadow(0 0 6px rgba(255, 229, 0, 0.4));
       }
       .nav-label {
-        font-size: 0.6rem;
-        font-weight: 500;
-        letter-spacing: 0.08em;
+        font-size: 0.58rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: var(--gray);
+        color: var(--gray-light);
         transition: color 0.2s;
       }
       .nav-item.active .nav-label {
@@ -274,20 +265,20 @@
       }
 
       /* ============================================
-       CONTENT SECTIONS
+       SECTIONS
        ============================================ */
       .content-section {
         display: none;
-        padding: 0 16px 24px;
+        padding: 0 20px 20px;
       }
       .content-section.active {
         display: block;
-        animation: fadeUp 0.35s var(--ease);
+        animation: fadeUp 0.3s var(--ease);
       }
       @keyframes fadeUp {
         from {
           opacity: 0;
-          transform: translateY(14px);
+          transform: translateY(12px);
         }
         to {
           opacity: 1;
@@ -296,42 +287,37 @@
       }
 
       /* ============================================
-       FILTER CHIPS (horizontal scroll)
+       FILTER CHIPS
        ============================================ */
-      .filter-wrap {
-        margin: 0 -16px 20px;
-        padding: 0 16px;
+      .filter-scroll {
+        margin: 0 -20px 24px;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        padding: 0 20px;
       }
-      .filter-wrap::-webkit-scrollbar {
+      .filter-scroll::-webkit-scrollbar {
         display: none;
       }
       .filter-chips {
         display: flex;
         gap: 8px;
         width: max-content;
-        padding-bottom: 4px;
       }
       .chip {
-        padding: 7px 16px;
+        padding: 8px 18px;
         border-radius: 100px;
-        font-size: 0.75rem;
+        font-size: 0.76rem;
         font-weight: 500;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.03em;
         cursor: pointer;
         white-space: nowrap;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.08);
         color: var(--gray-light);
-        background: transparent;
+        background: var(--dark-3);
         font-family: var(--font-body);
         transition: all 0.2s;
         -webkit-tap-highlight-color: transparent;
-      }
-      .chip:hover {
-        border-color: rgba(255, 229, 0, 0.3);
-        color: var(--white);
       }
       .chip.active {
         background: var(--yellow);
@@ -341,18 +327,18 @@
       }
 
       /* ============================================
-       VIDEO CARDS
+       VIDEO CARDS — cinematic style
        ============================================ */
       .videos-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
       .video-card {
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: var(--radius);
         overflow: hidden;
+        background: var(--dark-3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         transition:
           border-color 0.3s,
           transform 0.3s var(--ease);
@@ -360,9 +346,6 @@
       }
       .video-card.hidden {
         display: none;
-      }
-      .video-card:active {
-        transform: scale(0.98);
       }
       .video-embed {
         position: relative;
@@ -377,25 +360,41 @@
         border: none;
       }
       .video-info {
-        padding: 14px 16px;
+        padding: 14px 16px 16px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .video-info-left {
+        flex: 1;
+        min-width: 0;
       }
       .video-title {
-        font-size: 0.95rem;
-        font-weight: 500;
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        letter-spacing: 0.02em;
         color: var(--white);
+        line-height: 1.1;
         margin-bottom: 6px;
-        line-height: 1.3;
       }
       .video-tag {
-        display: inline-block;
-        background: var(--yellow-dim);
-        color: var(--yellow);
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
         font-size: 0.65rem;
         font-weight: 600;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
-        padding: 3px 9px;
-        border-radius: 4px;
+        color: var(--yellow);
+        padding: 4px 10px;
+        background: var(--yellow-dim);
+        border: 1px solid var(--yellow-border);
+        border-radius: 6px;
+      }
+      .video-tag::before {
+        content: "▶";
+        font-size: 0.5rem;
       }
 
       /* ============================================
@@ -404,45 +403,44 @@
       .audios-list {
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
       }
       .audio-card {
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.06);
         border-radius: var(--radius);
         overflow: hidden;
+        background: var(--dark-3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         transition: border-color 0.3s;
       }
       .audio-card.hidden {
         display: none;
       }
-      .audio-card:hover {
-        border-color: var(--yellow-border);
-      }
       .audio-header {
         display: flex;
         align-items: center;
         gap: 14px;
-        padding: 16px 16px 12px;
+        padding: 16px 16px 10px;
       }
       .audio-icon {
-        width: 44px;
-        height: 44px;
+        width: 46px;
+        height: 46px;
         flex-shrink: 0;
+        border-radius: 12px;
         background: linear-gradient(135deg, var(--yellow), var(--orange));
-        border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 1.3rem;
+        box-shadow: 0 4px 16px rgba(255, 181, 0, 0.25);
       }
       .audio-text {
         flex: 1;
         min-width: 0;
       }
       .audio-title {
-        font-size: 0.95rem;
-        font-weight: 500;
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        letter-spacing: 0.02em;
         color: var(--white);
         margin-bottom: 3px;
         white-space: nowrap;
@@ -450,44 +448,57 @@
         text-overflow: ellipsis;
       }
       .audio-meta {
-        font-size: 0.78rem;
+        font-size: 0.75rem;
         color: var(--gray-light);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .audio-meta::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        background: var(--yellow);
+        border-radius: 50%;
+        opacity: 0.6;
       }
       .audio-drive-embed {
         width: 100%;
         border: none;
         display: block;
-        background: var(--dark-2);
+        background: rgba(0, 0, 0, 0.4);
       }
 
       /* ============================================
-       SECTION DIVIDER
+       SECTION HEADING
        ============================================ */
-      .section-divider {
+      .section-heading {
         font-family: var(--font-display);
-        font-size: 1rem;
-        letter-spacing: 0.15em;
+        font-size: 0.85rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
         color: var(--gray-light);
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin: 28px 0 16px;
+        gap: 10px;
+        margin-bottom: 16px;
       }
-      .section-divider::after {
+      .section-heading::after {
         content: "";
         flex: 1;
         height: 1px;
-        background: rgba(255, 255, 255, 0.06);
+        background: rgba(255, 255, 255, 0.05);
       }
 
       /* ============================================
-       EMPTY STATE
+       EMPTY
        ============================================ */
       .empty-filter {
         text-align: center;
-        padding: 48px 16px;
+        padding: 40px 16px;
         color: var(--gray-light);
-        font-size: 0.88rem;
+        font-size: 0.85rem;
         display: none;
       }
       .empty-state {
@@ -495,7 +506,7 @@
         padding: 60px 16px;
         color: var(--gray-light);
       }
-      .empty-state .icon {
+      .empty-icon {
         font-size: 2.5rem;
         margin-bottom: 14px;
       }
@@ -505,75 +516,26 @@
         margin-bottom: 6px;
       }
       .empty-state p {
-        font-size: 0.85rem;
-      }
-
-      /* ============================================
-       RECURSOS
-       ============================================ */
-      .recurso-card {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        border-radius: var(--radius);
-        padding: 18px 16px;
-        margin-bottom: 10px;
-        transition:
-          border-color 0.2s,
-          background 0.2s;
-        text-decoration: none;
-        color: inherit;
-      }
-      .recurso-card:hover {
-        border-color: var(--yellow-border);
-        background: rgba(255, 229, 0, 0.04);
-      }
-      .recurso-icon {
-        font-size: 1.5rem;
-        flex-shrink: 0;
-      }
-      .recurso-info {
-        flex: 1;
-      }
-      .recurso-title {
-        font-size: 0.92rem;
-        font-weight: 500;
-        color: var(--white);
-        margin-bottom: 2px;
-      }
-      .recurso-meta {
-        font-size: 0.75rem;
-        color: var(--gray-light);
-      }
-      .recurso-arrow {
-        color: rgba(255, 229, 0, 0.4);
-        font-size: 1rem;
-        transition: transform 0.2s;
-      }
-      .recurso-card:hover .recurso-arrow {
-        transform: translateX(4px);
-        color: var(--yellow);
+        font-size: 0.83rem;
       }
 
       /* ============================================
        FOOTER
        ============================================ */
       .sala-footer {
-        padding: 20px 16px 8px;
+        padding: 20px;
         text-align: center;
-        border-top: 1px solid rgba(255, 229, 0, 0.08);
-        margin-top: 16px;
+        border-top: 1px solid rgba(255, 229, 0, 0.06);
+        margin-top: 8px;
       }
       .sala-footer p {
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         color: var(--gray);
         letter-spacing: 0.06em;
       }
 
       /* ============================================
-       DESKTOP OVERRIDES
+       DESKTOP
        ============================================ */
       @media (min-width: 768px) {
         body {
@@ -583,23 +545,23 @@
           display: none;
         }
         .top-bar {
-          height: 68px;
-          padding: 0 32px;
+          height: 70px;
+          padding: 0 40px;
         }
-        .top-bar-badge {
-          display: inline-block;
-        }
-        .user-greeting {
+        .user-name-pill {
           display: block;
         }
         .page-top {
-          padding: calc(68px + 40px) 32px 28px;
+          padding: calc(70px + 48px) 40px 0;
+          margin-bottom: 36px;
         }
         .content-section {
-          padding: 0 32px 40px;
+          padding: 0 40px 40px;
+          max-width: 1200px;
+          margin: 0 auto;
         }
-        .filter-wrap {
-          margin: 0 0 24px;
+        .filter-scroll {
+          margin: 0 0 28px;
           padding: 0;
           overflow-x: visible;
         }
@@ -607,17 +569,28 @@
           width: auto;
           flex-wrap: wrap;
         }
+        .videos-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
 
-        /* Desktop tab bar at top instead of bottom */
+        /* Desktop top tabs */
         .desktop-tabs {
           display: flex;
-          gap: 6px;
-          margin-bottom: 32px;
-          border-bottom: 1px solid rgba(255, 229, 0, 0.1);
-          padding-bottom: 0;
+          gap: 4px;
+          padding: 0 40px;
+          border-bottom: 1px solid rgba(255, 229, 0, 0.08);
+          max-width: 1200px;
+          margin: 0 auto;
+          position: sticky;
+          top: 70px;
+          z-index: 50;
+          background: rgba(8, 8, 8, 0.95);
+          backdrop-filter: blur(16px);
         }
         .desktop-tab {
-          padding: 10px 20px;
+          padding: 14px 22px;
           font-family: var(--font-display);
           font-size: 1rem;
           letter-spacing: 0.06em;
@@ -635,26 +608,13 @@
           color: var(--yellow);
           border-bottom-color: var(--yellow);
         }
-        .videos-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
+        .desktop-tab:hover {
+          color: var(--white);
         }
       }
-      @media (min-width: 1024px) {
+      @media (min-width: 1100px) {
         .videos-grid {
           grid-template-columns: repeat(3, 1fr);
-        }
-        .content-section {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding-left: 48px;
-          padding-right: 48px;
-        }
-        .page-top {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding-left: 48px;
-          padding-right: 48px;
         }
       }
     </style>
@@ -665,55 +625,42 @@
       <div class="loading-dots"><span></span><span></span><span></span></div>
     </div>
 
-    <!-- TOP BAR -->
     <header class="top-bar">
-      <div class="top-bar-left">
-        <a href="./index.html">
-          <img
-            src="./assets/images/logo.png"
-            alt="Arabatu Bloco"
-            class="top-bar-logo"
-          />
-        </a>
-        <span class="top-bar-badge">Sala de estudio</span>
-      </div>
+      <a href="./index.html">
+        <img
+          src="./assets/images/logo.png"
+          alt="Arabatu Bloco"
+          class="top-bar-logo"
+        />
+      </a>
       <div class="top-bar-right">
-        <span class="user-greeting" id="user-greeting"></span>
+        <span class="user-name-pill" id="user-name-pill"></span>
         <button class="btn-logout" id="btn-logout">Salir</button>
       </div>
     </header>
 
-    <!-- PAGE HEADER -->
     <div class="page-top">
-      <p class="page-eyebrow">Zona exclusiva · Miembros</p>
-      <h1 class="page-heading">Sala de<br /><span>Estudio</span></h1>
+      <span class="page-eyebrow">Zona exclusiva · Miembros</span>
+      <h1 class="page-heading">Sala de<span>Estudio</span></h1>
       <p class="page-sub">Todo el material del bloco en un solo lugar.</p>
     </div>
 
-    <!-- DESKTOP TABS (hidden on mobile) -->
-    <div
-      class="content-section active"
-      id="desktop-nav-placeholder"
-      style="padding-top: 0; padding-bottom: 0"
-    >
-      <div class="desktop-tabs" id="desktop-tabs">
-        <button class="desktop-tab active" data-section="videos">
-          🎬 Videos
-        </button>
-        <button class="desktop-tab" data-section="audios">🎵 Audios</button>
-        <button class="desktop-tab" data-section="timbal">🥁 Timbal</button>
-        <button class="desktop-tab" data-section="recursos">📄 Recursos</button>
-      </div>
+    <!-- DESKTOP TABS -->
+    <div class="desktop-tabs" id="desktop-tabs" style="display: none">
+      <button class="desktop-tab active" data-section="videos">
+        🎬 Videos
+      </button>
+      <button class="desktop-tab" data-section="audios">🎵 Audios</button>
+      <button class="desktop-tab" data-section="timbal">🥁 Timbal</button>
+      <button class="desktop-tab" data-section="recursos">📄 Recursos</button>
     </div>
 
     <!-- ======== VIDEOS ======== -->
     <section class="content-section active" id="section-videos">
-      <div class="filter-wrap">
+      <div class="filter-scroll">
         <div class="filter-chips" id="video-filter">
           <button class="chip active" data-cat="all">Todas</button>
-          <button class="chip" data-cat="merengue">
-            Merengue + Samba Reggae
-          </button>
+          <button class="chip" data-cat="merengue">Merengue + Samba</button>
           <button class="chip" data-cat="varias-queixas">Varias Queixas</button>
           <button class="chip" data-cat="convencion">Convención Olodum</button>
           <button class="chip" data-cat="xango">Xango</button>
@@ -741,8 +688,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Varias Queixas — Ensayo</p>
-            <span class="video-tag">Varias Queixas</span>
+            <div class="video-info-left">
+              <p class="video-title">Varias Queixas — Ensayo</p>
+              <span class="video-tag">Varias Queixas</span>
+            </div>
           </div>
         </div>
 
@@ -762,8 +711,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Cierre de Año 2024</p>
-            <span class="video-tag">Shows</span>
+            <div class="video-info-left">
+              <p class="video-title">Cierre de Año 2024</p>
+              <span class="video-tag">Shows</span>
+            </div>
           </div>
         </div>
 
@@ -783,8 +734,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Sólido — Video 1</p>
-            <span class="video-tag">Sólido</span>
+            <div class="video-info-left">
+              <p class="video-title">Sólido — Video 1</p>
+              <span class="video-tag">Sólido</span>
+            </div>
           </div>
         </div>
 
@@ -804,8 +757,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Sólido — Video 2</p>
-            <span class="video-tag">Sólido</span>
+            <div class="video-info-left">
+              <p class="video-title">Sólido — Video 2</p>
+              <span class="video-tag">Sólido</span>
+            </div>
           </div>
         </div>
 
@@ -825,8 +780,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Merengue + Samba Reggae — Video 1</p>
-            <span class="video-tag">Merengue + Samba Reggae</span>
+            <div class="video-info-left">
+              <p class="video-title">Merengue + Samba Reggae — Video 1</p>
+              <span class="video-tag">Merengue + Samba Reggae</span>
+            </div>
           </div>
         </div>
 
@@ -846,8 +803,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Merengue + Samba Reggae — Video 2</p>
-            <span class="video-tag">Merengue + Samba Reggae</span>
+            <div class="video-info-left">
+              <p class="video-title">Merengue + Samba Reggae — Video 2</p>
+              <span class="video-tag">Merengue + Samba Reggae</span>
+            </div>
           </div>
         </div>
 
@@ -867,8 +826,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Tamaquinho — Video 1</p>
-            <span class="video-tag">Tamaquinho</span>
+            <div class="video-info-left">
+              <p class="video-title">Tamaquinho — Video 1</p>
+              <span class="video-tag">Tamaquinho</span>
+            </div>
           </div>
         </div>
       </div>
@@ -879,12 +840,10 @@
 
     <!-- ======== AUDIOS ======== -->
     <section class="content-section" id="section-audios">
-      <div class="filter-wrap">
+      <div class="filter-scroll">
         <div class="filter-chips" id="audio-filter">
           <button class="chip active" data-cat="all">Todas</button>
-          <button class="chip" data-cat="merengue">
-            Merengue + Samba Reggae
-          </button>
+          <button class="chip" data-cat="merengue">Merengue + Samba</button>
           <button class="chip" data-cat="varias-queixas">Varias Queixas</button>
           <button class="chip" data-cat="convencion">Convención Olodum</button>
           <button class="chip" data-cat="xango">Xango</button>
@@ -894,7 +853,7 @@
         </div>
       </div>
 
-      <div class="section-divider">Maquetas</div>
+      <div class="section-heading">Maquetas</div>
       <div class="audios-list" id="audios-list">
         <div class="audio-card" data-cat="xango">
           <div class="audio-header">
@@ -948,7 +907,7 @@
 
     <!-- ======== TIMBAL ======== -->
     <section class="content-section" id="section-timbal">
-      <div class="section-divider">Guiones de Timbal</div>
+      <div class="section-heading">Guiones de Timbal</div>
       <div class="videos-grid">
         <div class="video-card">
           <div class="video-embed">
@@ -966,8 +925,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Variación Funky Candeal</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Variación Funky Candeal</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -987,8 +948,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Itamar</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Itamar</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1008,8 +971,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Funky Candeal 2</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Funky Candeal 2</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1029,8 +994,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Epab Verano Flur</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Epab Verano Flur</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1050,8 +1017,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Arreglo Tamaquinho</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Arreglo Tamaquinho</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1071,8 +1040,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Ile Nueva</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Ile Nueva</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1092,8 +1063,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Forrodum Timbal</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Forrodum Timbal</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1113,8 +1086,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Variación Cabila Timbal Epab</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Variación Cabila Timbal Epab</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1134,8 +1109,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Funky Flur</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Funky Flur</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1155,8 +1132,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Intro Rua 15</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Intro Rua 15</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1176,8 +1155,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Base Roda Flur</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Base Roda Flur</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1197,8 +1178,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Intro Toque de Timbalero</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Intro Toque de Timbalero</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1218,8 +1201,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Convención Timbalada 1</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Convención Timbalada 1</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
 
@@ -1239,8 +1224,10 @@
             ></iframe>
           </div>
           <div class="video-info">
-            <p class="video-title">Convención Timbalada desde Timbal</p>
-            <span class="video-tag">Timbal</span>
+            <div class="video-info-left">
+              <p class="video-title">Convención Timbalada desde Timbal</p>
+              <span class="video-tag">Timbal</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1249,7 +1236,7 @@
     <!-- ======== RECURSOS ======== -->
     <section class="content-section" id="section-recursos">
       <div class="empty-state">
-        <div class="icon">📄</div>
+        <div class="empty-icon">📄</div>
         <h3>Próximamente</h3>
         <p>Acá van a aparecer partituras, guías y materiales de estudio.</p>
       </div>
@@ -1259,22 +1246,77 @@
       <p>Material exclusivo para miembros · No compartir externamente</p>
     </div>
 
-    <!-- BOTTOM NAV (mobile) -->
-    <nav class="bottom-nav" id="bottom-nav">
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
       <button class="nav-item active" data-section="videos">
-        <span class="nav-icon">🎬</span>
+        <svg
+          class="nav-svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <rect x="2" y="4" width="20" height="16" rx="3" />
+          <polygon
+            points="10,8 16,12 10,16"
+            fill="currentColor"
+            stroke="none"
+          />
+        </svg>
         <span class="nav-label">Videos</span>
       </button>
       <button class="nav-item" data-section="audios">
-        <span class="nav-icon">🎵</span>
+        <svg
+          class="nav-svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <circle cx="12" cy="12" r="3" />
+          <line x1="12" y1="2" x2="12" y2="9" />
+        </svg>
         <span class="nav-label">Audios</span>
       </button>
       <button class="nav-item" data-section="timbal">
-        <span class="nav-icon">🥁</span>
+        <svg
+          class="nav-svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <ellipse cx="12" cy="8" rx="9" ry="4" />
+          <path d="M3 8v8c0 2.2 4 4 9 4s9-1.8 9-4V8" />
+          <line x1="12" y1="4" x2="10" y2="1" />
+          <line x1="16" y1="5" x2="18" y2="2" />
+        </svg>
         <span class="nav-label">Timbal</span>
       </button>
       <button class="nav-item" data-section="recursos">
-        <span class="nav-icon">📄</span>
+        <svg
+          class="nav-svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          />
+          <polyline points="14 2 14 8 20 8" />
+          <line x1="8" y1="13" x2="16" y2="13" />
+          <line x1="8" y1="17" x2="12" y2="17" />
+        </svg>
         <span class="nav-label">Recursos</span>
       </button>
     </nav>
@@ -1310,7 +1352,6 @@
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
       const db = getFirestore(app);
-      const loadingScreen = document.getElementById("loading-screen");
 
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
@@ -1325,10 +1366,15 @@
             return;
           }
           const name = snap.data().name || user.email;
-          document.getElementById("user-greeting").textContent =
+          document.getElementById("user-name-pill").textContent =
             `Hola, ${name.split(" ")[0]}`;
-          loadingScreen.style.opacity = "0";
-          setTimeout(() => (loadingScreen.style.display = "none"), 400);
+          document.getElementById("loading-screen").style.opacity = "0";
+          setTimeout(
+            () =>
+              (document.getElementById("loading-screen").style.display =
+                "none"),
+            400,
+          );
         } catch (err) {
           console.error(err);
           window.location.href = "./login.html";
@@ -1342,40 +1388,34 @@
           window.location.href = "./login.html";
         });
 
-      // Section switching — shared logic for bottom nav + desktop tabs
+      // Show/hide desktop tabs based on screen size
+      const desktopTabs = document.getElementById("desktop-tabs");
+      function checkDesktop() {
+        desktopTabs.style.display = window.innerWidth >= 768 ? "flex" : "none";
+      }
+      checkDesktop();
+      window.addEventListener("resize", checkDesktop);
+
+      // Section switch
       function switchSection(target) {
         document
           .querySelectorAll(".content-section")
           .forEach((s) =>
-            s.classList.toggle(
-              "active",
-              s.id === `section-${target}` ||
-                s.id === "desktop-nav-placeholder",
-            ),
+            s.classList.toggle("active", s.id === `section-${target}`),
           );
         document
-          .querySelectorAll(".nav-item")
-          .forEach((n) =>
-            n.classList.toggle("active", n.dataset.section === target),
-          );
-        document
-          .querySelectorAll(".desktop-tab")
-          .forEach((t) =>
-            t.classList.toggle("active", t.dataset.section === target),
+          .querySelectorAll(".nav-item, .desktop-tab")
+          .forEach((el) =>
+            el.classList.toggle("active", el.dataset.section === target),
           );
         window.scrollTo({ top: 0, behavior: "smooth" });
       }
 
-      document.querySelectorAll(".nav-item").forEach((item) => {
-        item.addEventListener("click", () =>
-          switchSection(item.dataset.section),
-        );
-      });
-      document.querySelectorAll(".desktop-tab").forEach((tab) => {
-        tab.addEventListener("click", () => switchSection(tab.dataset.section));
+      document.querySelectorAll(".nav-item, .desktop-tab").forEach((el) => {
+        el.addEventListener("click", () => switchSection(el.dataset.section));
       });
 
-      // Filter chips — Videos
+      // Video filter
       document.querySelectorAll("#video-filter .chip").forEach((chip) => {
         chip.addEventListener("click", () => {
           const cat = chip.dataset.cat;
@@ -1395,7 +1435,7 @@
         });
       });
 
-      // Filter chips — Audios
+      // Audio filter
       document.querySelectorAll("#audio-filter .chip").forEach((chip) => {
         chip.addEventListener("click", () => {
           const cat = chip.dataset.cat;

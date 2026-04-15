@@ -395,6 +395,102 @@
       .entrevista-card:nth-child(even) { direction: rtl; }
       .entrevista-card:nth-child(even) > * { direction: ltr; }
     }
+    /* ---- FLYER EN SHOW CARD ---- */
+    .show-card-flyer {
+      flex-wrap: wrap;
+      gap: 0;
+      padding: 0;
+      overflow: hidden;
+      align-items: stretch;
+      cursor: default;
+    }
+    .show-flyer {
+      width: 90px;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: #111;
+    }
+    .show-flyer img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease, filter 0.3s ease;
+      filter: brightness(0.85);
+    }
+    .show-flyer:hover img {
+      transform: scale(1.06);
+      filter: brightness(1);
+    }
+    .flyer-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .show-flyer:hover .flyer-overlay { opacity: 1; }
+    .flyer-overlay span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: #FFE500;
+      border: 1px solid rgba(255,229,0,0.5);
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .show-card-flyer .show-fecha,
+    .show-card-flyer .show-divider,
+    .show-card-flyer .show-info,
+    .show-card-flyer .show-badge,
+    .show-card-flyer .show-arrow {
+      padding: 20px 0;
+    }
+    .show-card-flyer .show-fecha { padding-left: 20px; }
+    .show-card-flyer .show-arrow { padding-right: 20px; }
+    .show-card-flyer .show-info { padding: 20px 12px; }
+
+    /* ---- FLYER LIGHTBOX ---- */
+    .flyer-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .flyer-lightbox.open { opacity: 1; pointer-events: all; }
+    .flyer-lightbox-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(4,4,4,0.96);
+      cursor: pointer;
+    }
+    .flyer-lightbox-content {
+      position: relative;
+      z-index: 1;
+      max-height: 92vh;
+      transform: scale(0.94);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .flyer-lightbox.open .flyer-lightbox-content { transform: scale(1); }
+    .flyer-lightbox-content img {
+      max-height: 92vh;
+      max-width: 92vw;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 0 120px rgba(0,0,0,0.9);
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -595,7 +691,11 @@
       </div>
       <div class="shows-list">
 
-        <a class="show-card" href="https://www.instagram.com/arabatu.bloco/" target="_blank">
+        <div class="show-card show-card-flyer">
+          <div class="show-flyer" id="flyer-domingazo">
+            <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
           <div class="show-fecha">
             <div class="show-dia">26</div>
             <div class="show-mes">Abr</div>
@@ -607,9 +707,18 @@
             <p class="show-lugar" style="margin-top:4px;font-size:0.75rem;color:#666;">Arabatu · Zonko Percusión · Batería Roja y Negra</p>
           </div>
           <span class="show-badge badge-proximo">Próximo</span>
-          <span class="show-arrow">→</span>
-        </a>
+          <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" class="show-arrow" style="text-decoration:none;">→</a>
+        </div>
 
+      </div>
+
+      <!-- FLYER LIGHTBOX -->
+      <div class="flyer-lightbox" id="flyer-lightbox">
+        <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
+        <button class="lightbox-close" id="flyer-close">✕</button>
+        <div class="flyer-lightbox-content">
+          <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
+        </div>
       </div>
     </div>
 
@@ -652,6 +761,26 @@
       link.addEventListener('click', () => {
         document.getElementById('toggle-menu').checked = false;
       });
+    });
+    // Flyer lightbox
+    const flyerLightbox = document.getElementById('flyer-lightbox');
+    document.getElementById('flyer-domingazo').addEventListener('click', () => {
+      flyerLightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    document.getElementById('flyer-backdrop').addEventListener('click', () => {
+      flyerLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.getElementById('flyer-close').addEventListener('click', () => {
+      flyerLightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        flyerLightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
     });
   </script>
 

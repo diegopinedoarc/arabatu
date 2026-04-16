@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="./assets/favicon.png" />
     <title>Ingresar · Arabatu Bloco</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
@@ -510,6 +512,10 @@
         getDoc,
         serverTimestamp,
       } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      import {
+        initializeAppCheck,
+        ReCaptchaV3Provider,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
 
       // =============================================
       // 🔧 REEMPLAZÁ ESTO CON TU CONFIGURACIÓN DE FIREBASE
@@ -528,10 +534,18 @@
 
         appId: "1:676384856570:web:967cab2e35a39986836c43",
       };
-
       // =============================================
 
       const app = initializeApp(firebaseConfig);
+
+      // App Check — protege contra usos no autorizados
+      initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider(
+          "6Ldrp7osAAAAANOjaeXUEOiiZAx7XaXqZLlg6rou",
+        ),
+        isTokenAutoRefreshEnabled: true,
+      });
+
       const auth = getAuth(app);
       const db = getFirestore(app);
 

@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <link rel="apple-touch-icon" href="./assets/favicon.png" />
   <title>Arabatu Bloco</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -363,6 +365,158 @@
       const diff = touchStartX - e.changedTouches[0].clientX;
       if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
     });
+  </script>
+
+  <!-- BANNER MOBILE: TAMBORES EN RED -->
+  <style>
+    .red-banner {
+      display: none;
+    }
+    @media (max-width: 767px) {
+      .red-banner {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        z-index: 500;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 20px calc(14px + env(safe-area-inset-bottom, 0px));
+        background: linear-gradient(135deg, #0d0d0d 0%, #1a1200 100%);
+        border-top: 1px solid rgba(255,229,0,0.25);
+        box-shadow: 0 -8px 40px rgba(0,0,0,0.6);
+        animation: bannerSlideUp 0.6s cubic-bezier(0.16,1,0.3,1) 1.5s both;
+        cursor: pointer;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      @keyframes bannerSlideUp {
+        from { transform: translateY(100%); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
+      }
+
+      /* Pulso de fondo */
+      .red-banner::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(255,229,0,0.04), transparent);
+        animation: bannerShimmer 3s ease-in-out infinite;
+      }
+      @keyframes bannerShimmer {
+        0%,100% { transform: translateX(-100%); }
+        50% { transform: translateX(100%); }
+      }
+
+      .red-banner-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .red-banner-icon {
+        width: 64px; height: 64px;
+        border-radius: 10px;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+        overflow: hidden;
+        animation: iconPulse 2.5s ease-in-out infinite;
+      }
+      .red-banner-icon img {
+        width: 100%; height: 100%;
+        object-fit: contain;
+      }
+      @keyframes iconPulse {
+        0%,100% { filter: drop-shadow(0 0 6px rgba(255,229,0,0.2)); }
+        50% { filter: drop-shadow(0 0 16px rgba(255,229,0,0.5)); }
+      }
+
+      .red-banner-text { flex: 1; }
+      .red-banner-label {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.6rem; font-weight: 600;
+        letter-spacing: 0.2em; text-transform: uppercase;
+        color: rgba(255,229,0,0.6);
+        margin-bottom: 2px;
+        display: block;
+      }
+      .red-banner-title {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 1.15rem; letter-spacing: 0.06em;
+        color: #fff; line-height: 1;
+      }
+
+      .red-banner-cta {
+        display: flex; align-items: center; gap: 6px;
+        background: var(--yellow, #FFE500);
+        color: #080808;
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: 0.9rem; letter-spacing: 0.06em;
+        padding: 8px 16px;
+        border-radius: 8px;
+        white-space: nowrap;
+        flex-shrink: 0;
+        position: relative; z-index: 1;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .red-banner:active .red-banner-cta {
+        transform: scale(0.95);
+      }
+      .red-banner-arrow {
+        font-size: 0.9rem;
+        animation: arrowBounce 1.5s ease-in-out infinite;
+      }
+      @keyframes arrowBounce {
+        0%,100% { transform: translateX(0); }
+        50% { transform: translateX(3px); }
+      }
+
+      .red-banner-close {
+        position: absolute;
+        top: 8px; right: 8px;
+        width: 20px; height: 20px;
+        display: flex; align-items: center; justify-content: center;
+        color: rgba(255,255,255,0.3);
+        font-size: 0.75rem;
+        cursor: pointer;
+        z-index: 2;
+        background: none; border: none;
+        font-family: sans-serif;
+        -webkit-tap-highlight-color: transparent;
+      }
+    }
+  </style>
+
+  <a class="red-banner" href="./red.html" id="red-banner">
+    <button class="red-banner-close" id="red-banner-close">✕</button>
+    <div class="red-banner-left">
+      <div class="red-banner-icon">
+          <img src="./assets/images/tamboresred.png" alt="Tambores en Red" />
+        </div>
+      <div class="red-banner-text">
+        <span class="red-banner-label">Nuevo en la web</span>
+        <div class="red-banner-title">Tambores en Red</div>
+      </div>
+    </div>
+    <div class="red-banner-cta">
+      Ver
+      <span class="red-banner-arrow">→</span>
+    </div>
+  </a>
+
+  <script>
+    // Banner close
+    document.getElementById('red-banner-close').addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      document.getElementById('red-banner').style.display = 'none';
+      sessionStorage.setItem('red-banner-closed', '1');
+    });
+    if (sessionStorage.getItem('red-banner-closed')) {
+      document.getElementById('red-banner').style.display = 'none';
+    }
   </script>
 
 </body>

@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+  <title>Neguinho do Samba · Tambores en Red · Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFE500;
+      --yellow-dim: rgba(255,229,0,0.08);
+      --yellow-border: rgba(255,229,0,0.15);
+      --dark: #080808;
+      --dark-2: #111;
+      --dark-3: #181818;
+      --white: #F5F0E8;
+      --gray: #666;
+      --gray-light: #999;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--dark);
+      background-image: url('./assets/images/fondobody.jpg');
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--white);
+      min-height: 100vh;
+      font-weight: 300;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8,8,8,0.95);
+      border-bottom: 1px solid var(--yellow-border);
+      backdrop-filter: blur(16px);
+    }
+    .top-bar-logo { height: 38px; filter: drop-shadow(0 0 8px rgba(255,229,0,0.3)); }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-light);
+      padding: 8px 16px; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; transition: all 0.2s;
+      cursor: pointer; background: none; font-family: var(--font-body);
+    }
+    .btn-back:hover { border-color: var(--yellow); color: var(--yellow); }
+    .btn-back svg { width: 14px; height: 14px; }
+
+    .article-wrap {
+      max-width: 720px; margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .article-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--yellow);
+      background: var(--yellow-dim); border: 1px solid var(--yellow-border);
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .article-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      line-height: 0.92; color: var(--white); margin-bottom: 8px;
+    }
+    .article-subtitle {
+      font-size: 1.1rem; color: var(--gray-light);
+      font-style: italic; font-weight: 300;
+      margin-bottom: 32px; line-height: 1.5;
+    }
+    .article-meta {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 40px;
+      font-size: 0.78rem; color: var(--gray-light); letter-spacing: 0.05em;
+    }
+    .meta-dot { width: 3px; height: 3px; background: var(--gray); border-radius: 50%; }
+
+    .article-hero {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--dark-3);
+      border-radius: 16px; overflow: hidden;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .article-hero img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+
+    .article-body { line-height: 1.85; color: rgba(245,240,232,0.85); }
+    .article-body p { font-size: 1rem; margin-bottom: 20px; }
+    .article-body p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-size: 4rem; line-height: 0.8;
+      float: left; margin: 8px 12px 0 0;
+      color: var(--yellow);
+    }
+    .article-body strong { color: var(--white); font-weight: 500; }
+    .article-body em { color: var(--gray-light); font-style: italic; }
+
+    .pull-quote {
+      border-left: 3px solid var(--yellow);
+      padding: 16px 24px; margin: 32px 0;
+      background: var(--yellow-dim);
+      border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+      font-size: 1.1rem !important; font-style: italic;
+      color: var(--white) !important; margin: 0 !important; line-height: 1.6;
+    }
+    .pull-quote p::first-letter { all: unset; }
+
+    .dato-card {
+      margin: 32px 0;
+      background: rgba(255,229,0,0.06);
+      border: 1px solid var(--yellow-border);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .dato-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 8px; display: block;
+    }
+    .dato-card p {
+      font-size: 0.9rem !important;
+      color: rgba(245,240,232,0.8) !important;
+      margin: 0 !important; line-height: 1.6;
+    }
+    .dato-card p::first-letter { all: unset; }
+
+    /* LOGROS */
+    .logros {
+      margin: 36px 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .logro-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 16px;
+    }
+    .logro-num {
+      font-family: var(--font-display);
+      font-size: 2rem; color: var(--yellow);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .logro-desc { font-size: 0.78rem; color: var(--gray-light); line-height: 1.4; }
+
+    .discografia {
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .discografia-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem; color: var(--white); margin-bottom: 20px;
+    }
+    .disco-grid { display: flex; flex-direction: column; gap: 12px; }
+    .disco-card {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .disco-card:hover { border-color: var(--yellow-border); background: var(--yellow-dim); }
+    .disco-num {
+      font-family: var(--font-display); font-size: 1.8rem;
+      color: rgba(255,229,0,0.2); width: 36px; flex-shrink: 0; text-align: center;
+    }
+    .disco-cover {
+      width: 64px; height: 64px; border-radius: 10px;
+      background: var(--dark-3); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.05); font-size: 1.6rem;
+    }
+    .disco-info { flex: 1; min-width: 0; }
+    .disco-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--white); margin-bottom: 4px; }
+    .disco-year { font-size: 0.75rem; color: var(--gray-light); letter-spacing: 0.08em; }
+    .disco-desc { font-size: 0.78rem; color: var(--gray-light); margin-top: 4px; line-height: 1.4; }
+
+    .article-footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .back-to-red {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--yellow); transition: gap 0.2s;
+    }
+    .back-to-red:hover { gap: 12px; }
+    .article-footer-note { font-size: 0.72rem; color: var(--gray); }
+
+    @media (min-width: 768px) {
+      .article-wrap { padding: 100px 40px 80px; }
+      .disco-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="./index.html">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="top-bar-logo" />
+    </a>
+    <button class="btn-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver
+    </button>
+  </header>
+
+  <article class="article-wrap">
+
+    <span class="article-tag">🥁 Referentes</span>
+    <h1 class="article-title">Neguinho do Samba</h1>
+    <p class="article-subtitle">El padre del samba-reggae. El hombre que le puso ritmo al mundo.</p>
+
+    <div class="article-meta">
+      <span>Salvador, Bahia, 1955 — 2009</span>
+      <div class="meta-dot"></div>
+      <span>Percusionista · Compositor · Director de batería</span>
+    </div>
+
+    <div class="article-hero">
+      <img src="./assets/images/notas/neguinho.jpg" alt="Neguinho do Samba" />
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        <strong>Antônio Luís Alves de Souza</strong> nació en 1955 en el barrio del Dique do Tororó, en Salvador de Bahía. Hijo de Nilza, lavandiera, y de Jacinto, ogã del candomblé y percusionista. Desde chico usaba las palanganas de su madre para crear ritmos. Su padre, que tocaba bongó en la orquesta del SESC, lo acercó a los sonidos afrocaribeños — el mambo, la rumba, el chá-chá-chá — que marcarían su oído para siempre.
+      </p>
+
+      <p>
+        A los 13 años ya frecuentaba los ensayos de los blocos carnavalescos de Salvador. Pronto pasó a tocar en las escuelas de samba de la ciudad hasta que encontró su verdadero hogar musical: <strong>Ilê Aiyê</strong>, el primer bloco afro del carnaval bahiano, fundado en 1974. Allí fue director de batería durante once años, perfeccionando su visión del ritmo.
+      </p>
+
+      <div class="pull-quote">
+        <p>"Esos ritmos no sé cómo suceden. Creo que había llegado el momento, y solo el universo puede decir por qué."</p>
+      </div>
+
+      <p>
+        Fue en Ilê Aiyê donde nació la chispa. Observando la danza de las mujeres mayores de bloco, Neguinho intentaba reproducir con los tambores esa atmósfera hipnotizante. Juntó esa experiencia con el reggae que sonaba en el primer bar del Pelourinho, con los ritmos afrobrasileros que conocía de memoria, y algo nuevo comenzó a tomar forma. En 1979, junto con otros vecinos del Maciel Pelourinho — barrio marginado, mayormente negro y pobre — cofundó <strong>Olodum</strong> y se convirtió en su maestro de batería.
+      </p>
+
+      <p>
+        En Olodum, Neguinho hizo algo revolucionario: eliminó la técnica tradicional de tocar el repique con una mano y una baqueta — costumbre que hacía sangrar las palmas — y lo reemplazó por dos palillos, permitiendo patrones más rápidos y complejos. Su argumento fue contundente: <em>"El tiempo de la esclavitud terminó."</em> Esa innovación técnica, sumada a la fusión de samba, reggae jamaicano y merengue, dio nacimiento oficial al <strong>samba-reggae</strong>.
+      </p>
+
+      <div class="dato-card">
+        <span class="dato-label">Dato histórico</span>
+        <p>En 1996, Neguinho do Samba dirigió a 250 músicos de Olodum en el histórico videoclip de Michael Jackson <em>They Don't Care About Us</em>, filmado en el Pelourinho por Spike Lee. En el video se lo ve regentando los tambores — y también abrazado por el Rey del Pop cuando una fanática irrumpe en la filmación.</p>
+      </div>
+
+      <p>
+        La proyección de Olodum bajo su dirección fue imparable. En 1989, <strong>Paul Simon</strong> se convirtió en el primer artista extranjero de renombre en grabar con el grupo, para el álbum <em>The Rhythm of the Saints</em>. También trabajaron con <strong>Jimmy Cliff</strong>, <strong>Sadao Watanabe</strong> y llevaron el samba-reggae a más de 40 países y todos los continentes.
+      </p>
+
+      <div class="logros">
+        <div class="logro-card">
+          <div class="logro-num">40+</div>
+          <div class="logro-desc">Países donde Olodum llevó el samba-reggae bajo su dirección</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">1993</div>
+          <div class="logro-desc">Fundó la Banda Didá, primer grupo de percusión exclusivamente femenino de Salvador</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">1974</div>
+          <div class="logro-desc">Primeros pasos en Ilê Aiyê, el primer bloco afro del carnaval bahiano</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">3 días</div>
+          <div class="logro-desc">De luto oficial decretado por la Secretaría de Cultura de Salvador tras su muerte en 2009</div>
+        </div>
+      </div>
+
+      <p>
+        En 1993 fundó la <strong>Banda Didá</strong> — el primer grupo de percusión exclusivamente femenino del Brasil — y la Asociación para la Educación y la Cultura Didá, un espacio sin fines de lucro orientado a mujeres negras del Pelourinho, con talleres gratuitos de percusión, canto, producción y formación de liderazgos. También impulsó la Escuela Olodum, que hasta hoy recibe jóvenes del barrio.
+      </p>
+
+      <p>
+        Neguinho do Samba murió el 31 de octubre de 2009, a los 54 años, de problemas cardíacos. La Secretaría de Cultura de Salvador decretó tres días de luto oficial. Una faja negra fue extendida en el corazón del Pelourinho. Su música, sin embargo, no dejó de sonar un solo día.
+      </p>
+
+    </div>
+
+    <!-- DISCOGRAFÍA -->
+    <div class="discografia">
+      <h2 class="discografia-title">Discografía seleccionada</h2>
+      <div class="disco-grid">
+
+        <div class="disco-card">
+          <div class="disco-num">01</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Faraó (Divindade do Egito)</p>
+            <p class="disco-year">1987 · Olodum</p>
+            <p class="disco-desc">Himno de Olodum. Neguinho creó el arreglo de merengue que lo hizo famoso mundialmente y definió el samba-reggae moderno.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">02</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">The Rhythm of the Saints</p>
+            <p class="disco-year">1990 · Paul Simon feat. Olodum</p>
+            <p class="disco-desc">El primer artista extranjero de renombre en grabar con Olodum. Grabado en Salvador bajo la batuta de Neguinho.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">03</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">They Don't Care About Us</p>
+            <p class="disco-year">1996 · Michael Jackson feat. Olodum</p>
+            <p class="disco-desc">Neguinho arregló y dirigió a 250 músicos en el Pelourinho. El clip filmado por Spike Lee es uno de los más icónicos de la historia del pop.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">04</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Neguinho do Samba</p>
+            <p class="disco-year">2002 · Álbum solista</p>
+            <p class="disco-desc">Su única producción solista. Una síntesis de todo su universo musical: samba-reggae, axé, candomblé y música afrobahiana.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="article-footer">
+      <a href="./red.html" class="back-to-red">← Volver a Tambores en Red</a>
+      <span class="article-footer-note">Fuente: Wikipedia · Fundação Palmares · Itaú Cultural · Metro1</span>
+    </div>
+
+  </article>
+
+</body>
+</html>

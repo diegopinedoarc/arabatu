@@ -539,6 +539,69 @@
       box-shadow: 0 0 120px rgba(0,0,0,0.9);
       display: block;
     }
+    /* ---- NOTAS ---- */
+    .notas-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .nota-card {
+      display: flex; flex-direction: column;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px; padding: 24px;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      gap: 14px;
+    }
+    .nota-card:hover {
+      border-color: rgba(255,229,0,0.3);
+      transform: translateY(-4px);
+      background: rgba(255,229,0,0.03);
+    }
+    .nota-card-top { display: flex; align-items: center; gap: 10px; }
+    .nota-tag {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--primary);
+      background: rgba(255,231,57,0.1);
+      border: 1px solid rgba(255,231,57,0.2);
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .nota-body { flex: 1; }
+    .nota-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.03em;
+      color: #fff; line-height: 1; margin-bottom: 10px;
+    }
+    .nota-desc {
+      font-size: 0.88rem; color: #999;
+      line-height: 1.65; font-family: 'DM Sans', sans-serif;
+    }
+    .nota-footer {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .nota-origen {
+      font-size: 0.72rem; color: rgba(255,229,0,0.6);
+      font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em;
+    }
+    .nota-cta {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      transition: letter-spacing 0.2s;
+    }
+    .nota-card:hover .nota-cta { letter-spacing: 0.14em; }
+
+    @media (min-width: 768px) {
+      .notas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .notas-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -861,6 +924,31 @@
             <p class="grupo-name">Cordão de Prata</p>
             <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
             <span class="grupo-link">@bc_cordaodeprata <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">📝</span>
+        <h2 class="red-section-title">Notas</h2>
+      </div>
+      <div class="notas-grid">
+
+        <a class="nota-card" href="./nota-musotto.html">
+          <div class="nota-card-top">
+            <span class="nota-tag">Referentes</span>
+          </div>
+          <div class="nota-body">
+            <h3 class="nota-title">Ramiro Musotto</h3>
+            <p class="nota-desc">El argentino que se volvió más bahiano que muchos bahianos. Percusionista, compositor y productor que llevó los ritmos afrobahianos al mundo.</p>
+          </div>
+          <div class="nota-footer">
+            <span class="nota-origen">📍 La Plata, 1963 — Salvador, 2009</span>
+            <span class="nota-cta">Leer nota →</span>
           </div>
         </a>
 

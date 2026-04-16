@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ramiro Musotto · Tambores en Red · Arabatu Bloco</title>
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFE500;
+      --yellow-dim: rgba(255,229,0,0.08);
+      --yellow-border: rgba(255,229,0,0.15);
+      --dark: #080808;
+      --dark-2: #111;
+      --dark-3: #181818;
+      --white: #F5F0E8;
+      --gray: #666;
+      --gray-light: #999;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--dark);
+      background-image: url('./assets/images/fondobody.jpg');
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--white);
+      min-height: 100vh;
+      font-weight: 300;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* TOP BAR */
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8,8,8,0.95);
+      border-bottom: 1px solid var(--yellow-border);
+      backdrop-filter: blur(16px);
+    }
+    .top-bar-logo { height: 38px; filter: drop-shadow(0 0 8px rgba(255,229,0,0.3)); }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-light);
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      transition: all 0.2s;
+      cursor: pointer; background: none; font-family: var(--font-body);
+    }
+    .btn-back:hover { border-color: var(--yellow); color: var(--yellow); }
+    .btn-back svg { width: 14px; height: 14px; }
+
+    /* ARTICLE */
+    .article-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    /* HEADER */
+    .article-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--yellow);
+      background: var(--yellow-dim); border: 1px solid var(--yellow-border);
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .article-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      line-height: 0.92; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .article-subtitle {
+      font-size: 1.1rem; color: var(--gray-light);
+      font-style: italic; font-weight: 300;
+      margin-bottom: 32px; line-height: 1.5;
+    }
+    .article-meta {
+      display: flex; align-items: center; gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 40px;
+      font-size: 0.78rem; color: var(--gray-light);
+      letter-spacing: 0.05em;
+    }
+    .article-meta span { display: flex; align-items: center; gap: 6px; }
+    .meta-dot { width: 3px; height: 3px; background: var(--gray); border-radius: 50%; }
+
+    /* HERO IMAGE */
+    .article-hero {
+      width: 100%; aspect-ratio: 16/9;
+      background: var(--dark-3);
+      border-radius: 16px; overflow: hidden;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .article-hero-placeholder {
+      text-align: center; color: var(--gray);
+    }
+    .article-hero-placeholder p { font-size: 0.82rem; margin-top: 8px; }
+
+    /* BODY TEXT */
+    .article-body { line-height: 1.85; color: rgba(245,240,232,0.85); }
+    .article-body p { font-size: 1rem; margin-bottom: 20px; }
+    .article-body p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-size: 4rem; line-height: 0.8;
+      float: left; margin: 8px 12px 0 0;
+      color: var(--yellow);
+    }
+    .article-body strong { color: var(--white); font-weight: 500; }
+    .article-body em { color: var(--gray-light); font-style: italic; }
+
+    /* PULL QUOTE */
+    .pull-quote {
+      border-left: 3px solid var(--yellow);
+      padding: 16px 24px;
+      margin: 32px 0;
+      background: var(--yellow-dim);
+      border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+      font-size: 1.1rem !important;
+      font-style: italic;
+      color: var(--white) !important;
+      margin: 0 !important;
+      line-height: 1.6;
+    }
+    .pull-quote p::first-letter { all: unset; }
+
+    /* DISCOGRAFIA */
+    .discografia {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .discografia-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem; letter-spacing: 0.05em;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .disco-grid { display: flex; flex-direction: column; gap: 12px; }
+    .disco-card {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .disco-card:hover {
+      border-color: var(--yellow-border);
+      background: var(--yellow-dim);
+    }
+    .disco-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem; color: rgba(255,229,0,0.2);
+      width: 36px; flex-shrink: 0; text-align: center;
+    }
+    .disco-cover {
+      width: 64px; height: 64px; border-radius: 10px;
+      background: var(--dark-3);
+      flex-shrink: 0; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 1.6rem;
+    }
+    .disco-info { flex: 1; min-width: 0; }
+    .disco-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem; color: var(--white);
+      margin-bottom: 4px; letter-spacing: 0.03em;
+    }
+    .disco-year {
+      font-size: 0.75rem; color: var(--gray-light);
+      letter-spacing: 0.08em;
+    }
+    .disco-desc {
+      font-size: 0.78rem; color: var(--gray-light);
+      margin-top: 4px; line-height: 1.4;
+    }
+
+    /* DATO CURIOSO */
+    .dato-card {
+      margin: 32px 0;
+      background: rgba(255,229,0,0.06);
+      border: 1px solid var(--yellow-border);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .dato-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 8px; display: block;
+    }
+    .dato-card p {
+      font-size: 0.9rem !important;
+      color: rgba(245,240,232,0.8) !important;
+      margin: 0 !important; line-height: 1.6;
+    }
+    .dato-card p::first-letter { all: unset; }
+
+    /* FOOTER */
+    .article-footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .back-to-red {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--yellow);
+      transition: gap 0.2s;
+    }
+    .back-to-red:hover { gap: 12px; }
+    .article-footer-note { font-size: 0.72rem; color: var(--gray); }
+
+    @media (min-width: 768px) {
+      .article-wrap { padding: 100px 40px 80px; }
+      .disco-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="./index.html">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="top-bar-logo" />
+    </a>
+    <button class="btn-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver
+    </button>
+  </header>
+
+  <article class="article-wrap">
+
+    <span class="article-tag">🥁 Referentes</span>
+    <h1 class="article-title">Ramiro Musotto</h1>
+    <p class="article-subtitle">El argentino que se volvió más bahiano que muchos bahianos</p>
+
+    <div class="article-meta">
+      <span>La Plata, 1963 — Salvador, 2009</span>
+      <div class="meta-dot"></div>
+      <span>Percusionista · Compositor · Productor</span>
+    </div>
+
+    <div class="article-hero">
+      <div class="article-hero-placeholder">
+        <span style="font-size:3rem;">🥁</span>
+        <p>Ramiro Musotto en vivo</p>
+      </div>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        <strong>Ramiro José Musotto</strong> nació en La Plata el 31 de octubre de 1963, pero creció en Bahía Blanca, donde su padre le regaló su primer instrumento: un bombo legüero — ese tambor patagónico que puede escucharse a leguas de distancia. Ese regalo marcó todo lo que vendría después.
+      </p>
+
+      <p>
+        Estudió en la Orquesta Sinfónica de Bahía Blanca y tocó en varios grupos locales, pero su curiosidad lo llevaba siempre hacia un mismo horizonte: Brasil. A los 18 años, recién terminada la secundaria, tomó una decisión que definiría su vida entera. Siguiendo el consejo del guitarrista Paulo Bellinati, se instaló primero en San Pablo para estudiar percusión brasileña con Zé Eduardo Nazário. Pero su destino real estaba más al norte.
+      </p>
+
+      <div class="pull-quote">
+        <p>"En Salvador de Bahía todos son hijos de Orixás, aunque hayan nacido en Bahía Blanca."</p>
+      </div>
+
+      <p>
+        En 1984 llegó a Salvador de Bahía y nunca más se fue. Se instaló en el Pelourinho — el corazón rítmico de la ciudad — donde compartió casa con Toinho Batera y comenzó a tocar en la Banda Salamandra del bloco Camaleão, formando el set de percusión junto a <strong>Carlinhos Brown</strong> y Tony Mola. Desde ese primer año, quedó completamente inmerso en la cultura afrobahiana: el candomblé, los blocos afro, el berimbau, los atabaques.
+      </p>
+
+      <p>
+        Su dominio del berimbau fue tan profundo y original que llegó a <strong>modificar físicamente el instrumento</strong> para expandir su sonido. Tocó con prácticamente toda la élite de la música popular brasileña: <em>Caetano Veloso, Gilberto Gil, Marisa Monte, Gal Costa, Maria Bethania, Daniela Mercury, Adriana Calcanhotto, Os Paralamas do Sucesso, Lenine, Skank, Lulu Santos</em> y muchos más.
+      </p>
+
+      <div class="dato-card">
+        <span class="dato-label">Dato curioso</span>
+        <p>En un arreglo para Margareth Menezes, Musotto introdujo subrepticiamente una cita del Himno Nacional Argentino. Cuando la cantante hizo gira con David Byrne, el público argentino aplaudió creyendo que era un guiño intencional de ella. Menezes no supo hasta después que había sido obra de Ramiro.</p>
+      </div>
+
+      <p>
+        Además de ser músico de sesión y productor de primer nivel, organizaba batucadas callejeras cada vez que volvía a Bahía Blanca en Navidad y Año Nuevo — un gesto que resume perfectamente quién era: alguien que traía el tambor a donde iba y reunía gente alrededor de él.
+      </p>
+
+      <p>
+        Murió el 11 de septiembre de 2009 en Salvador, a los 45 años, a causa de un cáncer de páncreas. Sus restos fueron despedidos por un grupo de percusionistas brasileños en una ceremonia a pura percusión. Había grabado solo dos discos solistas, dejando una obra pequeña en cantidad pero enorme en significado.
+      </p>
+
+    </div>
+
+    <!-- DISCOGRAFÍA -->
+    <div class="discografia">
+      <h2 class="discografia-title">Discografía</h2>
+      <div class="disco-grid">
+
+        <div class="disco-card">
+          <div class="disco-num">01</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Sudaka</p>
+            <p class="disco-year">2003</p>
+            <p class="disco-desc">Su debut solista. Mezcla electrónica, cánticos indígenas Xavantes, música pigmea y afro-baianidades. Con Gato Barbieri y Lulu Santos.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">02</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Civilização & Barbarie</p>
+            <p class="disco-year">2007</p>
+            <p class="disco-desc">Su segundo y último disco. Con Arto Lindsay y Chico César. El título dialoga con la dicotomía de Sarmiento, proponiéndola superada.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="article-footer">
+      <a href="./red.html" class="back-to-red">← Volver a Tambores en Red</a>
+      <span class="article-footer-note">Fuente: Wikipedia · Página/12 · BHInfo</span>
+    </div>
+
+  </article>
+
+</body>
+</html>

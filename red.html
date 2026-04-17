@@ -121,6 +121,61 @@
       flex-shrink: 0;
     }
 
+    /* ---- FILTER BAR GRUPOS ---- */
+    .grupos-filter-bar {
+      display: flex; gap: 10px; margin-bottom: 24px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .grupos-filter-select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px 36px 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; color: #F5F0E8;
+      outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+    .grupos-filter-select:focus { border-color: rgba(255,231,57,0.4); }
+    .grupos-filter-select option { background: #181818; color: #F5F0E8; }
+    .grupos-filter-search-wrap { position: relative; flex: 1; min-width: 160px; }
+    .grupos-filter-search-icon {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%);
+      color: #888; width: 15px; height: 15px; pointer-events: none;
+    }
+    .grupos-filter-search {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px 14px 10px 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; color: #F5F0E8;
+      outline: none; transition: border-color 0.2s;
+    }
+    .grupos-filter-search::placeholder { color: #666; }
+    .grupos-filter-search:focus { border-color: rgba(255,231,57,0.4); }
+    .grupos-filter-clear {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #888;
+      background: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; padding: 4px 0;
+      transition: color 0.2s; white-space: nowrap; display: none;
+    }
+    .grupos-filter-clear.visible { display: block; }
+    .grupos-filter-clear:hover { color: var(--primary); }
+    .grupos-filter-count {
+      font-size: 0.72rem; color: #888;
+      margin-bottom: 16px; letter-spacing: 0.04em; display: none;
+    }
+    .grupos-filter-count.visible { display: block; }
+    .grupos-filter-count span { color: var(--primary); font-weight: 600; }
+
     /* ---- GRUPOS GRID ---- */
     .grupos-grid {
       display: grid;
@@ -666,9 +721,26 @@
         <span class="red-section-icon">🥁</span>
         <h2 class="red-section-title">La escena del tambor</h2>
       </div>
-      <div class="grupos-grid">
+      <div class="grupos-filter-bar">
+        <div class="grupos-filter-search-wrap">
+          <svg class="grupos-filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="grupos-filter-search" id="grupos-search" type="text" placeholder="Buscar grupo..." autocomplete="off" />
+        </div>
+        <select class="grupos-filter-select" id="grupos-origen">
+          <option value="all">Todos los orígenes</option>
+          <option value="buenos-aires">Buenos Aires, Argentina</option>
+          <option value="rosario">Rosario, Argentina</option>
+          <option value="cordoba">Córdoba, Argentina</option>
+          <option value="brasil">Brasil</option>
+          <option value="uruguay">Uruguay</option>
+          <option value="chile">Chile</option>
+        </select>
+        <button class="grupos-filter-clear" id="grupos-clear">Limpiar</button>
+      </div>
+      <div class="grupos-filter-count" id="grupos-count"></div>
+      <div class="grupos-grid" id="grupos-grid">
 
-        <a class="grupo-card" href="https://www.instagram.com/cafundo.ok/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/cafundo.ok/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/cafundo.jpg" alt="Cafundo" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -678,7 +750,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/vibra.bloco/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/vibra.bloco/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/vibra.jpg" alt="Vibra" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -688,7 +760,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/oswingoficial/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/oswingoficial/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/oswing.jpg" alt="Oswing" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -698,7 +770,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/zonkopercusion/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/zonkopercusion/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/zonko.jpg" alt="Zonko Percusión" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -708,7 +780,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/aswingueira/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/aswingueira/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/aswingueira.jpg" alt="Aswingueira" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -718,7 +790,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/repiqueteandolascalles/" target="_blank">
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/repiqueteandolascalles/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/repiqueteando.jpg" alt="Repiqueteando las Calles" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -728,7 +800,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/estacatto/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/estacatto/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/estacatto.jpg" alt="Estacatto" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -738,7 +810,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/bateriarojaynegra/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bateriarojaynegra/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/bateriarojaynegra.jpg" alt="Batería Roja y Negra" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -748,7 +820,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/olodum_oficial/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/olodum_oficial/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/olodum.jpg" alt="Olodum" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -758,7 +830,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/osnegoes/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/osnegoes/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/osnegoes.jpg" alt="Osnegões" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -768,7 +840,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/didabandafeminina/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/didabandafeminina/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/dida.jpg" alt="Didá Banda Feminina" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -778,7 +850,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/toqueafrosantelmo/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/toqueafrosantelmo/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/toqueafro.jpg" alt="Toque Afro" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -788,7 +860,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/rielbloko/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/rielbloko/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/riel.jpg" alt="Riel" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -798,7 +870,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/brincadeiradelsur/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/brincadeiradelsur/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/brincadeira.jpg" alt="Brincadeira del Sur" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -808,7 +880,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/bloco_inchala/" target="_blank">
+        <a class="grupo-card" data-origen="uruguay" href="https://www.instagram.com/bloco_inchala/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/inchala.jpg" alt="Inchala" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -818,7 +890,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/fieras.sambareggae/" target="_blank">
+        <a class="grupo-card" data-origen="rosario" href="https://www.instagram.com/fieras.sambareggae/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/fieras.jpg" alt="Fieras Samba Reggae" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -828,7 +900,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/bombahia.bb/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bombahia.bb/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/bombahia.jpg" alt="BomBahia" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -838,7 +910,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/swing_do_pelo/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/swing_do_pelo/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/swingdopelo.jpg" alt="Swing do Pelo" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -848,7 +920,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/nuevaerapercusion/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/nuevaerapercusion/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/nuevaera.jpg" alt="Nueva Era" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -858,7 +930,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/revuelta.bloco/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/revuelta.bloco/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/revuelta.jpg" alt="Revuelta" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -868,7 +940,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/mistura_swingueira/" target="_blank">
+        <a class="grupo-card" data-origen="chile" href="https://www.instagram.com/mistura_swingueira/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/mistura.jpg" alt="Mistura Swingueira" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -878,7 +950,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/simiospercusion/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/simiospercusion/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/simios.jpg" alt="Simios" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -888,7 +960,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/pangeabloco/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/pangeabloco/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/pangea.jpg" alt="Pangea" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -898,7 +970,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/buena_mandinga/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/buena_mandinga/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/buenamandinga.jpg" alt="Buena Mandinga" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -908,7 +980,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/rebelion.ok/" target="_blank">
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/rebelion.ok/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/rebelion.jpg" alt="Rebelión" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -918,7 +990,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/fogobloco.ofc/" target="_blank">
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/fogobloco.ofc/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/fogobloco.jpg" alt="Fogobloco" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -928,7 +1000,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/sambamarta.bloco/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/sambamarta.bloco/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/sambamarta.jpg" alt="Samba Marta" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -938,7 +1010,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/bc_cordaodeprata/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bc_cordaodeprata/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/cordaodeprata.jpg" alt="Cordão de Prata" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -948,7 +1020,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/quintafeira_sr/" target="_blank">
+        <a class="grupo-card" data-origen="rosario" href="https://www.instagram.com/quintafeira_sr/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/quintafeira.jpg" alt="Quinta Feira" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -958,7 +1030,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/lablocasemba/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/lablocasemba/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/lablocasemba.jpg" alt="La Bloca Semba" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -968,7 +1040,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/santacadencia/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/santacadencia/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/santacadencia.jpg" alt="Santa Cadencia" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -978,7 +1050,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/elohim_sambareggae/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/elohim_sambareggae/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/elohim.jpg" alt="Elohim" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -988,7 +1060,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/latiaclota/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/latiaclota/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/latiaclota.jpg" alt="La Tía Clota" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -998,7 +1070,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/acuarelaescueladepercusion/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/acuarelaescueladepercusion/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/acuarela.jpg" alt="Acuarela" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1008,7 +1080,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/sambaglitter/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/sambaglitter/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/sambaglitter.jpg" alt="Sambaglitter" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1018,7 +1090,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/timbaladaoficial/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/timbaladaoficial/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/timbalada.jpg" alt="Timbalada" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1028,7 +1100,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/muzenzadoreggae/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/muzenzadoreggae/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/muzenza.jpg" alt="Muzenza" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1038,7 +1110,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/blocoileaiye/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/blocoileaiye/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/ileaiye.jpg" alt="Ilê Aiyê" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1048,7 +1120,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/la14bis/" target="_blank">
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/la14bis/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/la14bis.jpg" alt="La 14 Bis" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1058,7 +1130,7 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/coresdeaideoficial/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/coresdeaideoficial/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/coresdeaide.jpg" alt="Cores de Aide" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
@@ -1068,13 +1140,43 @@
           </div>
         </a>
 
-        <a class="grupo-card" href="https://www.instagram.com/maledebaleoficial/" target="_blank">
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/maledebaleoficial/" target="_blank">
           <div class="grupo-img"><img src="./assets/images/blocos/maledebale.jpg" alt="Malê Debalê" class="grupo-logo-fill" /></div>
           <div class="grupo-overlay"></div>
           <div class="grupo-info">
             <p class="grupo-name">Malê Debalê</p>
             <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
             <span class="grupo-link">@maledebaleoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/nossopulso/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/nossopulso.jpg" alt="Nosso Pulso" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nosso Pulso</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@nossopulso <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/blocoafro.ritmointerior/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/ritmointerior.jpg" alt="Ritmo Interior" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Ritmo Interior</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@blocoafro.ritmointerior <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bahianortepercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/bahianorte.jpg" alt="Bahia Norte" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Bahia Norte</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@bahianortepercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
           </div>
         </a>
 
@@ -1281,6 +1383,42 @@
         flyerLightbox.classList.remove('open');
         document.body.style.overflow = '';
       }
+    });
+
+    // Filtro de grupos — búsqueda + origen
+    function applyGruposFilter() {
+      const search = document.getElementById('grupos-search').value.toLowerCase().trim();
+      const origen = document.getElementById('grupos-origen').value;
+      const clearBtn = document.getElementById('grupos-clear');
+      const countEl = document.getElementById('grupos-count');
+
+      const isFiltering = search !== '' || origen !== 'all';
+      clearBtn.classList.toggle('visible', isFiltering);
+
+      let visible = 0;
+      document.querySelectorAll('#grupos-grid .grupo-card').forEach(card => {
+        const name = card.querySelector('.grupo-name')?.textContent.toLowerCase() || '';
+        const matchOrigen = origen === 'all' || card.dataset.origen === origen;
+        const matchSearch = search === '' || name.includes(search);
+        const show = matchOrigen && matchSearch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (isFiltering) {
+        countEl.classList.add('visible');
+        countEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? 'grupo encontrado' : 'grupos encontrados'}`;
+      } else {
+        countEl.classList.remove('visible');
+      }
+    }
+
+    document.getElementById('grupos-search').addEventListener('input', applyGruposFilter);
+    document.getElementById('grupos-origen').addEventListener('change', applyGruposFilter);
+    document.getElementById('grupos-clear').addEventListener('click', () => {
+      document.getElementById('grupos-search').value = '';
+      document.getElementById('grupos-origen').value = 'all';
+      applyGruposFilter();
     });
   </script>
 

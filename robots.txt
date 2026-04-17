@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# No indexar páginas privadas
+Disallow: /sala-estudio.html
+Disallow: /login.html
+
+Sitemap: https://arabatu.vercel.app/sitemap.xml

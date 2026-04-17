@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+  <title>Carlinhos Brown · Tambores en Red · Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFE500;
+      --yellow-dim: rgba(255,229,0,0.08);
+      --yellow-border: rgba(255,229,0,0.15);
+      --dark: #080808;
+      --dark-2: #111;
+      --dark-3: #181818;
+      --white: #F5F0E8;
+      --gray: #666;
+      --gray-light: #999;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--dark);
+      background-image: url('./assets/images/fondobody.jpg');
+      background-attachment: fixed;
+      background-size: cover;
+      color: var(--white);
+      min-height: 100vh;
+      font-weight: 300;
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8,8,8,0.95);
+      border-bottom: 1px solid var(--yellow-border);
+      backdrop-filter: blur(16px);
+    }
+    .top-bar-logo { height: 38px; filter: drop-shadow(0 0 8px rgba(255,229,0,0.3)); }
+    .btn-back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-light);
+      padding: 8px 16px; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; transition: all 0.2s;
+      cursor: pointer; background: none; font-family: var(--font-body);
+    }
+    .btn-back:hover { border-color: var(--yellow); color: var(--yellow); }
+    .btn-back svg { width: 14px; height: 14px; }
+
+    .article-wrap {
+      max-width: 720px; margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .article-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--yellow);
+      background: var(--yellow-dim); border: 1px solid var(--yellow-border);
+      padding: 5px 14px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .article-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      line-height: 0.92; color: var(--white); margin-bottom: 8px;
+    }
+    .article-subtitle {
+      font-size: 1.1rem; color: var(--gray-light);
+      font-style: italic; font-weight: 300;
+      margin-bottom: 32px; line-height: 1.5;
+    }
+    .article-meta {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 40px;
+      font-size: 0.78rem; color: var(--gray-light); letter-spacing: 0.05em;
+    }
+    .meta-dot { width: 3px; height: 3px; background: var(--gray); border-radius: 50%; }
+
+    .article-hero {
+      width: 100%; aspect-ratio: 4/3;
+      background: var(--dark-3);
+      border-radius: 16px; overflow: hidden;
+      margin-bottom: 40px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .article-hero img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+    }
+
+    .article-body { line-height: 1.85; color: rgba(245,240,232,0.85); }
+    .article-body p { font-size: 1rem; margin-bottom: 20px; }
+    .article-body p:first-child::first-letter {
+      font-family: var(--font-display);
+      font-size: 4rem; line-height: 0.8;
+      float: left; margin: 8px 12px 0 0;
+      color: var(--yellow);
+    }
+    .article-body strong { color: var(--white); font-weight: 500; }
+    .article-body em { color: var(--gray-light); font-style: italic; }
+
+    .pull-quote {
+      border-left: 3px solid var(--yellow);
+      padding: 16px 24px; margin: 32px 0;
+      background: var(--yellow-dim);
+      border-radius: 0 12px 12px 0;
+    }
+    .pull-quote p {
+      font-size: 1.1rem !important; font-style: italic;
+      color: var(--white) !important; margin: 0 !important; line-height: 1.6;
+    }
+    .pull-quote p::first-letter { all: unset; }
+
+    .dato-card {
+      margin: 32px 0;
+      background: rgba(255,229,0,0.06);
+      border: 1px solid var(--yellow-border);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .dato-label {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 8px; display: block;
+    }
+    .dato-card p {
+      font-size: 0.9rem !important;
+      color: rgba(245,240,232,0.8) !important;
+      margin: 0 !important; line-height: 1.6;
+    }
+    .dato-card p::first-letter { all: unset; }
+
+    .logros {
+      margin: 36px 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .logro-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 16px;
+    }
+    .logro-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem; color: var(--yellow);
+      line-height: 1; margin-bottom: 4px;
+    }
+    .logro-desc { font-size: 0.78rem; color: var(--gray-light); line-height: 1.4; }
+
+    .discografia {
+      margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .discografia-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem; color: var(--white); margin-bottom: 20px;
+    }
+    .disco-grid { display: flex; flex-direction: column; gap: 12px; }
+    .disco-card {
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px; padding: 16px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .disco-card:hover { border-color: var(--yellow-border); background: var(--yellow-dim); }
+    .disco-num {
+      font-family: var(--font-display); font-size: 1.8rem;
+      color: rgba(255,229,0,0.2); width: 36px; flex-shrink: 0; text-align: center;
+    }
+    .disco-cover {
+      width: 64px; height: 64px; border-radius: 10px;
+      background: var(--dark-3); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid rgba(255,255,255,0.05); font-size: 1.6rem;
+    }
+    .disco-info { flex: 1; min-width: 0; }
+    .disco-name { font-family: var(--font-display); font-size: 1.2rem; color: var(--white); margin-bottom: 4px; }
+    .disco-year { font-size: 0.75rem; color: var(--gray-light); letter-spacing: 0.08em; }
+    .disco-desc { font-size: 0.78rem; color: var(--gray-light); margin-top: 4px; line-height: 1.4; }
+
+    .article-footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .back-to-red {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--yellow); transition: gap 0.2s;
+    }
+    .back-to-red:hover { gap: 12px; }
+    .article-footer-note { font-size: 0.72rem; color: var(--gray); }
+
+    @media (min-width: 768px) {
+      .article-wrap { padding: 100px 40px 80px; }
+      .disco-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="./index.html">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="top-bar-logo" />
+    </a>
+    <button class="btn-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      Volver
+    </button>
+  </header>
+
+  <article class="article-wrap">
+
+    <span class="article-tag">🥁 Referentes</span>
+    <h1 class="article-title">Carlinhos Brown</h1>
+    <p class="article-subtitle">El tamborero de Candeal que convirtió la percusión en un idioma universal.</p>
+
+    <div class="article-meta">
+      <span>Salvador, Bahia, 1962</span>
+      <div class="meta-dot"></div>
+      <span>Percusionista · Compositor · Productor · Activista</span>
+    </div>
+
+    <div class="article-hero">
+      <img src="./assets/images/notas/carlinhosbrown.jpg" alt="Carlinhos Brown" />
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        <strong>Antônio Carlos Santos de Freitas</strong> nació el 23 de noviembre de 1962 en la favela de Candeal Pequeño, Salvador de Bahía. Su padre Renato le cantaba rumbas desde chico y fue un percusionista retirado, el Maestro Pintado do Bongo, quien lo introdujo en el universo de los tambores. Aprendió de manera autodidacta, dominando todos los instrumentos de percusión de la cultura afrobrasileña. Adoptó el nombre artístico de Brown en homenaje a dos figuras: <em>James Brown</em>, el padrino del soul, y <em>H. Rap Brown</em>, militante de las Panteras Negras.
+      </p>
+
+      <p>
+        A principios de los años 80 ya era uno de los percusionistas más requeridos de Salvador. En 1984 tocó en la banda Acordes Verdes y participó en el nacimiento del axé music junto a Luiz Caldas. En 1986 compuso <strong>Meia Lua Inteira</strong> para el disco de Caetano Veloso, que se convirtió en un éxito internacional y lo lanzó a su primera gira fuera de Brasil. Al regresar a Candeal, presenció una redada policial en la que murieron jóvenes con quienes había crecido. Tomó una decisión que definiría el resto de su vida: gastó todo el dinero de la gira en instrumentos de percusión para su barrio.
+      </p>
+
+      <div class="pull-quote">
+        <p>"No puedo haber nacido por debajo de la línea de la pobreza, haber vivido experiencias hermosas y no buscar convertir eso en algo positivo."</p>
+      </div>
+
+      <p>
+        A principios de los 90 fundó <strong>Timbalada</strong> — más de 100 percusionistas y cantantes, casi todos jóvenes de Candeal — que reinventó el sonido del timbau y revitalizó el carnaval de Salvador. El primer disco de Timbalada fue elegido mejor CD producido en América Latina por la revista Billboard. Paralelamente, en 1994, creó la <strong>Associação Pracatum Ação Social</strong>, que transformó su favela natal: donde había armas y drogas, Brown construyó un conservatorio, un estudio de grabación, un centro de salud y escuelas de idiomas, moda y reciclaje.
+      </p>
+
+      <p>
+        En 1996 debutó como solista con <em>Alfagamabetizado</em>. En 2002 formó <strong>Tribalistas</strong> junto a Marisa Monte y Arnaldo Antunes — uno de los álbumes más vendidos en la historia de la música brasileña, con más de dos millones de copias en todo el mundo. Colaboró con artistas tan diversos como Caetano Veloso, Gilberto Gil, João Gilberto, la banda Sepultura y el pianista cubano Bebo Valdés.
+      </p>
+
+      <div class="dato-card">
+        <span class="dato-label">Dato destacado</span>
+        <p>Fue el primer músico brasileño en recibir el título de Embajador Iberoamericano de la Cultura y en formar parte de la Academia de los Óscar. La UNESCO reconoció su trabajo social en Candeal con el Premio Juventud en 2002. El documental <em>El milagro de Candeal</em> (2004) de Fernando Trueba ganó dos premios Goya — mejor documental y mejor banda sonora original.</p>
+      </div>
+
+      <div class="logros">
+        <div class="logro-card">
+          <div class="logro-num">2M+</div>
+          <div class="logro-desc">Copias vendidas del álbum Tribalistas en todo el mundo</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">100+</div>
+          <div class="logro-desc">Percusionistas que integraron Timbalada, la mayoría jóvenes de Candeal</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">2 Grammy</div>
+          <div class="logro-desc">Latino. Por Tribalistas (2003) y por Carlinhos Brown é Carlito Marrón (2004)</div>
+        </div>
+        <div class="logro-card">
+          <div class="logro-num">1994</div>
+          <div class="logro-desc">Fundó Pracatum, convirtiendo Candeal en un polo cultural y educativo de referencia mundial</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DISCOGRAFÍA -->
+    <div class="discografia">
+      <h2 class="discografia-title">Discografía seleccionada</h2>
+      <div class="disco-grid">
+
+        <div class="disco-card">
+          <div class="disco-num">01</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Alfagamabetizado</p>
+            <p class="disco-year">1996 · Debut solista</p>
+            <p class="disco-desc">Su primer álbum solista. Mezcla revolucionaria de ritmos afrobrasileños con pop, rock y funk. Producido por Arto Lindsay.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">02</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Omelete Man</p>
+            <p class="disco-year">1998</p>
+            <p class="disco-desc">Su segundo álbum solista, consolidó su reputación como artista singular e inclasificable.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">03</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Tribalistas</p>
+            <p class="disco-year">2002 · Con Marisa Monte y Arnaldo Antunes</p>
+            <p class="disco-desc">Fenómeno global. Más de 2 millones de copias vendidas. Grammy Latino 2003. Reunión del trío en 2017 para un segundo álbum.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">04</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Carlinhos Brown é Carlito Marrón</p>
+            <p class="disco-year">2004</p>
+            <p class="disco-desc">Grammy Latino 2004. Una exploración de su identidad latinoamericana mezclando ritmos brasileños con influencias del Río de la Plata.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">05</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">A Gente Ainda Não Sonhou</p>
+            <p class="disco-year">2006</p>
+            <p class="disco-desc">Grabado con Marisa Monte y Arnaldo Antunes. Cantado en inglés como mensaje a los países que apoyaron la guerra de Irak.</p>
+          </div>
+        </div>
+
+        <div class="disco-card">
+          <div class="disco-num">06</div>
+          <div class="disco-cover">🎵</div>
+          <div class="disco-info">
+            <p class="disco-name">Umbalista</p>
+            <p class="disco-year">2020</p>
+            <p class="disco-desc">Parte de una trilogía lanzada en el mismo año. Editado bajo su propio sello Candyall Music.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="article-footer">
+      <a href="./red.html" class="back-to-red">← Volver a Tambores en Red</a>
+      <span class="article-footer-note">Fuente: Wikipedia · Domestika · La Nación · Biografías y Vidas</span>
+    </div>
+
+  </article>
+
+</body>
+</html>

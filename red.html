@@ -1272,6 +1272,28 @@
           </div>
         </div>
 
+        <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-vinicius">
+            <img src="./assets/images/eventos/viniciussilva.png" alt="Vinicius Silva en Argentina" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">24</div>
+                <div class="show-mes">May</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Vinicius Silva (Ilê Aiyê) en Argentina</h3>
+            <p class="show-evento-lugar">📍 Galpón B · A la gorra</p>
+            <p class="show-evento-blocos">Roda de Timbal · Ginga de Ramiro</p>
+            <a href="https://www.instagram.com/p/DXPRTbKDgxy/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
       </div>
 
       <!-- FLYER LIGHTBOX -->
@@ -1279,7 +1301,7 @@
         <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
         <button class="lightbox-close" id="flyer-close">✕</button>
         <div class="flyer-lightbox-content">
-          <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
+          <img id="flyer-lightbox-img" src="" alt="Flyer evento" />
         </div>
       </div>
     </div>
@@ -1366,10 +1388,26 @@
     });
     // Flyer lightbox
     const flyerLightbox = document.getElementById('flyer-lightbox');
-    document.getElementById('flyer-domingazo').addEventListener('click', () => {
-      flyerLightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    const flyerLightboxImg = document.getElementById('flyer-lightbox-img');
+
+    // Flyers — mapa de id → imagen
+    const flyerMap = {
+      'flyer-domingazo': { src: './assets/images/eventos/domingazo.png', alt: 'Domingazo Ensayo Abierto' },
+      'flyer-vinicius': { src: './assets/images/eventos/viniciussilva.png', alt: 'Vinicius Silva en Argentina' },
+    };
+
+    Object.entries(flyerMap).forEach(([id, data]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          flyerLightboxImg.src = data.src;
+          flyerLightboxImg.alt = data.alt;
+          flyerLightbox.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      }
     });
+
     document.getElementById('flyer-backdrop').addEventListener('click', () => {
       flyerLightbox.classList.remove('open');
       document.body.style.overflow = '';

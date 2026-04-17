@@ -511,6 +511,27 @@
       transition: border-color 0.3s ease;
     }
     .show-card-evento:hover { border-color: rgba(255,231,57,0.3); }
+
+    /* Countdown */
+    .show-countdown {
+      display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+    }
+    .countdown-unit {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(255,229,0,0.07);
+      border: 1px solid rgba(255,229,0,0.15);
+      border-radius: 8px; padding: 6px 10px; min-width: 44px;
+    }
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; line-height: 1;
+      color: var(--primary);
+    }
+    .countdown-label {
+      font-size: 0.55rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,229,0,0.5); margin-top: 2px;
+    }
     .show-flyer {
       position: relative;
       overflow: hidden;
@@ -714,6 +735,73 @@
   </div>
 
   <div class="red-main">
+
+    <!-- SHOWS & EVENTOS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🎪</span>
+        <h2 class="red-section-title">Shows & Eventos</h2>
+      </div>
+      <div class="shows-list">
+
+        <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-domingazo">
+            <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">26</div>
+                <div class="show-mes">Abr</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Domingazo — Ensayo Abierto</h3>
+            <p class="show-evento-lugar">📍 Parque de la Isla de Paternal · 15hs</p>
+            <p class="show-evento-blocos">Arabatu · Zonko Percusión · Batería Roja y Negra</p>
+            <div class="show-countdown" id="countdown-domingazo"></div>
+            <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
+        <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-vinicius">
+            <img src="./assets/images/eventos/viniciussilva.png" alt="Vinicius Silva en Argentina" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">24</div>
+                <div class="show-mes">May</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Vinicius Silva (Ilê Aiyê) en Argentina</h3>
+            <p class="show-evento-lugar">📍 Galpón B · A la gorra</p>
+            <p class="show-evento-blocos">Roda de Timbal · Ginga de Ramiro</p>
+            <div class="show-countdown" id="countdown-vinicius"></div>
+            <a href="https://www.instagram.com/p/DXPRTbKDgxy/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FLYER LIGHTBOX -->
+      <div class="flyer-lightbox" id="flyer-lightbox">
+        <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
+        <button class="lightbox-close" id="flyer-close">✕</button>
+        <div class="flyer-lightbox-content">
+          <img id="flyer-lightbox-img" src="" alt="Flyer evento" />
+        </div>
+      </div>
+    </div>
+
 
     <!-- GRUPOS -->
     <div class="red-section">
@@ -1242,70 +1330,6 @@
       </div>
     </div>
 
-    <!-- SHOWS & EVENTOS -->
-    <div class="red-section">
-      <div class="red-section-header">
-        <span class="red-section-icon">🎪</span>
-        <h2 class="red-section-title">Shows & Eventos</h2>
-      </div>
-      <div class="shows-list">
-
-        <div class="show-card-evento">
-          <div class="show-flyer" id="flyer-domingazo">
-            <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
-            <div class="flyer-overlay"><span>Ver flyer</span></div>
-          </div>
-          <div class="show-evento-info">
-            <div class="show-evento-top">
-              <div class="show-fecha-bloque">
-                <div class="show-dia">26</div>
-                <div class="show-mes">Abr</div>
-              </div>
-              <span class="show-badge badge-proximo">Próximo</span>
-            </div>
-            <h3 class="show-evento-nombre">Domingazo — Ensayo Abierto</h3>
-            <p class="show-evento-lugar">📍 Parque de la Isla de Paternal · 15hs</p>
-            <p class="show-evento-blocos">Arabatu · Zonko Percusión · Batería Roja y Negra</p>
-            <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" class="show-evento-link">
-              Más info en Instagram →
-            </a>
-          </div>
-        </div>
-
-        <div class="show-card-evento">
-          <div class="show-flyer" id="flyer-vinicius">
-            <img src="./assets/images/eventos/viniciussilva.png" alt="Vinicius Silva en Argentina" />
-            <div class="flyer-overlay"><span>Ver flyer</span></div>
-          </div>
-          <div class="show-evento-info">
-            <div class="show-evento-top">
-              <div class="show-fecha-bloque">
-                <div class="show-dia">24</div>
-                <div class="show-mes">May</div>
-              </div>
-              <span class="show-badge badge-proximo">Próximo</span>
-            </div>
-            <h3 class="show-evento-nombre">Vinicius Silva (Ilê Aiyê) en Argentina</h3>
-            <p class="show-evento-lugar">📍 Galpón B · A la gorra</p>
-            <p class="show-evento-blocos">Roda de Timbal · Ginga de Ramiro</p>
-            <a href="https://www.instagram.com/p/DXPRTbKDgxy/" target="_blank" class="show-evento-link">
-              Más info en Instagram →
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- FLYER LIGHTBOX -->
-      <div class="flyer-lightbox" id="flyer-lightbox">
-        <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
-        <button class="lightbox-close" id="flyer-close">✕</button>
-        <div class="flyer-lightbox-content">
-          <img id="flyer-lightbox-img" src="" alt="Flyer evento" />
-        </div>
-      </div>
-    </div>
-
     <!-- ENTREVISTAS -->
     <div class="red-section">
       <div class="red-section-header">
@@ -1422,6 +1446,33 @@
         document.body.style.overflow = '';
       }
     });
+
+    // Countdowns
+    function renderCountdown(containerId, targetDate) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      function update() {
+        const now = new Date();
+        const diff = new Date(targetDate) - now;
+        if (diff <= 0) {
+          el.innerHTML = '<span style="font-size:0.8rem;color:var(--primary);font-weight:500;">¡Hoy es el día! 🥁</span>';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        el.innerHTML = `
+          <div class="countdown-unit"><span class="countdown-num">${d}</span><span class="countdown-label">días</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(h).padStart(2,'0')}</span><span class="countdown-label">hs</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(m).padStart(2,'0')}</span><span class="countdown-label">min</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(s).padStart(2,'0')}</span><span class="countdown-label">seg</span></div>`;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+    renderCountdown('countdown-domingazo', '2026-04-26T15:00:00-03:00');
+    renderCountdown('countdown-vinicius',  '2026-05-24T00:00:00-03:00');
 
     // Filtro de grupos — búsqueda + origen
     function applyGruposFilter() {

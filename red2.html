@@ -2,6 +2,27 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
+  <!-- SEO -->
+  <meta name="description" content="La escena del tambor en Argentina, Uruguay, Chile y Brasil. Grupos, notas, shows y entrevistas sobre percusión afrobrasileña y samba reggae." />
+  <meta name="keywords" content="arabatu bloco, samba reggae, percusion afrobrasileña, bloco buenos aires, tambores afro, ritmos afro, batucada argentina, carnaval bahiano" />
+  <meta name="author" content="Arabatu Bloco" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://arabatu.vercel.app/red.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://arabatu.vercel.app/red.html" />
+  <meta property="og:title" content="Tambores en Red · Arabatu Bloco" />
+  <meta property="og:description" content="La escena del tambor en Argentina, Uruguay, Chile y Brasil. Grupos, notas, shows y entrevistas sobre percusión afrobrasileña y samba reggae." />
+  <meta property="og:image" content="https://arabatu.vercel.app/assets/images/hero.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="es_AR" />
+  <meta property="og:site_name" content="Arabatu Bloco" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tambores en Red · Arabatu Bloco" />
+  <meta name="twitter:description" content="La escena del tambor en Argentina, Uruguay, Chile y Brasil. Grupos, notas, shows y entrevistas sobre percusión afrobrasileña y samba reggae." />
+  <meta name="twitter:image" content="https://arabatu.vercel.app/assets/images/hero.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
     <link rel="apple-touch-icon" href="./assets/favicon.png" />
@@ -100,14 +121,70 @@
       flex-shrink: 0;
     }
 
+    /* ---- FILTER BAR GRUPOS ---- */
+    .grupos-filter-bar {
+      display: flex; gap: 10px; margin-bottom: 24px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .grupos-filter-select {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px 36px 10px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; color: #F5F0E8;
+      outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+    .grupos-filter-select:focus { border-color: rgba(255,231,57,0.4); }
+    .grupos-filter-select option { background: #181818; color: #F5F0E8; }
+    .grupos-filter-search-wrap { position: relative; flex: 1; min-width: 160px; }
+    .grupos-filter-search-icon {
+      position: absolute; left: 13px; top: 50%;
+      transform: translateY(-50%);
+      color: #888; width: 15px; height: 15px; pointer-events: none;
+    }
+    .grupos-filter-search {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 10px 14px 10px 38px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; color: #F5F0E8;
+      outline: none; transition: border-color 0.2s;
+    }
+    .grupos-filter-search::placeholder { color: #666; }
+    .grupos-filter-search:focus { border-color: rgba(255,231,57,0.4); }
+    .grupos-filter-clear {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: #888;
+      background: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; padding: 4px 0;
+      transition: color 0.2s; white-space: nowrap; display: none;
+    }
+    .grupos-filter-clear.visible { display: block; }
+    .grupos-filter-clear:hover { color: var(--primary); }
+    .grupos-filter-count {
+      font-size: 0.72rem; color: #888;
+      margin-bottom: 16px; letter-spacing: 0.04em; display: none;
+    }
+    .grupos-filter-count.visible { display: block; }
+    .grupos-filter-count span { color: var(--primary); font-weight: 600; }
+
     /* ---- GRUPOS GRID ---- */
     .grupos-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 24px;
+      padding: 8px;
     }
     .grupo-card {
-      border-radius: 16px;
+      border-radius: 50%;
       overflow: hidden;
       text-decoration: none;
       color: inherit;
@@ -118,8 +195,8 @@
       transition: transform 0.35s cubic-bezier(0.16,1,0.3,1), box-shadow 0.35s;
     }
     .grupo-card:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,231,57,0.25);
+      transform: translateY(-5px) scale(1.04);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 2px rgba(255,231,57,0.4);
     }
     .grupo-img {
       position: absolute;
@@ -133,59 +210,74 @@
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), filter 0.4s;
-      filter: brightness(0.75) saturate(0.9);
+      filter: brightness(0.8) saturate(0.9);
     }
     .grupo-card:hover .grupo-logo-fill {
       transform: scale(1.08);
-      filter: brightness(0.55) saturate(0.7);
+      filter: brightness(0.5) saturate(0.7);
     }
     .grupo-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+      background: radial-gradient(ellipse at center, transparent 20%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.85) 100%);
       z-index: 1;
+      opacity: 1;
     }
     .grupo-info {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
+      inset: 0;
       z-index: 2;
-      padding: 14px 14px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      text-align: center;
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.35s, transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    }
+    .grupo-card:hover .grupo-info { opacity: 1; transform: scale(1); }
+
+    @media (min-width: 768px) {
+      .grupo-overlay { opacity: 0; transition: opacity 0.35s; }
+      .grupo-info { opacity: 0; transform: scale(0.92); }
+      .grupo-card:hover .grupo-overlay { opacity: 1; }
+      .grupo-card:hover .grupo-info { opacity: 1; transform: scale(1); }
     }
     .grupo-name {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.15rem;
+      font-size: 1rem;
       letter-spacing: 0.04em;
       color: #fff;
-      line-height: 1;
+      line-height: 1.1;
       margin-bottom: 4px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.9), 0 0 20px rgba(0,0,0,0.7);
     }
     .grupo-ciudad {
-      font-size: 0.68rem;
-      color: rgba(255,229,0,0.75);
+      font-size: 0.62rem;
+      color: rgba(255,229,0,0.95);
       font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.04em;
+      font-weight: 500;
+      letter-spacing: 0.06em;
       margin-bottom: 8px;
-      display: flex; align-items: center; gap: 3px;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.9), 0 0 12px rgba(0,0,0,0.8);
     }
     .grupo-link {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      font-size: 0.7rem;
+      gap: 4px;
+      font-size: 0.62rem;
       font-weight: 600;
       letter-spacing: 0.06em;
       color: var(--primary);
       font-family: 'DM Sans', sans-serif;
-      background: rgba(255,231,57,0.12);
-      border: 1px solid rgba(255,231,57,0.25);
-      padding: 4px 10px;
+      background: rgba(255,231,57,0.15);
+      border: 1px solid rgba(255,231,57,0.3);
+      padding: 3px 9px;
       border-radius: 100px;
-      transition: background 0.2s;
     }
-    .grupo-card:hover .grupo-link {
-      background: rgba(255,231,57,0.2);
-    }
-    .grupo-link svg { width: 10px; height: 10px; }
+    .grupo-link svg { width: 9px; height: 9px; }
 
     /* ---- ENTREVISTAS ---- */
     .entrevistas-grid {
@@ -419,6 +511,27 @@
       transition: border-color 0.3s ease;
     }
     .show-card-evento:hover { border-color: rgba(255,231,57,0.3); }
+
+    /* Countdown */
+    .show-countdown {
+      display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+    }
+    .countdown-unit {
+      display: flex; flex-direction: column; align-items: center;
+      background: rgba(255,229,0,0.07);
+      border: 1px solid rgba(255,229,0,0.15);
+      border-radius: 8px; padding: 6px 10px; min-width: 44px;
+    }
+    .countdown-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; line-height: 1;
+      color: var(--primary);
+    }
+    .countdown-label {
+      font-size: 0.55rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,229,0,0.5); margin-top: 2px;
+    }
     .show-flyer {
       position: relative;
       overflow: hidden;
@@ -523,6 +636,69 @@
       box-shadow: 0 0 120px rgba(0,0,0,0.9);
       display: block;
     }
+    /* ---- NOTAS ---- */
+    .notas-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .nota-card {
+      display: flex; flex-direction: column;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px; padding: 24px;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.3s, transform 0.3s, background 0.3s;
+      gap: 14px;
+    }
+    .nota-card:hover {
+      border-color: rgba(255,229,0,0.3);
+      transform: translateY(-4px);
+      background: rgba(255,229,0,0.03);
+    }
+    .nota-card-top { display: flex; align-items: center; gap: 10px; }
+    .nota-tag {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--primary);
+      background: rgba(255,231,57,0.1);
+      border: 1px solid rgba(255,231,57,0.2);
+      padding: 4px 12px; border-radius: 100px;
+    }
+    .nota-body { flex: 1; }
+    .nota-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 0.03em;
+      color: #fff; line-height: 1; margin-bottom: 10px;
+    }
+    .nota-desc {
+      font-size: 0.88rem; color: #999;
+      line-height: 1.65; font-family: 'DM Sans', sans-serif;
+    }
+    .nota-footer {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      flex-wrap: wrap;
+    }
+    .nota-origen {
+      font-size: 0.72rem; color: rgba(255,229,0,0.6);
+      font-family: 'DM Sans', sans-serif; letter-spacing: 0.04em;
+    }
+    .nota-cta {
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      transition: letter-spacing 0.2s;
+    }
+    .nota-card:hover .nota-cta { letter-spacing: 0.14em; }
+
+    @media (min-width: 768px) {
+      .notas-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .notas-grid { grid-template-columns: repeat(3, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -560,297 +736,6 @@
 
   <div class="red-main">
 
-    <!-- GRUPOS -->
-    <div class="red-section">
-      <div class="red-section-header">
-        <span class="red-section-icon">🥁</span>
-        <h2 class="red-section-title">La escena del tambor</h2>
-      </div>
-      <div class="grupos-grid">
-
-        <a class="grupo-card" href="https://www.instagram.com/cafundo.ok/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/cafundo.jpg" alt="Cafundo" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Cafundo</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@cafundo.ok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/vibra.bloco/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/vibra.jpg" alt="Vibra" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Vibra</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@vibra.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/oswingoficial/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/oswing.jpg" alt="Oswing" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Oswing</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@oswingoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/zonkopercusion/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/zonko.jpg" alt="Zonko Percusión" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Zonko Percusión</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@zonkopercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/aswingueira/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/aswingueira.jpg" alt="Aswingueira" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Aswingueira</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@aswingueira <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/repiqueteandolascalles/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/repiqueteando.jpg" alt="Repiqueteando las Calles" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Repiqueteando las Calles</p>
-            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
-            <span class="grupo-link">@repiqueteandolascalles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/estacatto/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/estacatto.jpg" alt="Estacatto" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Estacatto</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@estacatto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/bateriarojaynegra/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/bateriarojaynegra.jpg" alt="Batería Roja y Negra" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Batería Roja y Negra</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@bateriarojaynegra <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/olodum_oficial/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/olodum.jpg" alt="Olodum" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Olodum</p>
-            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
-            <span class="grupo-link">@olodum_oficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/osnegoes/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/osnegoes.jpg" alt="Osnegões" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Osnegões</p>
-            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
-            <span class="grupo-link">@osnegoes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/didabandafeminina/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/dida.jpg" alt="Didá Banda Feminina" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Didá Banda Feminina</p>
-            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
-            <span class="grupo-link">@didabandafeminina <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/toqueafrosantelmo/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/toqueafro.jpg" alt="Toque Afro" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Toque Afro</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@toqueafrosantelmo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/rielbloko/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/riel.jpg" alt="Riel" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Riel</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@rielbloko <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/brincadeiradelsur/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/brincadeira.jpg" alt="Brincadeira del Sur" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Brincadeira del Sur</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@brincadeiradelsur <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/bloco_inchala/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/inchala.jpg" alt="Inchala" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Inchala</p>
-            <p class="grupo-ciudad">📍 Montevideo, Uruguay</p>
-            <span class="grupo-link">@bloco_inchala <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/fieras.sambareggae/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/fieras.jpg" alt="Fieras Samba Reggae" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Fieras Samba Reggae</p>
-            <p class="grupo-ciudad">📍 Rosario, Argentina</p>
-            <span class="grupo-link">@fieras.sambareggae <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/bombahia.bb/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/bombahia.jpg" alt="BomBahia" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">BomBahia</p>
-            <p class="grupo-ciudad">📍 Bahía Blanca, Argentina</p>
-            <span class="grupo-link">@bombahia.bb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/swing_do_pelo/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/swingdopelo.jpg" alt="Swing do Pelo" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Swing do Pelo</p>
-            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
-            <span class="grupo-link">@swing_do_pelo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/nuevaerapercusion/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/nuevaera.jpg" alt="Nueva Era" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Nueva Era</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@nuevaerapercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/revuelta.bloco/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/revuelta.jpg" alt="Revuelta" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Revuelta</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@revuelta.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/mistura_swingueira/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/mistura.jpg" alt="Mistura Swingueira" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Mistura Swingueira</p>
-            <p class="grupo-ciudad">📍 Punta Arenas, Chile</p>
-            <span class="grupo-link">@mistura_swingueira <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/simiospercusion/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/simios.jpg" alt="Simios" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Simios</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@simiospercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/pangeabloco/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/pangea.jpg" alt="Pangea" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Pangea</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@pangeabloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/buena_mandinga/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/buenamandinga.jpg" alt="Buena Mandinga" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Buena Mandinga</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@buena_mandinga <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/rebelion.ok/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/rebelion.jpg" alt="Rebelión" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Rebelión</p>
-            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
-            <span class="grupo-link">@rebelion.ok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/fogobloco.ofc/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/fogobloco.jpg" alt="Fogobloco" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Fogobloco</p>
-            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
-            <span class="grupo-link">@fogobloco.ofc <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/sambamarta.bloco/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/sambamarta.jpg" alt="Samba Marta" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Samba Marta</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@sambamarta.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a class="grupo-card" href="https://www.instagram.com/bc_cordaodeprata/" target="_blank">
-          <div class="grupo-img"><img src="./assets/images/blocos/cordaodeprata.jpg" alt="Cordão de Prata" class="grupo-logo-fill" /></div>
-          <div class="grupo-overlay"></div>
-          <div class="grupo-info">
-            <p class="grupo-name">Cordão de Prata</p>
-            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
-            <span class="grupo-link">@bc_cordaodeprata <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-      </div>
-    </div>
-
     <!-- SHOWS & EVENTOS -->
     <div class="red-section">
       <div class="red-section-header">
@@ -875,7 +760,31 @@
             <h3 class="show-evento-nombre">Domingazo — Ensayo Abierto</h3>
             <p class="show-evento-lugar">📍 Parque de la Isla de Paternal · 15hs</p>
             <p class="show-evento-blocos">Arabatu · Zonko Percusión · Batería Roja y Negra</p>
+            <div class="show-countdown" id="countdown-domingazo"></div>
             <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
+        <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-vinicius">
+            <img src="./assets/images/eventos/viniciussilva.png" alt="Vinicius Silva en Argentina" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">24</div>
+                <div class="show-mes">May</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Vinicius Silva (Ilê Aiyê) en Argentina</h3>
+            <p class="show-evento-lugar">📍 Galpón B · A la gorra</p>
+            <p class="show-evento-blocos">Roda de Timbal · Ginga de Ramiro</p>
+            <div class="show-countdown" id="countdown-vinicius"></div>
+            <a href="https://www.instagram.com/p/DXPRTbKDgxy/" target="_blank" class="show-evento-link">
               Más info en Instagram →
             </a>
           </div>
@@ -888,8 +797,536 @@
         <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
         <button class="lightbox-close" id="flyer-close">✕</button>
         <div class="flyer-lightbox-content">
-          <img src="./assets/images/eventos/domingazo.png" alt="Domingazo Ensayo Abierto" />
+          <img id="flyer-lightbox-img" src="" alt="Flyer evento" />
         </div>
+      </div>
+    </div>
+
+
+    <!-- GRUPOS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">🥁</span>
+        <h2 class="red-section-title">La escena del tambor</h2>
+      </div>
+      <div class="grupos-filter-bar">
+        <div class="grupos-filter-search-wrap">
+          <svg class="grupos-filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="grupos-filter-search" id="grupos-search" type="text" placeholder="Buscar grupo..." autocomplete="off" />
+        </div>
+        <select class="grupos-filter-select" id="grupos-origen">
+          <option value="all">Todos los orígenes</option>
+          <option value="buenos-aires">Buenos Aires, Argentina</option>
+          <option value="rosario">Rosario, Argentina</option>
+          <option value="cordoba">Córdoba, Argentina</option>
+          <option value="brasil">Brasil</option>
+          <option value="uruguay">Uruguay</option>
+          <option value="chile">Chile</option>
+        </select>
+        <button class="grupos-filter-clear" id="grupos-clear">Limpiar</button>
+      </div>
+      <div class="grupos-filter-count" id="grupos-count"></div>
+      <div class="grupos-grid" id="grupos-grid">
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/cafundo.ok/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/cafundo.jpg" alt="Cafundo" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Cafundo</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@cafundo.ok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/vibra.bloco/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/vibra.jpg" alt="Vibra" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Vibra</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@vibra.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/oswingoficial/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/oswing.jpg" alt="Oswing" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Oswing</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@oswingoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/zonkopercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/zonko.jpg" alt="Zonko Percusión" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Zonko Percusión</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@zonkopercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/aswingueira/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/aswingueira.jpg" alt="Aswingueira" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Aswingueira</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@aswingueira <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/repiqueteandolascalles/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/repiqueteando.jpg" alt="Repiqueteando las Calles" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Repiqueteando las Calles</p>
+            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
+            <span class="grupo-link">@repiqueteandolascalles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/estacatto/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/estacatto.jpg" alt="Estacatto" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Estacatto</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@estacatto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bateriarojaynegra/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/bateriarojaynegra.jpg" alt="Batería Roja y Negra" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Batería Roja y Negra</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@bateriarojaynegra <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/olodum_oficial/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/olodum.jpg" alt="Olodum" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Olodum</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@olodum_oficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/osnegoes/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/osnegoes.jpg" alt="Osnegões" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Osnegões</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@osnegoes <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/didabandafeminina/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/dida.jpg" alt="Didá Banda Feminina" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Didá Banda Feminina</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@didabandafeminina <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/toqueafrosantelmo/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/toqueafro.jpg" alt="Toque Afro" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Toque Afro</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@toqueafrosantelmo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/rielbloko/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/riel.jpg" alt="Riel" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Riel</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@rielbloko <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/brincadeiradelsur/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/brincadeira.jpg" alt="Brincadeira del Sur" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Brincadeira del Sur</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@brincadeiradelsur <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="uruguay" href="https://www.instagram.com/bloco_inchala/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/inchala.jpg" alt="Inchala" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Inchala</p>
+            <p class="grupo-ciudad">📍 Montevideo, Uruguay</p>
+            <span class="grupo-link">@bloco_inchala <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="rosario" href="https://www.instagram.com/fieras.sambareggae/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/fieras.jpg" alt="Fieras Samba Reggae" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Fieras Samba Reggae</p>
+            <p class="grupo-ciudad">📍 Rosario, Argentina</p>
+            <span class="grupo-link">@fieras.sambareggae <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bombahia.bb/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/bombahia.jpg" alt="BomBahia" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">BomBahia</p>
+            <p class="grupo-ciudad">📍 Bahía Blanca, Argentina</p>
+            <span class="grupo-link">@bombahia.bb <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/swing_do_pelo/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/swingdopelo.jpg" alt="Swing do Pelo" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Swing do Pelo</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@swing_do_pelo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/nuevaerapercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/nuevaera.jpg" alt="Nueva Era" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nueva Era</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@nuevaerapercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/revuelta.bloco/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/revuelta.jpg" alt="Revuelta" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Revuelta</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@revuelta.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="chile" href="https://www.instagram.com/mistura_swingueira/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/mistura.jpg" alt="Mistura Swingueira" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Mistura Swingueira</p>
+            <p class="grupo-ciudad">📍 Punta Arenas, Chile</p>
+            <span class="grupo-link">@mistura_swingueira <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/simiospercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/simios.jpg" alt="Simios" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Simios</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@simiospercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/pangeabloco/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/pangea.jpg" alt="Pangea" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Pangea</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@pangeabloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/buena_mandinga/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/buenamandinga.jpg" alt="Buena Mandinga" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Buena Mandinga</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@buena_mandinga <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/rebelion.ok/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/rebelion.jpg" alt="Rebelión" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Rebelión</p>
+            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
+            <span class="grupo-link">@rebelion.ok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="cordoba" href="https://www.instagram.com/fogobloco.ofc/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/fogobloco.jpg" alt="Fogobloco" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Fogobloco</p>
+            <p class="grupo-ciudad">📍 Córdoba, Argentina</p>
+            <span class="grupo-link">@fogobloco.ofc <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/sambamarta.bloco/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/sambamarta.jpg" alt="Samba Marta" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Samba Marta</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@sambamarta.bloco <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bc_cordaodeprata/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/cordaodeprata.jpg" alt="Cordão de Prata" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Cordão de Prata</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@bc_cordaodeprata <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="rosario" href="https://www.instagram.com/quintafeira_sr/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/quintafeira.jpg" alt="Quinta Feira" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Quinta Feira</p>
+            <p class="grupo-ciudad">📍 Rosario, Argentina</p>
+            <span class="grupo-link">@quintafeira_sr <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/lablocasemba/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/lablocasemba.jpg" alt="La Bloca Semba" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">La Bloca Semba</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@lablocasemba <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/santacadencia/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/santacadencia.jpg" alt="Santa Cadencia" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Santa Cadencia</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@santacadencia <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/elohim_sambareggae/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/elohim.jpg" alt="Elohim" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Elohim</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@elohim_sambareggae <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/latiaclota/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/latiaclota.jpg" alt="La Tía Clota" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">La Tía Clota</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@latiaclota <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/acuarelaescueladepercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/acuarela.jpg" alt="Acuarela" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Acuarela</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@acuarelaescueladepercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/sambaglitter/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/sambaglitter.jpg" alt="Sambaglitter" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Sambaglitter</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@sambaglitter <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/timbaladaoficial/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/timbalada.jpg" alt="Timbalada" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Timbalada</p>
+            <p class="grupo-ciudad">📍 Candeal, Bahia, Brasil</p>
+            <span class="grupo-link">@timbaladaoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/muzenzadoreggae/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/muzenza.jpg" alt="Muzenza" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Muzenza</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@muzenzadoreggae <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/blocoileaiye/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/ileaiye.jpg" alt="Ilê Aiyê" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Ilê Aiyê</p>
+            <p class="grupo-ciudad">📍 Curuzu, Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@blocoileaiye <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/la14bis/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/la14bis.jpg" alt="La 14 Bis" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">La 14 Bis</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@la14bis <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/coresdeaideoficial/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/coresdeaide.jpg" alt="Cores de Aide" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Cores de Aide</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@coresdeaideoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="brasil" href="https://www.instagram.com/maledebaleoficial/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/maledebale.jpg" alt="Malê Debalê" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Malê Debalê</p>
+            <p class="grupo-ciudad">📍 Salvador, Bahia, Brasil</p>
+            <span class="grupo-link">@maledebaleoficial <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/nossopulso/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/nossopulso.jpg" alt="Nosso Pulso" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Nosso Pulso</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@nossopulso <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/blocoafro.ritmointerior/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/ritmointerior.jpg" alt="Ritmo Interior" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Ritmo Interior</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@blocoafro.ritmointerior <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a class="grupo-card" data-origen="buenos-aires" href="https://www.instagram.com/bahianortepercusion/" target="_blank">
+          <div class="grupo-img"><img src="./assets/images/blocos/bahianorte.jpg" alt="Bahia Norte" class="grupo-logo-fill" /></div>
+          <div class="grupo-overlay"></div>
+          <div class="grupo-info">
+            <p class="grupo-name">Bahia Norte</p>
+            <p class="grupo-ciudad">📍 Buenos Aires, Argentina</p>
+            <span class="grupo-link">@bahianortepercusion <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- NOTAS -->
+    <div class="red-section">
+      <div class="red-section-header">
+        <span class="red-section-icon">📝</span>
+        <h2 class="red-section-title">Notas</h2>
+      </div>
+      <div class="notas-grid">
+
+        <a class="nota-card" href="./nota-musotto.html" style="position:relative;overflow:hidden;min-height:260px;">
+          <div style="position:absolute;inset:0;background:url('./assets/images/notas/ramiromussoto.jpg') center top/cover no-repeat;filter:brightness(0.35);z-index:0;"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);z-index:1;"></div>
+          <div class="nota-card-top" style="position:relative;z-index:2;">
+            <span class="nota-tag">Referentes</span>
+          </div>
+          <div class="nota-body" style="position:relative;z-index:2;">
+            <h3 class="nota-title">Ramiro Musotto</h3>
+            <p class="nota-desc">El argentino que se volvió más bahiano que muchos bahianos. Percusionista, compositor y productor que llevó los ritmos afrobahianos al mundo.</p>
+          </div>
+          <div class="nota-footer" style="position:relative;z-index:2;border-top-color:rgba(255,255,255,0.1);">
+            <span class="nota-origen">📍 La Plata, 1963 — Salvador, 2009</span>
+            <span class="nota-cta">Leer nota →</span>
+          </div>
+        </a>
+
+        <a class="nota-card" href="./nota-neguinho.html" style="position:relative;overflow:hidden;min-height:260px;">
+          <div style="position:absolute;inset:0;background:url('./assets/images/notas/neguinho.jpg') center top/cover no-repeat;filter:brightness(0.35);z-index:0;"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);z-index:1;"></div>
+          <div class="nota-card-top" style="position:relative;z-index:2;">
+            <span class="nota-tag">Referentes</span>
+          </div>
+          <div class="nota-body" style="position:relative;z-index:2;">
+            <h3 class="nota-title">Neguinho do Samba</h3>
+            <p class="nota-desc">El padre del samba-reggae. Fundó el Olodum, creó un ritmo que cambió el carnaval bahiano y dirigió a 250 músicos junto a Michael Jackson.</p>
+          </div>
+          <div class="nota-footer" style="position:relative;z-index:2;border-top-color:rgba(255,255,255,0.1);">
+            <span class="nota-origen">📍 Salvador, Bahia, 1955 — 2009</span>
+            <span class="nota-cta">Leer nota →</span>
+          </div>
+        </a>
+
+        <a class="nota-card" href="./nota-carlinhosbrown.html" style="position:relative;overflow:hidden;min-height:260px;">
+          <div style="position:absolute;inset:0;background:url('./assets/images/notas/carlinhosbrown.jpg') center top/cover no-repeat;filter:brightness(0.35);z-index:0;"></div>
+          <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);z-index:1;"></div>
+          <div class="nota-card-top" style="position:relative;z-index:2;">
+            <span class="nota-tag">Referentes</span>
+          </div>
+          <div class="nota-body" style="position:relative;z-index:2;">
+            <h3 class="nota-title">Carlinhos Brown</h3>
+            <p class="nota-desc">El tamborero de Candeal que convirtió la percusión en un idioma universal. Fundador de Timbalada, mitad de Tribalistas y transformador de su comunidad.</p>
+          </div>
+          <div class="nota-footer" style="position:relative;z-index:2;border-top-color:rgba(255,255,255,0.1);">
+            <span class="nota-origen">📍 Salvador, Bahia, 1962</span>
+            <span class="nota-cta">Leer nota →</span>
+          </div>
+        </a>
+
       </div>
     </div>
 
@@ -975,10 +1412,26 @@
     });
     // Flyer lightbox
     const flyerLightbox = document.getElementById('flyer-lightbox');
-    document.getElementById('flyer-domingazo').addEventListener('click', () => {
-      flyerLightbox.classList.add('open');
-      document.body.style.overflow = 'hidden';
+    const flyerLightboxImg = document.getElementById('flyer-lightbox-img');
+
+    // Flyers — mapa de id → imagen
+    const flyerMap = {
+      'flyer-domingazo': { src: './assets/images/eventos/domingazo.png', alt: 'Domingazo Ensayo Abierto' },
+      'flyer-vinicius': { src: './assets/images/eventos/viniciussilva.png', alt: 'Vinicius Silva en Argentina' },
+    };
+
+    Object.entries(flyerMap).forEach(([id, data]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          flyerLightboxImg.src = data.src;
+          flyerLightboxImg.alt = data.alt;
+          flyerLightbox.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        });
+      }
     });
+
     document.getElementById('flyer-backdrop').addEventListener('click', () => {
       flyerLightbox.classList.remove('open');
       document.body.style.overflow = '';
@@ -992,6 +1445,69 @@
         flyerLightbox.classList.remove('open');
         document.body.style.overflow = '';
       }
+    });
+
+    // Countdowns
+    function renderCountdown(containerId, targetDate) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      function update() {
+        const now = new Date();
+        const diff = new Date(targetDate) - now;
+        if (diff <= 0) {
+          el.innerHTML = '<span style="font-size:0.8rem;color:var(--primary);font-weight:500;">¡Hoy es el día! 🥁</span>';
+          return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        el.innerHTML = `
+          <div class="countdown-unit"><span class="countdown-num">${d}</span><span class="countdown-label">días</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(h).padStart(2,'0')}</span><span class="countdown-label">hs</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(m).padStart(2,'0')}</span><span class="countdown-label">min</span></div>
+          <div class="countdown-unit"><span class="countdown-num">${String(s).padStart(2,'0')}</span><span class="countdown-label">seg</span></div>`;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+    renderCountdown('countdown-domingazo', '2026-04-26T15:00:00-03:00');
+    renderCountdown('countdown-vinicius',  '2026-05-24T00:00:00-03:00');
+
+    // Filtro de grupos — búsqueda + origen
+    function applyGruposFilter() {
+      const search = document.getElementById('grupos-search').value.toLowerCase().trim();
+      const origen = document.getElementById('grupos-origen').value;
+      const clearBtn = document.getElementById('grupos-clear');
+      const countEl = document.getElementById('grupos-count');
+
+      const isFiltering = search !== '' || origen !== 'all';
+      clearBtn.classList.toggle('visible', isFiltering);
+
+      let visible = 0;
+      document.querySelectorAll('#grupos-grid .grupo-card').forEach(card => {
+        const name = card.querySelector('.grupo-name')?.textContent.toLowerCase() || '';
+        const matchOrigen = origen === 'all' || card.dataset.origen === origen;
+        const matchSearch = search === '' || name.includes(search);
+        const show = matchOrigen && matchSearch;
+        card.style.display = show ? '' : 'none';
+        if (show) visible++;
+      });
+
+      if (isFiltering) {
+        countEl.classList.add('visible');
+        countEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? 'grupo encontrado' : 'grupos encontrados'}`;
+      } else {
+        countEl.classList.remove('visible');
+      }
+    }
+
+    document.getElementById('grupos-search').addEventListener('input', applyGruposFilter);
+    document.getElementById('grupos-origen').addEventListener('change', applyGruposFilter);
+    document.getElementById('grupos-clear').addEventListener('click', () => {
+      document.getElementById('grupos-search').value = '';
+      document.getElementById('grupos-origen').value = 'all';
+      applyGruposFilter();
     });
   </script>
 

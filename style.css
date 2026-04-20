@@ -666,3 +666,24 @@ body::before {
   .eventos { padding: 130px 80px; }
   .galeria { padding: 130px 80px; }
 }
+
+/* ---- NAVBAR TAMBORES EN RED ICON ---- */
+.navbar-link--ter {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.navbar-ter-icon {
+  width: 22px !important;
+  height: 22px !important;
+  max-width: 22px !important;
+  max-height: 22px !important;
+  object-fit: contain;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.navbar-link--ter:hover .navbar-ter-icon {
+  transform: rotate(20deg) scale(1.15);
+}

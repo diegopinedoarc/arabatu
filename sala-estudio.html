@@ -1159,440 +1159,129 @@
 
     <!-- ======== TIMBAL ======== -->
     <section class="content-section" id="section-timbal">
+      <!-- Filter bar timbal -->
+      <div class="filter-bar">
+        <div class="filter-search-wrap">
+          <svg class="filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          <input class="filter-search" id="timbal-search" type="text" placeholder="Buscar video..." autocomplete="off" />
+        </div>
+        <select class="filter-select" id="timbal-select">
+          <option value="all">Todas las categorías</option>
+          <option value="epab">Epab</option>
+          <option value="varios">Timbal Varios</option>
+          <option value="taller">Taller Timbal 2026 Flur</option>
+        </select>
+        <button class="filter-clear" id="timbal-clear">Limpiar</button>
+      </div>
+      <div class="filter-results" id="timbal-results"></div>
+
       <div class="section-heading">Guiones de Timbal</div>
-      <div class="videos-grid">
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/qyCe6Bl4g_s"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Funky Candeal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+      <div class="videos-grid" id="timbal-grid">
+
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/qyCe6Bl4g_s" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Funky Candeal</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/cnKNc0pqPo8"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Itamar</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/cnKNc0pqPo8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Itamar</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/rAR_HNF4nUk"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Funky Candeal 2</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/rAR_HNF4nUk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Funky Candeal 2</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/o15r3IxDgII"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Epab Verano Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/o15r3IxDgII" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Epab Verano Flur</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/rCL04gyBw4U"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Arreglo Tamaquinho</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/rCL04gyBw4U" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Arreglo Tamaquinho</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/OAhvDDqfEAA"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Ile Nueva</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/OAhvDDqfEAA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Ile Nueva</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/e67jSl11img"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Forrodum Timbal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/e67jSl11img" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Forrodum Timbal</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/734zVD3MkyM"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Cabila Timbal Epab</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="epab">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/734zVD3MkyM" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Cabila Timbal Epab</p><span class="video-tag">Epab</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/2j7RD0T-f8c"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Funky Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="taller">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/2j7RD0T-f8c" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Funky Flur</p><span class="video-tag">Taller 2026</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/dWnXpYwYN7g"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Intro Rua 15</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/dWnXpYwYN7g" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Intro Rua 15</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/f2vUTfZOBCo"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Roda Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="taller">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/f2vUTfZOBCo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Base Roda Flur</p><span class="video-tag">Taller 2026</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/w_nxKzTN0qc"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Intro Toque de Timbalero</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/w_nxKzTN0qc" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Intro Toque de Timbalero</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/9PSN1ealCEI"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Convención Timbalada 1</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="epab">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/9PSN1ealCEI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Convención Timbalada 1</p><span class="video-tag">Epab</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/zf36iP6ef38"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Convención Timbalada desde Timbal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="epab">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/zf36iP6ef38" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Convención Timbalada desde Timbal</p><span class="video-tag">Epab</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/CG4H5cUwGcg"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Cabila Epab</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="epab">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/CG4H5cUwGcg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Cabila Epab</p><span class="video-tag">Epab</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/o3OkCw-luTI"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Funky Candeal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/o3OkCw-luTI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Funky Candeal</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/TmkIiu-Q200"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte Rumba Tambores y Cores</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/TmkIiu-Q200" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Corte Rumba Tambores y Cores</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/d6XnyqSZzWs"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Barravento Corte Bad Bunny</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="varios">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/d6XnyqSZzWs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Barravento Corte Bad Bunny</p><span class="video-tag">Timbal Varios</span></div></div>
         </div>
 
-        <div class="video-card">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/_PtMi8GO9Qc"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte 2 Cabila</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
+        <div class="video-card" data-cat="epab">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/_PtMi8GO9Qc" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Corte 2 Cabila</p><span class="video-tag">Epab</span></div></div>
+        </div>
+
+        <div class="video-card" data-cat="taller">
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/d8wOcMRKdRo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+          <div class="video-info"><div class="video-info-left"><p class="video-title">Arreglo Tamaquinho Flur</p><span class="video-tag">Taller 2026</span></div></div>
         </div>
 
       </div>
+      <div class="empty-filter" id="timbal-empty" style="display:none;">No hay videos en esta categoría todavía.</div>
     </section>
+
 
     <!-- ======== RECURSOS ======== -->
     <section class="content-section" id="section-recursos">
@@ -1887,6 +1576,44 @@
         document.getElementById("audio-search").value = "";
         document.getElementById("audio-select").value = "all";
         applyAudioFilter();
+      });
+
+      // Timbal filter
+      function applyTimbalFilter() {
+        const search = document.getElementById("timbal-search").value.toLowerCase().trim();
+        const cat = document.getElementById("timbal-select").value;
+        const clearBtn = document.getElementById("timbal-clear");
+        const resultsEl = document.getElementById("timbal-results");
+
+        const isFiltering = search !== "" || cat !== "all";
+        clearBtn.classList.toggle("visible", isFiltering);
+
+        let visible = 0;
+        document.querySelectorAll("#timbal-grid .video-card").forEach((card) => {
+          const title = card.querySelector(".video-title")?.textContent.toLowerCase() || "";
+          const matchCat = cat === "all" || card.dataset.cat === cat;
+          const matchSearch = search === "" || title.includes(search);
+          const show = matchCat && matchSearch;
+          card.classList.toggle("hidden", !show);
+          if (show) visible++;
+        });
+
+        document.getElementById("timbal-empty").style.display = visible === 0 ? "block" : "none";
+
+        if (isFiltering) {
+          resultsEl.classList.add("visible");
+          resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? "video encontrado" : "videos encontrados"}`;
+        } else {
+          resultsEl.classList.remove("visible");
+        }
+      }
+
+      document.getElementById("timbal-search").addEventListener("input", applyTimbalFilter);
+      document.getElementById("timbal-select").addEventListener("change", applyTimbalFilter);
+      document.getElementById("timbal-clear").addEventListener("click", () => {
+        document.getElementById("timbal-search").value = "";
+        document.getElementById("timbal-select").value = "all";
+        applyTimbalFilter();
       });
     </script>
   </body>

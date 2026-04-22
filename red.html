@@ -699,6 +699,163 @@
     @media (min-width: 1024px) {
       .notas-grid { grid-template-columns: repeat(3, 1fr); }
     }
+
+    /* ---- CALENDARIO EVENTOS ---- */
+    .events-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.04);
+      padding: 4px;
+      border-radius: 10px;
+      width: fit-content;
+    }
+    .events-toggle button {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.6);
+      padding: 8px 18px;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      font-family: inherit;
+    }
+    .events-toggle button.active {
+      background: #f5c518;
+      color: #111;
+    }
+    .events-toggle button:hover:not(.active) {
+      color: #fff;
+    }
+    .events-view { display: none; }
+    .events-view.active { display: block; }
+    .calendar-container {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 20px;
+    }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .calendar-nav {
+      background: rgba(255,255,255,0.06);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+    .calendar-nav:hover { background: rgba(255,255,255,0.12); }
+    .calendar-month-label {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: capitalize;
+      color: #fff;
+    }
+    .calendar-weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .calendar-weekday {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 4px 0;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 6px;
+    }
+    .calendar-day {
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .calendar-day:hover:not(.empty):not(.past) {
+      background: rgba(255,255,255,0.07);
+      transform: translateY(-1px);
+    }
+    .calendar-day.empty {
+      background: transparent;
+      border: none;
+      cursor: default;
+    }
+    .calendar-day.past {
+      color: rgba(255,255,255,0.25);
+    }
+    .calendar-day.today {
+      border-color: #f5c518;
+      color: #f5c518;
+      font-weight: 700;
+    }
+    .calendar-day.has-event {
+      background: rgba(245,197,24,0.08);
+      border-color: rgba(245,197,24,0.3);
+      color: #fff;
+      font-weight: 600;
+    }
+    .calendar-day.selected {
+      background: #f5c518;
+      color: #111;
+      font-weight: 700;
+      border-color: #f5c518;
+    }
+    .calendar-dots { display: flex; gap: 3px; }
+    .calendar-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #dc3545;
+    }
+    .calendar-day.selected .calendar-dot { background: #111; }
+    .calendar-details {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .calendar-empty-msg {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      padding: 30px 20px;
+      font-size: 14px;
+      font-style: italic;
+    }
+    @media (max-width: 600px) {
+      .calendar-container { padding: 14px; }
+      .calendar-day { font-size: 13px; }
+      .calendar-dot { width: 4px; height: 4px; }
+      .calendar-month-label { font-size: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -748,6 +905,12 @@
         <span class="red-section-icon">🎪</span>
         <h2 class="red-section-title">Shows & Eventos</h2>
       </div>
+      <div class="events-toggle">
+        <button id="view-list-btn" class="active" onclick="setEventsView('list')">📋 Lista</button>
+        <button id="view-calendar-btn" onclick="setEventsView('calendar')">📅 Calendario</button>
+      </div>
+
+      <div class="events-view active" id="events-view-list">
       <div class="shows-list">
 
         <div class="show-card-evento">
@@ -867,8 +1030,30 @@
         </div>
 
       </div>
+      </div><!-- /events-view-list -->
 
-      <!-- FLYER LIGHTBOX -->
+      <div class="events-view" id="events-view-calendar">
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <button class="calendar-nav" onclick="changeMonth(-1)" aria-label="Mes anterior">‹</button>
+            <div class="calendar-month-label" id="calendar-month-label"></div>
+            <button class="calendar-nav" onclick="changeMonth(1)" aria-label="Mes siguiente">›</button>
+          </div>
+          <div class="calendar-weekdays">
+            <div class="calendar-weekday">Dom</div>
+            <div class="calendar-weekday">Lun</div>
+            <div class="calendar-weekday">Mar</div>
+            <div class="calendar-weekday">Mié</div>
+            <div class="calendar-weekday">Jue</div>
+            <div class="calendar-weekday">Vie</div>
+            <div class="calendar-weekday">Sáb</div>
+          </div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+          <div class="calendar-details" id="calendar-details">
+            <p class="calendar-empty-msg">Seleccioná un día del calendario para ver los eventos.</p>
+          </div>
+        </div>
+      </div>
       <div class="flyer-lightbox" id="flyer-lightbox">
         <div class="flyer-lightbox-backdrop" id="flyer-backdrop"></div>
         <button class="lightbox-close" id="flyer-close">✕</button>
@@ -1601,6 +1786,185 @@
       document.getElementById('grupos-origen').value = 'all';
       applyGruposFilter();
     });
+
+    // ===== CALENDARIO DE EVENTOS =====
+    const eventosData = [
+      {
+        fecha: '2026-04-26', dia: '26', mes: 'Abr',
+        nombre: 'Domingazo — Ensayo Abierto',
+        lugar: '📍 Parque de la Isla de Paternal · 15hs',
+        blocos: 'Arabatu · Zonko Percusión · Batería Roja y Negra',
+        link: 'https://www.instagram.com/arabatu.bloco/',
+        flyerId: 'flyer-domingazo',
+        flyerSrc: './assets/images/eventos/domingazo.png'
+      },
+      {
+        fecha: '2026-04-26', dia: '26', mes: 'Abr',
+        nombre: 'Toque Afro — Ensayo Abierto',
+        lugar: '📍 Plaza José Hernández · Isla Maciel · 14 a 18hs',
+        blocos: 'Banda · Taller · Olla Popular',
+        link: 'https://www.instagram.com/toqueafrosantelmo/',
+        flyerId: 'flyer-toqueafro',
+        flyerSrc: './assets/images/eventos/toqueafroensayo.jpg'
+      },
+      {
+        fecha: '2026-05-15', dia: '15', mes: 'May',
+        nombre: 'Tudo Muito Gostoso — Roda de Samba & Festa',
+        lugar: '📍 C Art Media · Av. Corrientes 6271 · 20:30 a 3am',
+        blocos: 'Vai Pra Lá · DJ Diyaneiro · La Coneja China',
+        link: 'https://www.instagram.com/p/DW6zwPVjvJj/',
+        flyerId: 'flyer-tudomuito',
+        flyerSrc: './assets/images/eventos/tudomuitogostoso.jpg'
+      },
+      {
+        fecha: '2026-05-16', dia: '16', mes: 'May',
+        nombre: 'Fiesta RH — 9 Años Rumbo Horizonte',
+        lugar: '📍 La Quince · Av. Corrientes 5426, CABA · 20:30hs',
+        blocos: 'Percusión en vivo · Jamones Ska · Sonora Cañahuate · DJ Vidmi',
+        link: 'https://www.instagram.com/p/DW2VWZmCdxG/',
+        flyerId: 'flyer-fiestarh',
+        flyerSrc: './assets/images/eventos/fiestarh.jpg'
+      },
+      {
+        fecha: '2026-05-24', dia: '24', mes: 'May',
+        nombre: 'Vinicius Silva (Ilê Aiyê) en Argentina',
+        lugar: '📍 Galpón B · A la gorra',
+        blocos: 'Roda de Timbal · Ginga de Ramiro',
+        link: 'https://www.instagram.com/p/DXPRTbKDgxy/',
+        flyerId: 'flyer-vinicius',
+        flyerSrc: './assets/images/eventos/viniciussilva.png'
+      }
+    ];
+
+    const monthNames = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let selectedDate = null;
+
+    function setEventsView(mode) {
+      document.getElementById('events-view-list').classList.toggle('active', mode === 'list');
+      document.getElementById('events-view-calendar').classList.toggle('active', mode === 'calendar');
+      document.getElementById('view-list-btn').classList.toggle('active', mode === 'list');
+      document.getElementById('view-calendar-btn').classList.toggle('active', mode === 'calendar');
+      if (mode === 'calendar') renderCalendar();
+    }
+
+    function changeMonth(delta) {
+      currentMonth += delta;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      else if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      selectedDate = null;
+      renderCalendar();
+      renderDayDetails(null);
+    }
+
+    function renderCalendar() {
+      const label = document.getElementById('calendar-month-label');
+      label.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const today = new Date();
+      const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+      // Celdas vacías al inicio
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement('div');
+        empty.className = 'calendar-day empty';
+        grid.appendChild(empty);
+      }
+
+      // Días del mes
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dateStr = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+        const dayEvents = eventosData.filter(e => e.fecha === dateStr);
+        const hasEvents = dayEvents.length > 0;
+        const isPast = new Date(dateStr) < new Date(todayStr);
+        const isToday = dateStr === todayStr;
+
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day';
+        if (isPast && !hasEvents) cell.classList.add('past');
+        if (isToday) cell.classList.add('today');
+        if (hasEvents) cell.classList.add('has-event');
+        if (selectedDate === dateStr) cell.classList.add('selected');
+
+        const num = document.createElement('span');
+        num.textContent = day;
+        cell.appendChild(num);
+
+        if (hasEvents) {
+          const dots = document.createElement('div');
+          dots.className = 'calendar-dots';
+          dayEvents.slice(0, 3).forEach(() => {
+            const dot = document.createElement('span');
+            dot.className = 'calendar-dot';
+            dots.appendChild(dot);
+          });
+          cell.appendChild(dots);
+          cell.onclick = () => {
+            selectedDate = dateStr;
+            renderCalendar();
+            renderDayDetails(dayEvents);
+          };
+        }
+
+        grid.appendChild(cell);
+      }
+    }
+
+    function renderDayDetails(events) {
+      const details = document.getElementById('calendar-details');
+      if (!events || events.length === 0) {
+        details.innerHTML = '<p class="calendar-empty-msg">Seleccioná un día del calendario para ver los eventos.</p>';
+        return;
+      }
+      details.innerHTML = events.map(ev => `
+        <div class="show-card-evento">
+          <div class="show-flyer" onclick="openFlyer('${ev.flyerSrc}', '${ev.nombre.replace(/'/g,"\\'")}')">
+            <img src="${ev.flyerSrc}" alt="${ev.nombre}" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">${ev.dia}</div>
+                <div class="show-mes">${ev.mes}</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">${ev.nombre}</h3>
+            <p class="show-evento-lugar">${ev.lugar}</p>
+            <p class="show-evento-blocos">${ev.blocos}</p>
+            <a href="${ev.link}" target="_blank" class="show-evento-link">Más info en Instagram →</a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openFlyer(src, alt) {
+      const lightbox = document.getElementById('flyer-lightbox');
+      const img = document.getElementById('flyer-lightbox-img');
+      img.src = src;
+      img.alt = alt;
+      lightbox.classList.add('open');
+    }
+
+    // Posicionar el calendario en el mes del primer evento futuro al cargar
+    (function initCalendar() {
+      const today = new Date();
+      const upcoming = eventosData
+        .map(e => new Date(e.fecha))
+        .filter(d => d >= new Date(today.toISOString().split('T')[0]))
+        .sort((a,b) => a - b)[0];
+      if (upcoming) {
+        currentMonth = upcoming.getMonth();
+        currentYear = upcoming.getFullYear();
+      }
+    })();
   </script>
 
 </body>

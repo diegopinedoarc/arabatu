@@ -774,6 +774,53 @@
         </div>
 
         <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-toqueafro">
+            <img src="./assets/images/eventos/toqueafroensayo.jpg" alt="Toque Afro — Ensayo Abierto" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">26</div>
+                <div class="show-mes">Abr</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Toque Afro — Ensayo Abierto</h3>
+            <p class="show-evento-lugar">📍 Plaza José Hernández · Isla Maciel · 14 a 18hs</p>
+            <p class="show-evento-blocos">Banda · Taller · Olla Popular</p>
+            <div class="show-countdown" id="countdown-toqueafro"></div>
+            <a href="https://www.instagram.com/toqueafrosantelmo/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
+
+        <div class="show-card-evento">
+          <div class="show-flyer" id="flyer-tudomuito">
+            <img src="./assets/images/eventos/tudomuitogostoso.jpg" alt="Tudo Muito Gostoso — Roda de Samba" />
+            <div class="flyer-overlay"><span>Ver flyer</span></div>
+          </div>
+          <div class="show-evento-info">
+            <div class="show-evento-top">
+              <div class="show-fecha-bloque">
+                <div class="show-dia">15</div>
+                <div class="show-mes">May</div>
+              </div>
+              <span class="show-badge badge-proximo">Próximo</span>
+            </div>
+            <h3 class="show-evento-nombre">Tudo Muito Gostoso — Roda de Samba & Festa</h3>
+            <p class="show-evento-lugar">📍 C Art Media · Av. Corrientes 6271 · 20:30 a 3am</p>
+            <p class="show-evento-blocos">Vai Pra Lá · DJ Diyaneiro · La Coneja China</p>
+            <div class="show-countdown" id="countdown-tudomuito"></div>
+            <a href="https://www.instagram.com/p/DW6zwPVjvJj/" target="_blank" class="show-evento-link">
+              Más info en Instagram →
+            </a>
+          </div>
+        </div>
+
+        <div class="show-card-evento">
           <div class="show-flyer" id="flyer-fiestarh">
             <img src="./assets/images/eventos/fiestarh.jpg" alt="Fiesta RH 9 Años" />
             <div class="flyer-overlay"><span>Ver flyer</span></div>
@@ -1456,6 +1503,8 @@
     // Flyers — mapa de id → imagen
     const flyerMap = {
       'flyer-domingazo': { src: './assets/images/eventos/domingazo.png', alt: 'Domingazo Ensayo Abierto' },
+      'flyer-tudomuito': { src: './assets/images/eventos/tudomuitogostoso.jpg', alt: 'Tudo Muito Gostoso' },
+      'flyer-toqueafro': { src: './assets/images/eventos/toqueafroensayo.jpg', alt: 'Toque Afro Ensayo Abierto' },
       'flyer-vinicius': { src: './assets/images/eventos/viniciussilva.png', alt: 'Vinicius Silva en Argentina' },
       'flyer-fiestarh': { src: './assets/images/eventos/fiestarh.jpg', alt: 'Fiesta RH 9 Años' },
     };
@@ -1512,6 +1561,8 @@
       setInterval(update, 1000);
     }
     renderCountdown('countdown-domingazo', '2026-04-26T15:00:00-03:00');
+    renderCountdown('countdown-tudomuito', '2026-05-15T20:30:00-03:00');
+    renderCountdown('countdown-toqueafro', '2026-04-26T14:00:00-03:00');
     renderCountdown('countdown-vinicius',  '2026-05-24T00:00:00-03:00');
     renderCountdown('countdown-fiestarh', '2026-05-16T20:30:00-03:00');
 

@@ -1,2114 +1,1084 @@
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
     <link rel="apple-touch-icon" href="./assets/favicon.png" />
-    <title>Sala de Estudio · Arabatu Bloco</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      :root {
-        --yellow: #ffe500;
-        --yellow-dim: rgba(255, 229, 0, 0.08);
-        --yellow-border: rgba(255, 229, 0, 0.2);
-        --orange: #f09819;
-        --dark: #080808;
-        --dark-2: #111;
-        --dark-3: #181818;
-        --dark-4: #222;
-        --white: #f5f0e8;
-        --gray: #444;
-        --gray-light: #888;
-        --font-display: "Bebas Neue", sans-serif;
-        --font-body: "DM Sans", sans-serif;
-        --bottom-h: 74px;
-        --top-h: 62px;
-        --radius: 16px;
-        --ease: cubic-bezier(0.16, 1, 0.3, 1);
-      }
-      *,
-      *::before,
-      *::after {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: var(--font-body);
-        background: var(--dark);
-        background-image: url("./assets/images/fondobody.jpg");
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-        color: var(--white);
-        min-height: 100svh;
-        overflow-x: hidden;
-        padding-bottom: calc(var(--bottom-h) + 16px);
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      img {
-        display: block;
-        max-width: 100%;
-      }
+  <title>Sala de Estudio · Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFE500;
+      --yellow-dim: rgba(255,229,0,0.08);
+      --yellow-border: rgba(255,229,0,0.2);
+      --orange: #F09819;
+      --dark: #080808;
+      --dark-2: #111;
+      --dark-3: #181818;
+      --dark-4: #222;
+      --white: #F5F0E8;
+      --gray: #444;
+      --gray-light: #888;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --bottom-h: 74px;
+      --top-h: 62px;
+      --radius: 16px;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--dark);
+      background-image: url('./assets/images/fondobody.jpg');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      color: var(--white);
+      min-height: 100svh;
+      overflow-x: hidden;
+      padding-bottom: calc(var(--bottom-h) + 16px);
+    }
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
 
-      /* ============================================
+    /* ============================================
        LOADING
        ============================================ */
-      #loading-screen {
-        position: fixed;
-        inset: 0;
-        background: var(--dark);
-        z-index: 9999;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        transition: opacity 0.4s ease;
-      }
-      #loading-screen img {
-        height: 48px;
-        filter: drop-shadow(0 0 16px rgba(255, 229, 0, 0.5));
-      }
-      .loading-dots {
-        display: flex;
-        gap: 8px;
-      }
-      .loading-dots span {
-        width: 8px;
-        height: 8px;
-        background: var(--yellow);
-        border-radius: 50%;
-        animation: pulse 1.2s ease-in-out infinite;
-      }
-      .loading-dots span:nth-child(2) {
-        animation-delay: 0.2s;
-      }
-      .loading-dots span:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 0.2;
-          transform: scale(0.7);
-        }
-        50% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
+    #loading-screen {
+      position: fixed; inset: 0;
+      background: var(--dark); z-index: 9999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      transition: opacity 0.4s ease;
+    }
+    #loading-screen img { height: 48px; filter: drop-shadow(0 0 16px rgba(255,229,0,0.5)); }
+    .loading-dots { display: flex; gap: 8px; }
+    .loading-dots span {
+      width: 8px; height: 8px; background: var(--yellow);
+      border-radius: 50%; animation: pulse 1.2s ease-in-out infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes pulse { 0%,100%{opacity:0.2;transform:scale(0.7)} 50%{opacity:1;transform:scale(1)} }
 
-      /* ============================================
+    /* ============================================
        TOP BAR
        ============================================ */
-      .top-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        height: var(--top-h);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 20px;
-        background: rgba(8, 8, 8, 0.97);
-        border-bottom: 1px solid rgba(255, 229, 0, 0.08);
-        backdrop-filter: blur(20px);
-      }
-      .top-bar-logo {
-        height: 36px;
-        filter: drop-shadow(0 0 8px rgba(255, 229, 0, 0.3));
-      }
-      .top-bar-right {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .user-name-pill {
-        font-size: 0.75rem;
-        color: var(--gray-light);
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        padding: 5px 12px;
-        border-radius: 100px;
-        display: none;
-      }
-      .btn-logout {
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--gray-light);
-        padding: 8px 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
-        cursor: pointer;
-        background: none;
-        font-family: var(--font-body);
-        transition: all 0.2s;
-      }
-      .btn-logout:hover {
-        border-color: var(--yellow);
-        color: var(--yellow);
-      }
+    .top-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: var(--top-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px;
+      background: rgba(8,8,8,0.97);
+      border-bottom: 1px solid rgba(255,229,0,0.08);
+      backdrop-filter: blur(20px);
+    }
+    .top-bar-logo { height: 36px; filter: drop-shadow(0 0 8px rgba(255,229,0,0.3)); }
+    .top-bar-right { display: flex; align-items: center; gap: 10px; }
+    .user-name-pill {
+      font-size: 0.75rem; color: var(--gray-light);
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 5px 12px; border-radius: 100px;
+      display: none;
+    }
+    .btn-logout {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gray-light);
+      padding: 8px 16px; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; cursor: pointer; background: none;
+      font-family: var(--font-body); transition: all 0.2s;
+    }
+    .btn-logout:hover { border-color: var(--yellow); color: var(--yellow); }
 
-      /* ============================================
+    /* ============================================
        PAGE HEADER
        ============================================ */
-      .page-top {
-        padding: calc(var(--top-h) + 28px) 20px 0;
-        margin-bottom: 28px;
-      }
-      .page-eyebrow {
-        font-size: 0.62rem;
-        font-weight: 500;
-        letter-spacing: 0.28em;
-        text-transform: uppercase;
-        color: var(--yellow);
-        margin-bottom: 8px;
-        display: block;
-      }
-      .page-heading {
-        font-family: var(--font-display);
-        font-size: clamp(2.8rem, 12vw, 5rem);
-        line-height: 0.92;
-        color: var(--white);
-        margin-bottom: 10px;
-      }
-      .page-heading span {
-        color: var(--yellow);
-        display: block;
-      }
-      .page-sub {
-        font-size: 0.83rem;
-        color: var(--gray-light);
-        line-height: 1.55;
-        max-width: 300px;
-      }
+    .page-top {
+      padding: calc(var(--top-h) + 28px) 20px 0;
+      margin-bottom: 28px;
+    }
+    .page-eyebrow {
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--yellow);
+      margin-bottom: 8px; display: block;
+    }
+    .page-heading {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 12vw, 5rem);
+      line-height: 0.92; color: var(--white); margin-bottom: 10px;
+    }
+    .page-heading span { color: var(--yellow); display: block; }
+    .page-sub {
+      font-size: 0.83rem; color: var(--gray-light);
+      line-height: 1.55; max-width: 300px;
+    }
 
-      /* ============================================
+    /* ============================================
        BOTTOM NAV
        ============================================ */
-      .bottom-nav {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 100;
-        height: var(--bottom-h);
-        background: rgba(10, 10, 10, 0.98);
-        border-top: 1px solid rgba(255, 229, 0, 0.1);
-        backdrop-filter: blur(24px);
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        padding-bottom: env(safe-area-inset-bottom, 0);
-      }
-      .nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 5px;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        font-family: var(--font-body);
-        position: relative;
-        transition: all 0.2s;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .nav-item::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 25%;
-        right: 25%;
-        height: 2px;
-        background: var(--yellow);
-        border-radius: 0 0 6px 6px;
-        transform: scaleX(0);
-        transform-origin: center;
-        transition: transform 0.3s var(--ease);
-      }
-      .nav-item.active::after {
-        transform: scaleX(1);
-      }
-      .nav-svg {
-        width: 24px;
-        height: 24px;
-        color: rgba(255, 255, 255, 0.35);
-        transition:
-          transform 0.25s var(--ease),
-          color 0.25s;
-        stroke: currentColor;
-      }
-      .nav-item.active .nav-svg {
-        transform: scale(1.12);
-        color: var(--yellow);
-        filter: drop-shadow(0 0 6px rgba(255, 229, 0, 0.5));
-      }
-      .nav-label {
-        font-size: 0.58rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.3);
-        transition: color 0.2s;
-      }
-      .nav-item.active .nav-label {
-        color: var(--yellow);
-      }
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      height: var(--bottom-h);
+      background: rgba(10,10,10,0.98);
+      border-top: 1px solid rgba(255,229,0,0.1);
+      backdrop-filter: blur(24px);
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      padding-bottom: env(safe-area-inset-bottom, 0);
+    }
+    .nav-item {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 5px; cursor: pointer; border: none;
+      background: transparent; font-family: var(--font-body);
+      position: relative; transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-item::after {
+      content: '';
+      position: absolute; top: 0; left: 25%; right: 25%;
+      height: 2px; background: var(--yellow);
+      border-radius: 0 0 6px 6px;
+      transform: scaleX(0); transform-origin: center;
+      transition: transform 0.3s var(--ease);
+    }
+    .nav-item.active::after { transform: scaleX(1); }
+    .nav-svg {
+      width: 24px; height: 24px;
+      color: rgba(255,255,255,0.35);
+      transition: transform 0.25s var(--ease), color 0.25s;
+      stroke: currentColor;
+    }
+    .nav-item.active .nav-svg {
+      transform: scale(1.12);
+      color: var(--yellow);
+      filter: drop-shadow(0 0 6px rgba(255,229,0,0.5));
+    }
+    .nav-label {
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      transition: color 0.2s;
+    }
+    .nav-item.active .nav-label { color: var(--yellow); }
 
-      /* ============================================
+    /* ============================================
        SECTIONS
        ============================================ */
-      .content-section {
-        display: none;
-        padding: 0 20px 20px;
-      }
-      .content-section.active {
-        display: block;
-        animation: fadeUp 0.3s var(--ease);
-      }
-      @keyframes fadeUp {
-        from {
-          opacity: 0;
-          transform: translateY(12px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+    .content-section { display: none; padding: 0 20px 20px; }
+    .content-section.active { display: block; animation: fadeUp 0.3s var(--ease); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
 
-      /* ============================================
+    /* ============================================
        FILTROS — SEARCH + DROPDOWN
        ============================================ */
-      .filter-bar {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 24px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-      .filter-search-wrap {
-        flex: 1;
-        min-width: 0;
-        position: relative;
-      }
-      .filter-search-icon {
-        position: absolute;
-        left: 14px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--gray-light);
-        width: 16px;
-        height: 16px;
-        pointer-events: none;
-      }
-      .filter-search {
-        width: 100%;
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 10px 14px 10px 40px;
-        font-family: var(--font-body);
-        font-size: 0.85rem;
-        color: var(--white);
-        outline: none;
-        transition: border-color 0.2s;
-        -webkit-appearance: none;
-      }
-      .filter-search::placeholder {
-        color: var(--gray-light);
-      }
-      .filter-search:focus {
-        border-color: rgba(255, 229, 0, 0.4);
-      }
-      .filter-select {
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 10px 36px 10px 14px;
-        font-family: var(--font-body);
-        font-size: 0.82rem;
-        color: var(--white);
-        outline: none;
-        cursor: pointer;
-        transition: border-color 0.2s;
-        -webkit-appearance: none;
-        appearance: none;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        flex-shrink: 0;
-      }
-      .filter-select:focus {
-        border-color: rgba(255, 229, 0, 0.4);
-      }
-      .filter-select option {
-        background: #181818;
-        color: var(--white);
-      }
-      .filter-clear {
-        font-size: 0.72rem;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--gray-light);
-        background: none;
-        border: none;
-        cursor: pointer;
-        font-family: var(--font-body);
-        padding: 4px 0;
-        transition: color 0.2s;
-        white-space: nowrap;
-        display: none;
-      }
-      .filter-clear.visible {
-        display: block;
-      }
-      .filter-clear:hover {
-        color: var(--yellow);
-      }
-      .filter-results {
-        font-size: 0.72rem;
-        color: var(--gray-light);
-        margin-bottom: 16px;
-        letter-spacing: 0.04em;
-        display: none;
-      }
-      .filter-results.visible {
-        display: block;
-      }
-      .filter-results span {
-        color: var(--yellow);
-        font-weight: 500;
-      }
+    .filter-bar {
+      display: flex; gap: 10px; margin-bottom: 24px;
+      align-items: center; flex-wrap: wrap;
+    }
+    .filter-search-wrap {
+      flex: 1; min-width: 0;
+      position: relative;
+    }
+    .filter-search-icon {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-light);
+      width: 16px; height: 16px; pointer-events: none;
+    }
+    .filter-search {
+      width: 100%;
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 14px 10px 40px;
+      font-family: var(--font-body);
+      font-size: 0.85rem; color: var(--white);
+      outline: none; transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .filter-search::placeholder { color: var(--gray-light); }
+    .filter-search:focus { border-color: rgba(255,229,0,0.4); }
+    .filter-select {
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 10px 36px 10px 14px;
+      font-family: var(--font-body);
+      font-size: 0.82rem; color: var(--white);
+      outline: none; cursor: pointer;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      flex-shrink: 0;
+    }
+    .filter-select:focus { border-color: rgba(255,229,0,0.4); }
+    .filter-select option { background: #181818; color: var(--white); }
+    .filter-clear {
+      font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--gray-light);
+      background: none; border: none; cursor: pointer;
+      font-family: var(--font-body); padding: 4px 0;
+      transition: color 0.2s; white-space: nowrap;
+      display: none;
+    }
+    .filter-clear.visible { display: block; }
+    .filter-clear:hover { color: var(--yellow); }
+    .filter-results {
+      font-size: 0.72rem; color: var(--gray-light);
+      margin-bottom: 16px; letter-spacing: 0.04em;
+      display: none;
+    }
+    .filter-results.visible { display: block; }
+    .filter-results span { color: var(--yellow); font-weight: 500; }
 
-      /* ============================================
+    /* ============================================
        VIDEO CARDS — cinematic style
        ============================================ */
-      .videos-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-      }
-      .video-card {
-        border-radius: var(--radius);
-        overflow: hidden;
-        background: rgba(24, 24, 24, 0.85);
-        backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition:
-          border-color 0.35s,
-          transform 0.35s var(--ease),
-          box-shadow 0.35s;
-        -webkit-tap-highlight-color: transparent;
-        position: relative;
-      }
-      .video-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: var(--radius);
-        background: linear-gradient(
-          135deg,
-          rgba(255, 229, 0, 0.06),
-          transparent 60%
-        );
-        opacity: 0;
-        transition: opacity 0.35s;
-        pointer-events: none;
-        z-index: 1;
-      }
-      .video-card:hover {
-        border-color: rgba(255, 229, 0, 0.35);
-        transform: translateY(-4px);
-        box-shadow:
-          0 8px 40px rgba(255, 229, 0, 0.12),
-          0 0 0 1px rgba(255, 229, 0, 0.1);
-      }
-      .video-card:hover::before {
-        opacity: 1;
-      }
-      .video-card.hidden {
-        display: none;
-      }
-      .video-embed {
-        position: relative;
-        aspect-ratio: 16/9;
-        background: var(--dark-2);
-      }
-      .video-embed iframe {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        border: none;
-      }
-      .video-info {
-        padding: 14px 16px 16px;
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 10px;
-        position: relative;
-        z-index: 2;
-      }
-      .video-info-left {
-        flex: 1;
-        min-width: 0;
-      }
-      .video-title {
-        font-family: var(--font-display);
-        font-size: 1.15rem;
-        letter-spacing: 0.02em;
-        color: var(--white);
-        line-height: 1.1;
-        margin-bottom: 6px;
-      }
-      .video-tag {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        font-size: 0.65rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: var(--yellow);
-        padding: 4px 10px;
-        background: var(--yellow-dim);
-        border: 1px solid var(--yellow-border);
-        border-radius: 6px;
-      }
-      .video-tag::before {
-        content: "▶";
-        font-size: 0.5rem;
-      }
+    .videos-grid { display: flex; flex-direction: column; gap: 20px; }
+    .video-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: rgba(24,24,24,0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.35s, transform 0.35s var(--ease), box-shadow 0.35s;
+      -webkit-tap-highlight-color: transparent;
+      position: relative;
+    }
+    .video-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(255,229,0,0.06), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .video-card:hover {
+      border-color: rgba(255,229,0,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 40px rgba(255,229,0,0.12), 0 0 0 1px rgba(255,229,0,0.1);
+    }
+    .video-card:hover::before { opacity: 1; }
+    .video-card.hidden { display: none; }
+    .video-embed {
+      position: relative; aspect-ratio: 16/9;
+      background: var(--dark-2);
+    }
+    .video-embed iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: none;
+    }
+    .video-info {
+      padding: 14px 16px 16px;
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 10px;
+      position: relative; z-index: 2;
+    }
+    .video-info-left { flex: 1; min-width: 0; }
+    .video-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem; letter-spacing: 0.02em;
+      color: var(--white); line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .video-tag {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--yellow); padding: 4px 10px;
+      background: var(--yellow-dim);
+      border: 1px solid var(--yellow-border);
+      border-radius: 6px;
+    }
+    .video-tag::before {
+      content: '▶';
+      font-size: 0.5rem;
+    }
 
-      /* ============================================
+    /* ============================================
        AUDIO CARDS
        ============================================ */
-      .audios-list {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-      .audio-card {
-        border-radius: var(--radius);
-        overflow: hidden;
-        background: var(--dark-3);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: border-color 0.3s;
-      }
-      .audio-card.hidden {
-        display: none;
-      }
-      .audio-header {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 16px 16px 10px;
-      }
-      .audio-icon {
-        width: 46px;
-        height: 46px;
-        flex-shrink: 0;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--yellow), var(--orange));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.3rem;
-        box-shadow: 0 4px 16px rgba(255, 181, 0, 0.25);
-      }
-      .audio-text {
-        flex: 1;
-        min-width: 0;
-      }
-      .audio-title {
-        font-family: var(--font-display);
-        font-size: 1.1rem;
-        letter-spacing: 0.02em;
-        color: var(--white);
-        margin-bottom: 3px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .audio-meta {
-        font-size: 0.75rem;
-        color: var(--gray-light);
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-      .audio-meta::before {
-        content: "";
-        display: inline-block;
-        width: 6px;
-        height: 6px;
-        background: var(--yellow);
-        border-radius: 50%;
-        opacity: 0.6;
-      }
-      .audio-drive-embed {
-        width: 100%;
-        border: none;
-        display: block;
-        background: rgba(0, 0, 0, 0.4);
-      }
+    .audios-list { display: flex; flex-direction: column; gap: 14px; }
+    .audio-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--dark-3);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.3s;
+    }
+    .audio-card.hidden { display: none; }
+    .audio-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 16px 10px;
+    }
+    .audio-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 16px rgba(255,181,0,0.25);
+    }
+    .audio-text { flex: 1; min-width: 0; }
+    .audio-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem; letter-spacing: 0.02em;
+      color: var(--white); margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .audio-meta {
+      font-size: 0.75rem; color: var(--gray-light);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .audio-meta::before {
+      content: '';
+      display: inline-block; width: 6px; height: 6px;
+      background: var(--yellow); border-radius: 50%;
+      opacity: 0.6;
+    }
+    .audio-drive-embed {
+      width: 100%; border: none; display: block;
+      background: rgba(0,0,0,0.4);
+    }
 
-      /* ============================================
+    /* ============================================
        SECTION HEADING
        ============================================ */
-      .section-heading {
-        font-family: var(--font-display);
-        font-size: 0.85rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--gray-light);
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 16px;
-      }
-      .section-heading::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: rgba(255, 255, 255, 0.05);
-      }
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 0.85rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gray-light);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .section-heading::after {
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,0.05);
+    }
 
-      /* ============================================
+    /* ============================================
        EMPTY
        ============================================ */
-      .empty-filter {
-        text-align: center;
-        padding: 40px 16px;
-        color: var(--gray-light);
-        font-size: 0.85rem;
-        display: none;
-      }
-      .empty-state {
-        text-align: center;
-        padding: 60px 16px;
-        color: var(--gray-light);
-      }
-      .empty-icon {
-        font-size: 2.5rem;
-        margin-bottom: 14px;
-      }
-      .empty-state h3 {
-        font-size: 1rem;
-        color: var(--white);
-        margin-bottom: 6px;
-      }
-      .empty-state p {
-        font-size: 0.83rem;
-      }
+    .empty-filter {
+      text-align: center; padding: 40px 16px;
+      color: var(--gray-light); font-size: 0.85rem; display: none;
+    }
+    .empty-state {
+      text-align: center; padding: 60px 16px; color: var(--gray-light);
+    }
+    .empty-icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .empty-state h3 { font-size: 1rem; color: var(--white); margin-bottom: 6px; }
+    .empty-state p { font-size: 0.83rem; }
 
-      /* ============================================
+    /* ============================================
        FOOTER
        ============================================ */
-      .sala-footer {
-        padding: 20px;
-        text-align: center;
-        border-top: 1px solid rgba(255, 229, 0, 0.06);
-        margin-top: 8px;
-      }
-      .sala-footer p {
-        font-size: 0.7rem;
-        color: var(--gray);
-        letter-spacing: 0.06em;
-      }
+    .sala-footer {
+      padding: 20px; text-align: center;
+      border-top: 1px solid rgba(255,229,0,0.06);
+      margin-top: 8px;
+    }
+    .sala-footer p { font-size: 0.7rem; color: var(--gray); letter-spacing: 0.06em; }
 
-      /* ============================================
+    /* ============================================
        DESKTOP
        ============================================ */
-      @media (min-width: 768px) {
-        body {
-          padding-bottom: 0;
-        }
-        .bottom-nav {
-          display: none;
-        }
-        .top-bar {
-          height: 70px;
-          padding: 0 40px;
-        }
-        .user-name-pill {
-          display: block;
-        }
-        .page-top {
-          padding: calc(70px + 48px) 40px 0;
-          margin-bottom: 36px;
-        }
-        .content-section {
-          padding: 0 40px 40px;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
-        .filter-scroll {
-          margin: 0 0 28px;
-          padding: 0;
-          overflow-x: visible;
-        }
-        .filter-chips {
-          width: auto;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
-        .videos-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 20px;
-        }
-
-        /* Desktop top tabs */
-        .desktop-tabs {
-          display: flex;
-          gap: 0;
-          padding: 0 40px;
-          border-bottom: 1px solid rgba(255, 229, 0, 0.08);
-          max-width: 1200px;
-          margin: 0 auto 32px;
-          position: sticky;
-          top: 70px;
-          z-index: 50;
-          background: rgba(8, 8, 8, 0.92);
-          backdrop-filter: blur(16px);
-          overflow-x: auto;
-          scrollbar-width: none;
-        }
-        .desktop-tabs::-webkit-scrollbar {
-          display: none;
-        }
-        .desktop-tab {
-          padding: 18px 32px;
-          font-family: var(--font-display);
-          font-size: 1.05rem;
-          letter-spacing: 0.08em;
-          cursor: pointer;
-          border: none;
-          background: transparent;
-          color: var(--gray-light);
-          white-space: nowrap;
-          border-bottom: 2px solid transparent;
-          margin-bottom: -1px;
-          transition:
-            color 0.2s,
-            border-color 0.2s;
-        }
-        .desktop-tab.active {
-          color: var(--yellow);
-          border-bottom-color: var(--yellow);
-        }
-        .desktop-tab:hover {
-          color: var(--white);
-        }
-        .content-section {
-          padding: 28px 40px 40px;
-          max-width: 1200px;
-          margin: 0 auto;
-        }
+    @media (min-width: 768px) {
+      body { padding-bottom: 0; }
+      .bottom-nav { display: none; }
+      .top-bar { height: 70px; padding: 0 40px; }
+      .user-name-pill { display: block; }
+      .page-top { padding: calc(70px + 48px) 40px 0; margin-bottom: 36px; }
+      .content-section { padding: 0 40px 40px; max-width: 1200px; margin: 0 auto; }
+      .filter-scroll { margin: 0 0 28px; padding: 0; overflow-x: visible; }
+      .filter-chips { width: auto; flex-wrap: wrap; gap: 10px; }
+      .videos-grid {
+        display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
       }
-      @media (min-width: 1100px) {
-        .videos-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
+
+      /* Desktop top tabs */
+      .desktop-tabs {
+        display: flex; gap: 0; padding: 0 40px;
+        border-bottom: 1px solid rgba(255,229,0,0.08);
+        max-width: 1200px; margin: 0 auto 32px;
+        position: sticky; top: 70px; z-index: 50;
+        background: rgba(8,8,8,0.92); backdrop-filter: blur(16px);
+        overflow-x: auto; scrollbar-width: none;
       }
-    </style>
-  </head>
-  <body>
-    <div id="loading-screen">
-      <img src="./assets/images/logo.png" alt="Arabatu" />
-      <div class="loading-dots"><span></span><span></span><span></span></div>
+      .desktop-tabs::-webkit-scrollbar { display: none; }
+      .desktop-tab {
+        padding: 18px 32px;
+        font-family: var(--font-display); font-size: 1.05rem;
+        letter-spacing: 0.08em; cursor: pointer;
+        border: none; background: transparent;
+        color: var(--gray-light); white-space: nowrap;
+        border-bottom: 2px solid transparent;
+        margin-bottom: -1px;
+        transition: color 0.2s, border-color 0.2s;
+      }
+      .desktop-tab.active { color: var(--yellow); border-bottom-color: var(--yellow); }
+      .desktop-tab:hover { color: var(--white); }
+      .content-section { padding: 28px 40px 40px; max-width: 1200px; margin: 0 auto; }
+    }
+    @media (min-width: 1100px) {
+      .videos-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="loading-screen">
+    <img src="./assets/images/logo.png" alt="Arabatu" />
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <header class="top-bar">
+    <a href="./index.html">
+      <img src="./assets/images/logo.png" alt="Arabatu Bloco" class="top-bar-logo" />
+    </a>
+    <div class="top-bar-right">
+      <span class="user-name-pill" id="user-name-pill"></span>
+      <button class="btn-logout" id="btn-logout">Salir</button>
     </div>
+  </header>
 
-    <header class="top-bar">
-      <a href="./index.html">
-        <img
-          src="./assets/images/logo.png"
-          alt="Arabatu Bloco"
-          class="top-bar-logo"
-        />
-      </a>
-      <div class="top-bar-right">
-        <span class="user-name-pill" id="user-name-pill"></span>
-        <button class="btn-logout" id="btn-logout">Salir</button>
+  <div class="page-top">
+    <span class="page-eyebrow">Zona exclusiva · Miembros</span>
+    <h1 class="page-heading">Sala de<span>Estudio</span></h1>
+    <p class="page-sub">Todo el material del bloco en un solo lugar.</p>
+  </div>
+
+  <!-- DESKTOP TABS -->
+  <div class="desktop-tabs" id="desktop-tabs" style="display:none;">
+    <button class="desktop-tab active" data-section="videos">🎬 Videos</button>
+    <button class="desktop-tab" data-section="audios">🎵 Audios</button>
+    <button class="desktop-tab" data-section="timbal">🥁 Timbal</button>
+    <button class="desktop-tab" data-section="recursos">📄 Recursos</button>
+  </div>
+
+  <!-- ======== VIDEOS ======== -->
+  <section class="content-section active" id="section-videos">
+
+    <div class="filter-bar">
+      <div class="filter-search-wrap">
+        <svg class="filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="filter-search" id="video-search" type="text" placeholder="Buscar video..." autocomplete="off" />
       </div>
-    </header>
-
-    <div class="page-top">
-      <span class="page-eyebrow">Zona exclusiva · Miembros</span>
-      <h1 class="page-heading">Sala de<span>Estudio</span></h1>
-      <p class="page-sub">Todo el material del bloco en un solo lugar.</p>
+      <select class="filter-select" id="video-select">
+        <option value="all">Todas las categorías</option>
+        <option value="merengue">Merengue + Samba</option>
+        <option value="varias-queixas">Varias Queixas</option>
+        <option value="convencion">Convención Olodum</option>
+        <option value="xango">Xango</option>
+        <option value="rocky">Rocky</option>
+        <option value="solido">Sólido</option>
+        <option value="tamaquinho">Tamaquinho</option>
+        <option value="samba-nuevo">Samba Nuevo</option>
+        <option value="shows">Shows</option>
+      </select>
+      <button class="filter-clear" id="video-clear">Limpiar</button>
     </div>
+    <div class="filter-results" id="video-results"></div>
 
-    <!-- DESKTOP TABS -->
-    <div class="desktop-tabs" id="desktop-tabs" style="display: none">
-      <button class="desktop-tab active" data-section="videos">
-        🎬 Videos
-      </button>
-      <button class="desktop-tab" data-section="audios">🎵 Audios</button>
-      <button class="desktop-tab" data-section="timbal">🥁 Timbal</button>
-      <button class="desktop-tab" data-section="recursos">📄 Recursos</button>
+    <div class="videos-grid" id="videos-grid">
+
+      <div class="video-card" data-cat="varias-queixas">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/mFM3lI62e20" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Varias Queixas — Ensayo</p>
+            <span class="video-tag">Varias Queixas</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="shows">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/oqkrgo8vwfQ" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Cierre de Año 2024</p>
+            <span class="video-tag">Shows</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="solido">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/ODZhZU6LUU4" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Sólido — Video 1</p>
+            <span class="video-tag">Sólido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="solido">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/OcXjNZKyoC0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Sólido — Video 2</p>
+            <span class="video-tag">Sólido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="merengue">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/q8QydDACP70" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Merengue + Samba Reggae — Video 1</p>
+            <span class="video-tag">Merengue + Samba Reggae</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="merengue">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/zrIlocUHLxg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Merengue + Samba Reggae — Video 2</p>
+            <span class="video-tag">Merengue + Samba Reggae</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="tamaquinho">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/ERfITW_MmkU" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Tamaquinho — Video 1</p>
+            <span class="video-tag">Tamaquinho</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-card" data-cat="samba-nuevo">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/LwqX9KNbj3s" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-info">
+          <div class="video-info-left">
+            <p class="video-title">Samba Nuevo</p>
+            <span class="video-tag">Samba Nuevo</span>
+          </div>
+        </div>
+      </div>
+
     </div>
+    <div class="empty-filter" id="videos-empty">No hay videos en esta categoría todavía.</div>
+  </section>
 
-    <!-- ======== VIDEOS ======== -->
-    <section class="content-section active" id="section-videos">
-      <div class="filter-bar">
-        <div class="filter-search-wrap">
-          <svg
-            class="filter-search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
-          </svg>
-          <input
-            class="filter-search"
-            id="video-search"
-            type="text"
-            placeholder="Buscar video..."
-            autocomplete="off"
-          />
-        </div>
-        <select class="filter-select" id="video-select">
-          <option value="all">Todas las categorías</option>
-          <option value="merengue">Merengue + Samba</option>
-          <option value="varias-queixas">Varias Queixas</option>
-          <option value="convencion">Convención Olodum</option>
-          <option value="xango">Xango</option>
-          <option value="rocky">Rocky</option>
-          <option value="solido">Sólido</option>
-          <option value="tamaquinho">Tamaquinho</option>
-          <option value="samba-nuevo">Samba Nuevo</option>
-          <option value="shows">Shows</option>
-        </select>
-        <button class="filter-clear" id="video-clear">Limpiar</button>
+  <!-- ======== AUDIOS ======== -->
+  <section class="content-section" id="section-audios">
+
+    <div class="filter-bar">
+      <div class="filter-search-wrap">
+        <svg class="filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="filter-search" id="audio-search" type="text" placeholder="Buscar audio..." autocomplete="off" />
       </div>
-      <div class="filter-results" id="video-results"></div>
+      <select class="filter-select" id="audio-select">
+        <option value="all">Todas las categorías</option>
+        <option value="merengue">Merengue + Samba</option>
+        <option value="varias-queixas">Varias Queixas</option>
+        <option value="convencion">Convención Olodum</option>
+        <option value="xango">Xango</option>
+        <option value="rocky">Rocky</option>
+        <option value="solido">Sólido</option>
+        <option value="tamaquinho">Tamaquinho</option>
+      </select>
+      <button class="filter-clear" id="audio-clear">Limpiar</button>
+    </div>
+    <div class="filter-results" id="audio-results"></div>
 
-      <div class="videos-grid" id="videos-grid">
-        <div class="video-card" data-cat="varias-queixas">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/mFM3lI62e20"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Varias Queixas — Ensayo</p>
-              <span class="video-tag">Varias Queixas</span>
-            </div>
+    <div class="section-heading">Maquetas</div>
+    <div class="audios-list" id="audios-list">
+
+      <div class="audio-card" data-cat="xango">
+        <div class="audio-header">
+          <div class="audio-icon">🥁</div>
+          <div class="audio-text">
+            <p class="audio-title">Xango — Maqueta</p>
+            <p class="audio-meta">Maqueta para la grabación</p>
           </div>
         </div>
-
-        <div class="video-card" data-cat="shows">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/oqkrgo8vwfQ"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Cierre de Año 2024</p>
-              <span class="video-tag">Shows</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="solido">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/ODZhZU6LUU4"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Sólido — Video 1</p>
-              <span class="video-tag">Sólido</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="solido">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/OcXjNZKyoC0"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Sólido — Video 2</p>
-              <span class="video-tag">Sólido</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="merengue">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/q8QydDACP70"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Merengue + Samba Reggae — Video 1</p>
-              <span class="video-tag">Merengue + Samba Reggae</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="merengue">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/zrIlocUHLxg"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Merengue + Samba Reggae — Video 2</p>
-              <span class="video-tag">Merengue + Samba Reggae</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="tamaquinho">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/ERfITW_MmkU"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Tamaquinho — Video 1</p>
-              <span class="video-tag">Tamaquinho</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="samba-nuevo">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/LwqX9KNbj3s"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Samba Nuevo</p>
-              <span class="video-tag">Samba Nuevo</span>
-            </div>
-          </div>
-        </div>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1O7D3D9Cb3IY96GuQKSLVAt6q9OjB7y3o/preview" height="80"></iframe>
       </div>
-      <div class="empty-filter" id="videos-empty">
-        No hay videos en esta categoría todavía.
+
+      <div class="audio-card" data-cat="rocky">
+        <div class="audio-header">
+          <div class="audio-icon">🎵</div>
+          <div class="audio-text">
+            <p class="audio-title">Rocky - Ile Aye — Maqueta</p>
+            <p class="audio-meta">Maqueta para la grabación</p>
+          </div>
+        </div>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1ilQyZkqkpBn1Hb_UknZoVCvAfSXDCkjc/preview" height="80"></iframe>
       </div>
-    </section>
 
-    <!-- ======== AUDIOS ======== -->
-    <section class="content-section" id="section-audios">
-      <div class="filter-bar">
-        <div class="filter-search-wrap">
-          <svg
-            class="filter-search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
-          </svg>
-          <input
-            class="filter-search"
-            id="audio-search"
-            type="text"
-            placeholder="Buscar audio..."
-            autocomplete="off"
-          />
+      <div class="audio-card" data-cat="varias-queixas">
+        <div class="audio-header">
+          <div class="audio-icon">🎶</div>
+          <div class="audio-text">
+            <p class="audio-title">Varias Queixas — Maqueta</p>
+            <p class="audio-meta">Maqueta para la grabación</p>
+          </div>
         </div>
-        <select class="filter-select" id="audio-select">
-          <option value="all">Todas las categorías</option>
-          <option value="merengue">Merengue + Samba</option>
-          <option value="varias-queixas">Varias Queixas</option>
-          <option value="convencion">Convención Olodum</option>
-          <option value="xango">Xango</option>
-          <option value="rocky">Rocky</option>
-          <option value="solido">Sólido</option>
-          <option value="tamaquinho">Tamaquinho</option>
-        </select>
-        <button class="filter-clear" id="audio-clear">Limpiar</button>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1CMCScRrzX5x12AdPUR2l1K3hTea2Zd51/preview" height="80"></iframe>
       </div>
-      <div class="filter-results" id="audio-results"></div>
 
-      <div class="section-heading">Maquetas</div>
-      <div class="audios-list" id="audios-list">
-        <div class="audio-card" data-cat="xango">
-          <div class="audio-header">
-            <div class="audio-icon">🥁</div>
-            <div class="audio-text">
-              <p class="audio-title">Xango</p>
-              <p class="audio-meta">Maqueta para la grabación</p>
-            </div>
+      <div class="audio-card" data-cat="tamaquinho">
+        <div class="audio-header">
+          <div class="audio-icon">🥁</div>
+          <div class="audio-text">
+            <p class="audio-title">Tamaquinho — Versión Ensayo</p>
+            <p class="audio-meta">Versión ensayo</p>
           </div>
-          <iframe
-            class="audio-drive-embed"
-            src="https://drive.google.com/file/d/1O7D3D9Cb3IY96GuQKSLVAt6q9OjB7y3o/preview"
-            height="80"
-          ></iframe>
         </div>
-
-        <div class="audio-card" data-cat="rocky">
-          <div class="audio-header">
-            <div class="audio-icon">🎵</div>
-            <div class="audio-text">
-              <p class="audio-title">Rocky - Ile Aye</p>
-              <p class="audio-meta">Maqueta para la grabación</p>
-            </div>
-          </div>
-          <iframe
-            class="audio-drive-embed"
-            src="https://drive.google.com/file/d/1ilQyZkqkpBn1Hb_UknZoVCvAfSXDCkjc/preview"
-            height="80"
-          ></iframe>
-        </div>
-
-        <div class="audio-card" data-cat="varias-queixas">
-          <div class="audio-header">
-            <div class="audio-icon">🎶</div>
-            <div class="audio-text">
-              <p class="audio-title">Varias Queixas</p>
-              <p class="audio-meta">Maqueta para la grabación</p>
-            </div>
-          </div>
-          <iframe
-            class="audio-drive-embed"
-            src="https://drive.google.com/file/d/1CMCScRrzX5x12AdPUR2l1K3hTea2Zd51/preview"
-            height="80"
-          ></iframe>
-        </div>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1Iy0RkiP8FvJqXvE5nMkT2wRcLGpHdZ3a/preview" height="80"></iframe>
       </div>
-      <div class="empty-filter" id="audios-empty">
-        No hay audios en esta categoría todavía.
+
+      <div class="audio-card" data-cat="varias-queixas">
+        <div class="audio-header">
+          <div class="audio-icon">🎶</div>
+          <div class="audio-text">
+            <p class="audio-title">Varias Queixas — Versión Ensayo</p>
+            <p class="audio-meta">Versión ensayo</p>
+          </div>
+        </div>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1cWBou0QW3dezImZjnn5jEkXLq2qy7RNn/preview" height="80"></iframe>
       </div>
-    </section>
 
-    <!-- ======== TIMBAL ======== -->
-    <section class="content-section" id="section-timbal">
-      <div class="filter-bar">
-        <div class="filter-search-wrap">
-          <svg
-            class="filter-search-icon"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="M21 21l-4.35-4.35" />
-          </svg>
-          <input
-            class="filter-search"
-            id="timbal-search"
-            type="text"
-            placeholder="Buscar video..."
-            autocomplete="off"
-          />
+      <div class="audio-card" data-cat="xango">
+        <div class="audio-header">
+          <div class="audio-icon">🥁</div>
+          <div class="audio-text">
+            <p class="audio-title">Xango — Versión Ensayo</p>
+            <p class="audio-meta">Versión ensayo</p>
+          </div>
         </div>
-        <select class="filter-select" id="timbal-select">
-          <option value="all">Todas las categorías</option>
-          <option value="epab">Epab</option>
-          <option value="varios">Varios</option>
-          <option value="timbal-flur">Timbal Flur</option>
-          <option value="trio-surdos">Trio de Surdos</option>
-        </select>
-        <button class="filter-clear" id="timbal-clear">Limpiar</button>
+        <iframe class="audio-drive-embed" src="https://drive.google.com/file/d/1OaEhUmFbzbxM6CDy45Cya3BLP5e6vDjv/preview" height="80"></iframe>
       </div>
-      <div class="filter-results" id="timbal-results"></div>
 
-      <div class="videos-grid" id="timbal-grid">
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/qyCe6Bl4g_s"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Funky Candeal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+    </div>
+    <div class="empty-filter" id="audios-empty">No hay audios en esta categoría todavía.</div>
+  </section>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/cnKNc0pqPo8"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Itamar</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+  <!-- ======== TIMBAL ======== -->
+  <section class="content-section" id="section-timbal">
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/rAR_HNF4nUk"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Funky Candeal 2</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+    <div class="filter-bar">
+      <div class="filter-search-wrap">
+        <svg class="filter-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="filter-search" id="timbal-search" type="text" placeholder="Buscar video..." autocomplete="off" />
+      </div>
+      <select class="filter-select" id="timbal-select">
+        <option value="all">Todas las categorías</option>
+        <option value="epab">Epab</option>
+        <option value="varios">Varios</option>
+        <option value="timbal-flur">Timbal Flur</option>
+        <option value="trio-surdos">Trio de Surdos</option>
+      </select>
+      <button class="filter-clear" id="timbal-clear">Limpiar</button>
+    </div>
+    <div class="filter-results" id="timbal-results"></div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/o15r3IxDgII"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Epab Verano Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+    <div class="videos-grid" id="timbal-grid">
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/rCL04gyBw4U"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Arreglo Tamaquinho</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/qyCe6Bl4g_s" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Funky Candeal</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/OAhvDDqfEAA"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Ile Nueva</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/cnKNc0pqPo8" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Itamar</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/e67jSl11img"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Forrodum Timbal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/rAR_HNF4nUk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Funky Candeal 2</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/734zVD3MkyM"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Cabila Timbal Epab</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/o15r3IxDgII" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Epab Verano Flur</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/2j7RD0T-f8c"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Funky Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/rCL04gyBw4U" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Arreglo Tamaquinho</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/dWnXpYwYN7g"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Intro Rua 15</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/OAhvDDqfEAA" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Ile Nueva</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/f2vUTfZOBCo"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Roda Flur</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/e67jSl11img" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Forrodum Timbal</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/w_nxKzTN0qc"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Intro Toque de Timbalero</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/734zVD3MkyM" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Cabila Timbal Epab</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/9PSN1ealCEI"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Convención Timbalada 1</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/2j7RD0T-f8c" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Funky Flur</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/zf36iP6ef38"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Convención Timbalada desde Timbal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/dWnXpYwYN7g" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Intro Rua 15</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/CG4H5cUwGcg"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Cabila Epab</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/f2vUTfZOBCo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Roda Flur</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/o3OkCw-luTI"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Variación Funky Candeal</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/w_nxKzTN0qc" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Intro Toque de Timbalero</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/TmkIiu-Q200"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte Rumba Tambores y Cores</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/9PSN1ealCEI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Convención Timbalada 1</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
-        <div class="video-card" data-cat="varios">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/d6XnyqSZzWs"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Barravento Corte Bad Bunny</p>
-              <span class="video-tag">Timbal</span>
-            </div>
-          </div>
-        </div>
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/zf36iP6ef38" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Convención Timbalada desde Timbal</p><span class="video-tag">Timbal</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/CG4H5cUwGcg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Cabila Epab</p><span class="video-tag">Timbal</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/o3OkCw-luTI" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Variación Funky Candeal</p><span class="video-tag">Timbal</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/TmkIiu-Q200" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Corte Rumba Tambores y Cores</p><span class="video-tag">Timbal</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="varios">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/d6XnyqSZzWs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Barravento Corte Bad Bunny</p><span class="video-tag">Timbal</span></div></div>
+      </div>
 
         <div class="video-card" data-cat="trio-surdos">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/9w1K9ZZ-2XM"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Samba Afro con Clave en Aro</p>
-              <span class="video-tag">Trio de Surdos</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="trio-surdos">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/jHixueQaCZU"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Forrodum Trio</p>
-              <span class="video-tag">Trio de Surdos</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="trio-surdos">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/gZcAQsW9fn0"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Reggae + Variación Reggae en Trio</p>
-              <span class="video-tag">Trio de Surdos</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="trio-surdos">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/cBkWOKaMC8E"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Ijexa + Samba Afro en Trio</p>
-              <span class="video-tag">Trio de Surdos</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/d8wOcMRKdRo"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Arreglo Tamaquinho Flur</p>
-              <span class="video-tag">Timbal Flur</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/BWZhFhW7U9I"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte Taboca Flur</p>
-              <span class="video-tag">Timbal Flur</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/uI1TpAktwk0"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Base Taboca Flur</p>
-              <span class="video-tag">Timbal Flur</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="timbal-flur">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/b_mut4FCz8Q"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">3 Bases Ijexa</p>
-              <span class="video-tag">Timbal Flur</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/_PtMi8GO9Qc"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte Cabila</p>
-              <span class="video-tag">Epab</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="video-card" data-cat="epab">
-          <div class="video-embed">
-            <iframe
-              src="https://www.youtube.com/embed/JdjECkHNq8c"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-              "
-              allowfullscreen
-            ></iframe>
-          </div>
-          <div class="video-info">
-            <div class="video-info-left">
-              <p class="video-title">Corte Final Timbalada</p>
-              <span class="video-tag">Epab</span>
-            </div>
-          </div>
-        </div>
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/9w1K9ZZ-2XM" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Samba Afro con Clave en Aro</p><span class="video-tag">Trio de Surdos</span></div></div>
       </div>
-    </section>
 
-    <!-- ======== RECURSOS ======== -->
-    <section class="content-section" id="section-recursos">
-      <div class="empty-state">
-        <div class="empty-icon">📄</div>
-        <h3>Próximamente</h3>
-        <p>Acá van a aparecer partituras, guías y materiales de estudio.</p>
+      <div class="video-card" data-cat="trio-surdos">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/jHixueQaCZU" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Forrodum Trio</p><span class="video-tag">Trio de Surdos</span></div></div>
       </div>
-    </section>
 
-    <div class="sala-footer">
-      <p>Material exclusivo para miembros · No compartir externamente</p>
+      <div class="video-card" data-cat="trio-surdos">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/gZcAQsW9fn0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Reggae + Variación Reggae en Trio</p><span class="video-tag">Trio de Surdos</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="trio-surdos">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/cBkWOKaMC8E" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Ijexa + Samba Afro en Trio</p><span class="video-tag">Trio de Surdos</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/d8wOcMRKdRo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Arreglo Tamaquinho Flur</p><span class="video-tag">Timbal Flur</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/BWZhFhW7U9I" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Corte Taboca Flur</p><span class="video-tag">Timbal Flur</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/uI1TpAktwk0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Base Taboca Flur</p><span class="video-tag">Timbal Flur</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="timbal-flur">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/b_mut4FCz8Q" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">3 Bases Ijexa</p><span class="video-tag">Timbal Flur</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/_PtMi8GO9Qc" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Corte Cabila</p><span class="video-tag">Epab</span></div></div>
+      </div>
+
+      <div class="video-card" data-cat="epab">
+        <div class="video-embed"><iframe src="https://www.youtube.com/embed/JdjECkHNq8c" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+        <div class="video-info"><div class="video-info-left"><p class="video-title">Corte Final Timbalada</p><span class="video-tag">Epab</span></div></div>
+      </div>
+
     </div>
+  </section>
 
-    <!-- BOTTOM NAV -->
-    <nav class="bottom-nav">
-      <button class="nav-item active" data-section="videos">
-        <svg
-          class="nav-svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <rect x="2" y="4" width="20" height="16" rx="3" />
-          <polygon
-            points="10,8 16,12 10,16"
-            fill="currentColor"
-            stroke="none"
-          />
-        </svg>
-        <span class="nav-label">Videos</span>
-      </button>
-      <button class="nav-item" data-section="audios">
-        <svg
-          class="nav-svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <circle cx="12" cy="12" r="10" />
-          <circle cx="12" cy="12" r="3" />
-          <line x1="12" y1="2" x2="12" y2="9" />
-        </svg>
-        <span class="nav-label">Audios</span>
-      </button>
-      <button class="nav-item" data-section="timbal">
-        <svg
-          class="nav-svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <ellipse cx="12" cy="8" rx="9" ry="4" />
-          <path d="M3 8v8c0 2.2 4 4 9 4s9-1.8 9-4V8" />
-          <line x1="12" y1="4" x2="10" y2="1" />
-          <line x1="16" y1="5" x2="18" y2="2" />
-        </svg>
-        <span class="nav-label">Timbal</span>
-      </button>
-      <button class="nav-item" data-section="recursos">
-        <svg
-          class="nav-svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <path
-            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-          />
-          <polyline points="14 2 14 8 20 8" />
-          <line x1="8" y1="13" x2="16" y2="13" />
-          <line x1="8" y1="17" x2="12" y2="17" />
-        </svg>
-        <span class="nav-label">Recursos</span>
-      </button>
-    </nav>
+  <!-- ======== RECURSOS ======== -->
+  <section class="content-section" id="section-recursos">
+    <div class="empty-state">
+      <div class="empty-icon">📄</div>
+      <h3>Próximamente</h3>
+      <p>Acá van a aparecer partituras, guías y materiales de estudio.</p>
+    </div>
+  </section>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-      import {
-        getAuth,
-        onAuthStateChanged,
-        signOut,
-      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-      import {
-        getFirestore,
-        doc,
-        getDoc,
-      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-      import {
-        initializeAppCheck,
-        ReCaptchaV3Provider,
-      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
+  <div class="sala-footer">
+    <p>Material exclusivo para miembros · No compartir externamente</p>
+  </div>
 
-      // 🔧 REEMPLAZÁ CON TU CONFIGURACIÓN DE FIREBASE
-      const firebaseConfig = {
-        apiKey: "AIzaSyBEn3XcZ8y1M-HPVTUFOjjZMWGY66OplqU",
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-section="videos">
+      <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="3"/>
+        <polygon points="10,8 16,12 10,16" fill="currentColor" stroke="none"/>
+      </svg>
+      <span class="nav-label">Videos</span>
+    </button>
+    <button class="nav-item" data-section="audios">
+      <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="3"/>
+        <line x1="12" y1="2" x2="12" y2="9"/>
+      </svg>
+      <span class="nav-label">Audios</span>
+    </button>
+    <button class="nav-item" data-section="timbal">
+      <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="8" rx="9" ry="4"/>
+        <path d="M3 8v8c0 2.2 4 4 9 4s9-1.8 9-4V8"/>
+        <line x1="12" y1="4" x2="10" y2="1"/>
+        <line x1="16" y1="5" x2="18" y2="2"/>
+      </svg>
+      <span class="nav-label">Timbal</span>
+    </button>
+    <button class="nav-item" data-section="recursos">
+      <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="8" y1="13" x2="16" y2="13"/>
+        <line x1="8" y1="17" x2="12" y2="17"/>
+      </svg>
+      <span class="nav-label">Recursos</span>
+    </button>
+  </nav>
 
-        authDomain: "arabatuweb-1ee65.firebaseapp.com",
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeAppCheck, ReCaptchaV3Provider }
+      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
 
-        projectId: "arabatuweb-1ee65",
+    // 🔧 REEMPLAZÁ CON TU CONFIGURACIÓN DE FIREBASE
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_PROYECTO.firebaseapp.com",
+      projectId: "TU_PROYECTO_ID",
+      storageBucket: "TU_PROYECTO.appspot.com",
+      messagingSenderId: "TU_SENDER_ID",
+      appId: "TU_APP_ID"
+    };
 
-        storageBucket: "arabatuweb-1ee65.firebasestorage.app",
+    const app = initializeApp(firebaseConfig);
 
-        messagingSenderId: "676384856570",
+    // App Check — protege contra usos no autorizados
+    initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider('6Ldrp7osAAAAANOjaeXUEOiiZAx7XaXqZLlg6rou'),
+      isTokenAutoRefreshEnabled: true
+    });
 
-        appId: "1:676384856570:web:967cab2e35a39986836c43",
-      };
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-      const app = initializeApp(firebaseConfig);
-
-      // App Check — protege contra usos no autorizados
-      initializeAppCheck(app, {
-        provider: new ReCaptchaV3Provider(
-          "6Ldrp7osAAAAANOjaeXUEOiiZAx7XaXqZLlg6rou",
-        ),
-        isTokenAutoRefreshEnabled: true,
-      });
-
-      const auth = getAuth(app);
-      const db = getFirestore(app);
-
-      onAuthStateChanged(auth, async (user) => {
-        if (!user) {
-          window.location.href = "./login.html";
-          return;
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) { window.location.href = "./login.html"; return; }
+      try {
+        const snap = await getDoc(doc(db, "users", user.uid));
+        if (!snap.exists() || !snap.data().approved) {
+          await signOut(auth); window.location.href = "./login.html"; return;
         }
-        try {
-          const snap = await getDoc(doc(db, "users", user.uid));
-          if (!snap.exists() || !snap.data().approved) {
-            await signOut(auth);
-            window.location.href = "./login.html";
-            return;
-          }
-          const name = snap.data().name || user.email;
-          document.getElementById("user-name-pill").textContent =
-            `Hola, ${name.split(" ")[0]}`;
-          document.getElementById("loading-screen").style.opacity = "0";
-          setTimeout(
-            () =>
-              (document.getElementById("loading-screen").style.display =
-                "none"),
-            400,
-          );
-        } catch (err) {
-          console.error(err);
-          window.location.href = "./login.html";
-        }
+        const name = snap.data().name || user.email;
+        document.getElementById('user-name-pill').textContent = `Hola, ${name.split(' ')[0]}`;
+        document.getElementById('loading-screen').style.opacity = '0';
+        setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 400);
+      } catch (err) { console.error(err); window.location.href = "./login.html"; }
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', async () => {
+      await signOut(auth); window.location.href = "./login.html";
+    });
+
+    // Show/hide desktop tabs based on screen size
+    const desktopTabs = document.getElementById('desktop-tabs');
+    function checkDesktop() {
+      desktopTabs.style.display = window.innerWidth >= 768 ? 'flex' : 'none';
+    }
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+
+    // Section switch
+    function switchSection(target) {
+      document.querySelectorAll('.content-section').forEach(s =>
+        s.classList.toggle('active', s.id === `section-${target}`)
+      );
+      document.querySelectorAll('.nav-item, .desktop-tab').forEach(el =>
+        el.classList.toggle('active', el.dataset.section === target)
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.nav-item, .desktop-tab').forEach(el => {
+      el.addEventListener('click', () => switchSection(el.dataset.section));
+    });
+
+    // Video filter — search + dropdown combinados
+    function applyVideoFilter() {
+      const search = document.getElementById('video-search').value.toLowerCase().trim();
+      const cat = document.getElementById('video-select').value;
+      const clearBtn = document.getElementById('video-clear');
+      const resultsEl = document.getElementById('video-results');
+
+      const isFiltering = search !== '' || cat !== 'all';
+      clearBtn.classList.toggle('visible', isFiltering);
+
+      let visible = 0;
+      document.querySelectorAll('#videos-grid .video-card').forEach(card => {
+        const title = card.querySelector('.video-title')?.textContent.toLowerCase() || '';
+        const matchCat = cat === 'all' || card.dataset.cat === cat;
+        const matchSearch = search === '' || title.includes(search);
+        const show = matchCat && matchSearch;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
       });
 
-      document
-        .getElementById("btn-logout")
-        .addEventListener("click", async () => {
-          await signOut(auth);
-          window.location.href = "./login.html";
-        });
+      document.getElementById('videos-empty').style.display = visible === 0 ? 'block' : 'none';
 
-      // Show/hide desktop tabs based on screen size
-      const desktopTabs = document.getElementById("desktop-tabs");
-      function checkDesktop() {
-        desktopTabs.style.display = window.innerWidth >= 768 ? "flex" : "none";
+      if (isFiltering) {
+        resultsEl.classList.add('visible');
+        resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? 'video encontrado' : 'videos encontrados'}`;
+      } else {
+        resultsEl.classList.remove('visible');
       }
-      checkDesktop();
-      window.addEventListener("resize", checkDesktop);
+    }
 
-      // Section switch
-      function switchSection(target) {
-        document
-          .querySelectorAll(".content-section")
-          .forEach((s) =>
-            s.classList.toggle("active", s.id === `section-${target}`),
-          );
-        document
-          .querySelectorAll(".nav-item, .desktop-tab")
-          .forEach((el) =>
-            el.classList.toggle("active", el.dataset.section === target),
-          );
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+    document.getElementById('video-search').addEventListener('input', applyVideoFilter);
+    document.getElementById('video-select').addEventListener('change', applyVideoFilter);
+    document.getElementById('video-clear').addEventListener('click', () => {
+      document.getElementById('video-search').value = '';
+      document.getElementById('video-select').value = 'all';
+      applyVideoFilter();
+    });
 
-      document.querySelectorAll(".nav-item, .desktop-tab").forEach((el) => {
-        el.addEventListener("click", () => switchSection(el.dataset.section));
+    // Audio filter — search + dropdown combinados
+    function applyAudioFilter() {
+      const search = document.getElementById('audio-search').value.toLowerCase().trim();
+      const cat = document.getElementById('audio-select').value;
+      const clearBtn = document.getElementById('audio-clear');
+      const resultsEl = document.getElementById('audio-results');
+
+      const isFiltering = search !== '' || cat !== 'all';
+      clearBtn.classList.toggle('visible', isFiltering);
+
+      let visible = 0;
+      document.querySelectorAll('#audios-list .audio-card').forEach(card => {
+        const title = card.querySelector('.audio-title')?.textContent.toLowerCase() || '';
+        const matchCat = cat === 'all' || card.dataset.cat === cat;
+        const matchSearch = search === '' || title.includes(search);
+        const show = matchCat && matchSearch;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
       });
 
-      // Video filter — search + dropdown combinados
-      function applyVideoFilter() {
-        const search = document
-          .getElementById("video-search")
-          .value.toLowerCase()
-          .trim();
-        const cat = document.getElementById("video-select").value;
-        const clearBtn = document.getElementById("video-clear");
-        const resultsEl = document.getElementById("video-results");
+      document.getElementById('audios-empty').style.display = visible === 0 ? 'block' : 'none';
 
-        const isFiltering = search !== "" || cat !== "all";
-        clearBtn.classList.toggle("visible", isFiltering);
-
-        let visible = 0;
-        document
-          .querySelectorAll("#videos-grid .video-card")
-          .forEach((card) => {
-            const title =
-              card.querySelector(".video-title")?.textContent.toLowerCase() ||
-              "";
-            const matchCat = cat === "all" || card.dataset.cat === cat;
-            const matchSearch = search === "" || title.includes(search);
-            const show = matchCat && matchSearch;
-            card.classList.toggle("hidden", !show);
-            if (show) visible++;
-          });
-
-        document.getElementById("videos-empty").style.display =
-          visible === 0 ? "block" : "none";
-
-        if (isFiltering) {
-          resultsEl.classList.add("visible");
-          resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? "video encontrado" : "videos encontrados"}`;
-        } else {
-          resultsEl.classList.remove("visible");
-        }
+      if (isFiltering) {
+        resultsEl.classList.add('visible');
+        resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? 'audio encontrado' : 'audios encontrados'}`;
+      } else {
+        resultsEl.classList.remove('visible');
       }
+    }
 
-      document
-        .getElementById("video-search")
-        .addEventListener("input", applyVideoFilter);
-      document
-        .getElementById("video-select")
-        .addEventListener("change", applyVideoFilter);
-      document.getElementById("video-clear").addEventListener("click", () => {
-        document.getElementById("video-search").value = "";
-        document.getElementById("video-select").value = "all";
-        applyVideoFilter();
+    // Timbal filter
+    function applyTimbalFilter() {
+      const search = document.getElementById('timbal-search').value.toLowerCase().trim();
+      const cat = document.getElementById('timbal-select').value;
+      const clearBtn = document.getElementById('timbal-clear');
+      const resultsEl = document.getElementById('timbal-results');
+      const isFiltering = search !== '' || cat !== 'all';
+      clearBtn.classList.toggle('visible', isFiltering);
+      let visible = 0;
+      document.querySelectorAll('#timbal-grid .video-card').forEach(card => {
+        const title = card.querySelector('.video-title')?.textContent.toLowerCase() || '';
+        const matchCat = cat === 'all' || card.dataset.cat === cat;
+        const matchSearch = search === '' || title.includes(search);
+        const show = matchCat && matchSearch;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
       });
+      if (isFiltering) {
+        resultsEl.classList.add('visible');
+        resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? 'video encontrado' : 'videos encontrados'}`;
+      } else { resultsEl.classList.remove('visible'); }
+    }
+    document.getElementById('timbal-search').addEventListener('input', applyTimbalFilter);
+    document.getElementById('timbal-select').addEventListener('change', applyTimbalFilter);
+    document.getElementById('timbal-clear').addEventListener('click', () => {
+      document.getElementById('timbal-search').value = '';
+      document.getElementById('timbal-select').value = 'all';
+      applyTimbalFilter();
+    });
 
-      // Audio filter — search + dropdown combinados
-      function applyAudioFilter() {
-        const search = document
-          .getElementById("audio-search")
-          .value.toLowerCase()
-          .trim();
-        const cat = document.getElementById("audio-select").value;
-        const clearBtn = document.getElementById("audio-clear");
-        const resultsEl = document.getElementById("audio-results");
+        document.getElementById('audio-search').addEventListener('input', applyAudioFilter);
+    document.getElementById('audio-select').addEventListener('change', applyAudioFilter);
+    document.getElementById('audio-clear').addEventListener('click', () => {
+      document.getElementById('audio-search').value = '';
+      document.getElementById('audio-select').value = 'all';
+      applyAudioFilter();
+    });
+  </script>
 
-        const isFiltering = search !== "" || cat !== "all";
-        clearBtn.classList.toggle("visible", isFiltering);
-
-        let visible = 0;
-        document
-          .querySelectorAll("#audios-list .audio-card")
-          .forEach((card) => {
-            const title =
-              card.querySelector(".audio-title")?.textContent.toLowerCase() ||
-              "";
-            const matchCat = cat === "all" || card.dataset.cat === cat;
-            const matchSearch = search === "" || title.includes(search);
-            const show = matchCat && matchSearch;
-            card.classList.toggle("hidden", !show);
-            if (show) visible++;
-          });
-
-        document.getElementById("audios-empty").style.display =
-          visible === 0 ? "block" : "none";
-
-        if (isFiltering) {
-          resultsEl.classList.add("visible");
-          resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? "audio encontrado" : "audios encontrados"}`;
-        } else {
-          resultsEl.classList.remove("visible");
-        }
-      }
-
-      // Timbal filter
-      function applyTimbalFilter() {
-        const search = document
-          .getElementById("timbal-search")
-          .value.toLowerCase()
-          .trim();
-        const cat = document.getElementById("timbal-select").value;
-        const clearBtn = document.getElementById("timbal-clear");
-        const resultsEl = document.getElementById("timbal-results");
-        const isFiltering = search !== "" || cat !== "all";
-        clearBtn.classList.toggle("visible", isFiltering);
-        let visible = 0;
-        document
-          .querySelectorAll("#timbal-grid .video-card")
-          .forEach((card) => {
-            const title =
-              card.querySelector(".video-title")?.textContent.toLowerCase() ||
-              "";
-            const matchCat = cat === "all" || card.dataset.cat === cat;
-            const matchSearch = search === "" || title.includes(search);
-            const show = matchCat && matchSearch;
-            card.classList.toggle("hidden", !show);
-            if (show) visible++;
-          });
-        if (isFiltering) {
-          resultsEl.classList.add("visible");
-          resultsEl.innerHTML = `<span>${visible}</span> ${visible === 1 ? "video encontrado" : "videos encontrados"}`;
-        } else {
-          resultsEl.classList.remove("visible");
-        }
-      }
-      document
-        .getElementById("timbal-search")
-        .addEventListener("input", applyTimbalFilter);
-      document
-        .getElementById("timbal-select")
-        .addEventListener("change", applyTimbalFilter);
-      document.getElementById("timbal-clear").addEventListener("click", () => {
-        document.getElementById("timbal-search").value = "";
-        document.getElementById("timbal-select").value = "all";
-        applyTimbalFilter();
-      });
-
-      document
-        .getElementById("audio-search")
-        .addEventListener("input", applyAudioFilter);
-      document
-        .getElementById("audio-select")
-        .addEventListener("change", applyAudioFilter);
-      document.getElementById("audio-clear").addEventListener("click", () => {
-        document.getElementById("audio-search").value = "";
-        document.getElementById("audio-select").value = "all";
-        applyAudioFilter();
-      });
-    </script>
-  </body>
+</body>
 </html>

@@ -51,8 +51,6 @@
         text-decoration: none;
         color: inherit;
       }
-
-      /* LOADING */
       #loading-screen {
         position: fixed;
         inset: 0;
@@ -97,8 +95,6 @@
           transform: scale(1);
         }
       }
-
-      /* TOP BAR */
       .top-bar {
         position: fixed;
         top: 0;
@@ -154,15 +150,11 @@
         border-color: var(--yellow);
         color: var(--yellow);
       }
-
-      /* PAGE WRAP */
       .page-wrap {
         max-width: 860px;
         margin: 0 auto;
         padding: calc(var(--top-h) + 28px) 20px 60px;
       }
-
-      /* HEADER */
       .page-eyebrow {
         font-size: 0.65rem;
         font-weight: 600;
@@ -187,8 +179,6 @@
         margin-bottom: 32px;
         line-height: 1.6;
       }
-
-      /* TABS */
       .prode-tabs {
         display: flex;
         gap: 4px;
@@ -217,8 +207,6 @@
       .prode-tab:hover {
         color: var(--white);
       }
-
-      /* PANEL */
       .prode-panel {
         display: none;
       }
@@ -236,8 +224,6 @@
           transform: translateY(0);
         }
       }
-
-      /* SAVE BAR */
       .save-bar {
         position: sticky;
         top: var(--top-h);
@@ -245,10 +231,8 @@
         background: rgba(8, 8, 8, 0.95);
         backdrop-filter: blur(16px);
         border-bottom: 1px solid rgba(255, 229, 0, 0.1);
-        padding: 12px 0;
+        padding: 12px 20px;
         margin: 0 -20px 24px;
-        padding-left: 20px;
-        padding-right: 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -300,8 +284,6 @@
         border: 1px solid rgba(244, 67, 54, 0.3);
         display: block;
       }
-
-      /* GROUP SECTION */
       .grupo-section {
         margin-bottom: 32px;
       }
@@ -324,8 +306,6 @@
         font-size: 0.75rem;
         color: var(--gray-light);
       }
-
-      /* PARTIDO CARD */
       .partido-card {
         background: rgba(255, 255, 255, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.06);
@@ -355,7 +335,6 @@
       .partido-card.incorrecto {
         border-color: rgba(244, 67, 54, 0.2);
       }
-
       .equipo-block {
         display: flex;
         flex-direction: column;
@@ -372,11 +351,6 @@
         color: var(--white);
         line-height: 1;
       }
-      .equipo-bandera {
-        font-size: 1.2rem;
-        line-height: 1;
-      }
-
       .marcador-block {
         display: flex;
         align-items: center;
@@ -410,36 +384,32 @@
         font-size: 1.2rem;
         color: var(--gray-light);
       }
-
       .partido-fecha {
         font-size: 0.65rem;
         color: var(--gray-light);
         letter-spacing: 0.06em;
         text-align: center;
-        grid-column: 1 / -1;
+        grid-column: 1/-1;
         margin-top: 4px;
       }
-
-      /* RESULTADO REAL badge */
       .resultado-real {
         font-size: 0.7rem;
         font-weight: 600;
         color: var(--green);
         letter-spacing: 0.06em;
-        grid-column: 1 / -1;
+        grid-column: 1/-1;
         text-align: center;
         display: none;
       }
       .resultado-real.visible {
         display: block;
       }
-
       .partido-puntos {
         font-size: 0.68rem;
         font-weight: 600;
         padding: 2px 8px;
         border-radius: 6px;
-        grid-column: 1 / -1;
+        grid-column: 1/-1;
         text-align: right;
         display: none;
       }
@@ -457,8 +427,6 @@
         display: block;
         color: var(--gray-light);
       }
-
-      /* FASE 32 */
       .fase32-info {
         background: var(--yellow-dim);
         border: 1px solid var(--yellow-border);
@@ -472,8 +440,6 @@
       .fase32-info strong {
         color: var(--yellow);
       }
-
-      /* RANKING */
       .ranking-table {
         width: 100%;
         border-collapse: collapse;
@@ -527,10 +493,6 @@
         color: var(--yellow);
         text-align: right;
       }
-      .rank-detail {
-        font-size: 0.72rem;
-        color: var(--gray-light);
-      }
       .ranking-empty {
         text-align: center;
         padding: 40px;
@@ -576,11 +538,10 @@
         <button class="prode-tab" data-tab="ranking">🏅 Ranking</button>
       </div>
 
-      <!-- ===== FASE DE GRUPOS ===== -->
       <div class="prode-panel active" id="panel-grupos">
         <div class="save-bar">
           <span class="save-bar-info"
-            >Guardando como: <strong id="display-nombre">...</strong></span
+            >Jugando como: <strong id="display-nombre">...</strong></span
           >
           <div style="display: flex; gap: 10px; align-items: center">
             <span class="save-msg" id="save-msg-grupos"></span>
@@ -589,15 +550,13 @@
             </button>
           </div>
         </div>
-
         <div id="grupos-container"></div>
       </div>
 
-      <!-- ===== RONDA DE 32 ===== -->
       <div class="prode-panel" id="panel-fase32">
         <div class="save-bar">
           <span class="save-bar-info"
-            >Guardando como: <strong id="display-nombre-32">...</strong></span
+            >Jugando como: <strong id="display-nombre-32">...</strong></span
           >
           <div style="display: flex; gap: 10px; align-items: center">
             <span class="save-msg" id="save-msg-32"></span>
@@ -606,17 +565,14 @@
             </button>
           </div>
         </div>
-
         <div class="fase32-info">
-          <strong>Ronda de 32 — Dieciseisavos de Final</strong><br />
-          Los cruces se definen según cómo terminen los grupos. Completá tu
-          predicción de ganador en cada partido.
+          <strong>Ronda de 32 — Dieciseisavos de Final</strong><br />Los cruces
+          se definen según cómo terminen los grupos. Completá tu predicción en
+          cada partido.
         </div>
-
         <div id="fase32-container"></div>
       </div>
 
-      <!-- ===== RANKING ===== -->
       <div class="prode-panel" id="panel-ranking">
         <div id="ranking-container">
           <div class="ranking-empty">Cargando ranking...</div>
@@ -625,7 +581,11 @@
     </div>
 
     <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import {
+        initializeApp,
+        getApps,
+        getApp,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
       import {
         getAuth,
         onAuthStateChanged,
@@ -655,13 +615,12 @@
         appId: "1:676384856570:web:967cab2e35a39986836c43",
       };
 
-      const app = initializeApp(firebaseConfig);
+      // ✅ Reutiliza la instancia existente para no romper el login
+      const app =
+        getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
       const auth = getAuth(app);
       const db = getFirestore(app);
 
-      // =============================================
-      // DATOS DEL MUNDIAL
-      // =============================================
       const GRUPOS = [
         {
           id: "A",
@@ -1234,19 +1193,13 @@
         },
       ];
 
-      // =============================================
-      // STATE
-      // =============================================
-      let currentUser = null;
-      let userName = "";
-      let predGrupos = {};
-      let predFase32 = {};
-      let resultados = {};
-      let locked = {};
+      let currentUser = null,
+        userName = "",
+        predGrupos = {},
+        predFase32 = {},
+        resultados = {},
+        locked = {};
 
-      // =============================================
-      // AUTH
-      // =============================================
       onAuthStateChanged(auth, async (user) => {
         if (!user) {
           window.location.href = "./login.html";
@@ -1281,169 +1234,159 @@
         }
       });
 
-      // =============================================
-      // LOAD DATA
-      // =============================================
       async function loadData() {
-        // Predicciones del usuario
         const predDoc = await getDoc(doc(db, "predicciones", currentUser.uid));
         if (predDoc.exists()) {
           const d = predDoc.data();
           predGrupos = d.grupos || {};
           predFase32 = d.fase32 || {};
         }
-        // Resultados reales (cargados por admin)
         const resDoc = await getDoc(doc(db, "resultados", "mundialistas"));
-        if (resDoc.exists()) {
-          resultados = resDoc.data();
-        }
-        // Partidos bloqueados (partido empezó, no se puede editar)
+        if (resDoc.exists()) resultados = resDoc.data();
         const lockDoc = await getDoc(doc(db, "config", "locked"));
-        if (lockDoc.exists()) {
-          locked = lockDoc.data();
-        }
+        if (lockDoc.exists()) locked = lockDoc.data();
       }
 
-      // =============================================
-      // RENDER GRUPOS
-      // =============================================
+      function calcPuntos(pred, res) {
+        if (!res || pred.local === "" || pred.visita === "") return null;
+        const pl = parseInt(pred.local),
+          pv = parseInt(pred.visita),
+          rl = parseInt(res.local),
+          rv = parseInt(res.visita);
+        if (pl === rl && pv === rv) return 3;
+        const pg = pl > pv ? "L" : pl < pv ? "V" : "E",
+          rg = rl > rv ? "L" : rl < rv ? "V" : "E";
+        return pg === rg ? 1 : 0;
+      }
+
+      function totalPuntos(pred, res) {
+        let t = 0;
+        Object.keys(pred).forEach((pid) => {
+          const p = calcPuntos(pred[pid], res[pid]);
+          if (p) t += p;
+        });
+        return t;
+      }
+
       function renderGrupos() {
         const container = document.getElementById("grupos-container");
         container.innerHTML = "";
         GRUPOS.forEach((grupo) => {
           const section = document.createElement("div");
           section.className = "grupo-section";
-          section.innerHTML = `
-          <div class="grupo-header">
-            <span class="grupo-badge">Grupo ${grupo.id}</span>
-            <span class="grupo-equipos">${grupo.equipos.join(" · ")}</span>
-          </div>`;
+          section.innerHTML = `<div class="grupo-header"><span class="grupo-badge">Grupo ${grupo.id}</span><span class="grupo-equipos">${grupo.equipos.join(" · ")}</span></div>`;
           grupo.partidos.forEach((p) => {
             const pred = predGrupos[p.id] || { local: "", visita: "" };
-            const res = resultados[p.id];
-            const isLocked = locked[p.id];
+            const res = resultados[p.id],
+              isLocked = locked[p.id];
             const pts = calcPuntos(pred, res);
-            let cardClass = "";
-            if (res)
-              cardClass =
-                pts === 3 ? "correcto" : pts === 1 ? "parcial" : "incorrecto";
+            const cardClass = res
+              ? pts === 3
+                ? "correcto"
+                : pts === 1
+                  ? "parcial"
+                  : "incorrecto"
+              : "";
+            const ptsClass =
+              pts === 3
+                ? "pts3"
+                : pts === 1
+                  ? "pts1"
+                  : pts === 0 && res
+                    ? "pts0"
+                    : "";
+            const ptsText =
+              pts === 3
+                ? "✅ +3 pts — ¡Resultado exacto!"
+                : pts === 1
+                  ? "🟡 +1 pt — Ganador correcto"
+                  : pts === 0 && res
+                    ? "❌ 0 pts"
+                    : "";
             section.innerHTML += `
             <div class="partido-card ${isLocked ? "locked" : ""} ${cardClass}">
-              <div class="equipo-block">
-                <span class="equipo-nombre">${p.local}</span>
-              </div>
+              <div class="equipo-block"><span class="equipo-nombre">${p.local}</span></div>
               <div class="marcador-block">
-                <input class="score-input" type="number" min="0" max="99"
-                  data-partido="${p.id}" data-lado="local"
-                  value="${pred.local !== "" ? pred.local : ""}"
-                  placeholder="?" ${isLocked ? "disabled" : ""} />
+                <input class="score-input" type="number" min="0" max="99" data-partido="${p.id}" data-lado="local" value="${pred.local !== "" ? pred.local : ""}" placeholder="?" ${isLocked ? "disabled" : ""} />
                 <span class="score-sep">-</span>
-                <input class="score-input" type="number" min="0" max="99"
-                  data-partido="${p.id}" data-lado="visita"
-                  value="${pred.visita !== "" ? pred.visita : ""}"
-                  placeholder="?" ${isLocked ? "disabled" : ""} />
+                <input class="score-input" type="number" min="0" max="99" data-partido="${p.id}" data-lado="visita" value="${pred.visita !== "" ? pred.visita : ""}" placeholder="?" ${isLocked ? "disabled" : ""} />
               </div>
-              <div class="equipo-block derecha">
-                <span class="equipo-nombre">${p.visita}</span>
-              </div>
+              <div class="equipo-block derecha"><span class="equipo-nombre">${p.visita}</span></div>
               <div class="partido-fecha">${p.fecha}</div>
               ${res ? `<div class="resultado-real visible">Resultado final: ${res.local} - ${res.visita}</div>` : ""}
-              <div class="partido-puntos ${pts === 3 ? "pts3" : pts === 1 ? "pts1" : pts === 0 && res ? "pts0" : ""}">
-                ${pts === 3 ? "✅ +3 pts — ¡Resultado exacto!" : pts === 1 ? "🟡 +1 pt — Ganador correcto" : pts === 0 && res ? "❌ 0 pts" : ""}
-              </div>
+              <div class="partido-puntos ${ptsClass}">${ptsText}</div>
             </div>`;
           });
           container.appendChild(section);
         });
-        // Listeners
         container.querySelectorAll(".score-input").forEach((input) => {
           input.addEventListener("input", () => {
-            const pid = input.dataset.partido;
-            const lado = input.dataset.lado;
+            const pid = input.dataset.partido,
+              lado = input.dataset.lado;
             if (!predGrupos[pid]) predGrupos[pid] = { local: "", visita: "" };
             predGrupos[pid][lado] = input.value;
           });
         });
       }
 
-      // =============================================
-      // RENDER FASE 32
-      // =============================================
       function renderFase32() {
         const container = document.getElementById("fase32-container");
         container.innerHTML = "";
         FASE32.forEach((p) => {
           const pred = predFase32[p.id] || { local: "", visita: "" };
-          const res = resultados[p.id];
-          const isLocked = locked[p.id];
+          const res = resultados[p.id],
+            isLocked = locked[p.id];
           const pts = calcPuntos(pred, res);
-          let cardClass = "";
-          if (res)
-            cardClass =
-              pts === 3 ? "correcto" : pts === 1 ? "parcial" : "incorrecto";
+          const cardClass = res
+            ? pts === 3
+              ? "correcto"
+              : pts === 1
+                ? "parcial"
+                : "incorrecto"
+            : "";
+          const ptsClass =
+            pts === 3
+              ? "pts3"
+              : pts === 1
+                ? "pts1"
+                : pts === 0 && res
+                  ? "pts0"
+                  : "";
+          const ptsText =
+            pts === 3
+              ? "✅ +3 pts — ¡Resultado exacto!"
+              : pts === 1
+                ? "🟡 +1 pt — Ganador correcto"
+                : pts === 0 && res
+                  ? "❌ 0 pts"
+                  : "";
           container.innerHTML += `
           <div class="partido-card ${isLocked ? "locked" : ""} ${cardClass}">
             <div class="equipo-block" style="grid-column:1/-1;margin-bottom:6px;">
-              <span style="font-size:0.78rem;color:var(--gray-light);">Partido ${p.id} · ${p.fecha}</span><br>
-              <span style="font-family:var(--font-display);font-size:1rem;letter-spacing:0.03em;">${p.desc}</span>
+              <span style="font-size:.78rem;color:var(--gray-light);">Partido ${p.id} · ${p.fecha}</span><br>
+              <span style="font-family:var(--font-display);font-size:1rem;letter-spacing:.03em;">${p.desc}</span>
             </div>
             <div class="equipo-block"><span class="equipo-nombre">Local</span></div>
             <div class="marcador-block">
-              <input class="score-input" type="number" min="0" max="99"
-                data-partido="${p.id}" data-lado="local"
-                value="${pred.local !== "" ? pred.local : ""}"
-                placeholder="?" ${isLocked ? "disabled" : ""} />
+              <input class="score-input" type="number" min="0" max="99" data-partido="${p.id}" data-lado="local" value="${pred.local !== "" ? pred.local : ""}" placeholder="?" ${isLocked ? "disabled" : ""} />
               <span class="score-sep">-</span>
-              <input class="score-input" type="number" min="0" max="99"
-                data-partido="${p.id}" data-lado="visita"
-                value="${pred.visita !== "" ? pred.visita : ""}"
-                placeholder="?" ${isLocked ? "disabled" : ""} />
+              <input class="score-input" type="number" min="0" max="99" data-partido="${p.id}" data-lado="visita" value="${pred.visita !== "" ? pred.visita : ""}" placeholder="?" ${isLocked ? "disabled" : ""} />
             </div>
             <div class="equipo-block derecha"><span class="equipo-nombre">Visita</span></div>
             ${res ? `<div class="resultado-real visible">Resultado final: ${res.local} - ${res.visita}</div>` : ""}
-            <div class="partido-puntos ${pts === 3 ? "pts3" : pts === 1 ? "pts1" : pts === 0 && res ? "pts0" : ""}">
-              ${pts === 3 ? "✅ +3 pts — ¡Resultado exacto!" : pts === 1 ? "🟡 +1 pt — Ganador correcto" : pts === 0 && res ? "❌ 0 pts" : ""}
-            </div>
+            <div class="partido-puntos ${ptsClass}">${ptsText}</div>
           </div>`;
         });
         container.querySelectorAll(".score-input").forEach((input) => {
           input.addEventListener("input", () => {
-            const pid = input.dataset.partido;
-            const lado = input.dataset.lado;
+            const pid = input.dataset.partido,
+              lado = input.dataset.lado;
             if (!predFase32[pid]) predFase32[pid] = { local: "", visita: "" };
             predFase32[pid][lado] = input.value;
           });
         });
       }
 
-      // =============================================
-      // CALCULAR PUNTOS
-      // =============================================
-      function calcPuntos(pred, res) {
-        if (!res || pred.local === "" || pred.visita === "") return null;
-        const pl = parseInt(pred.local),
-          pv = parseInt(pred.visita);
-        const rl = parseInt(res.local),
-          rv = parseInt(res.visita);
-        if (pl === rl && pv === rv) return 3;
-        const predGanador = pl > pv ? "L" : pl < pv ? "V" : "E";
-        const resGanador = rl > rv ? "L" : rl < rv ? "V" : "E";
-        if (predGanador === resGanador) return 1;
-        return 0;
-      }
-
-      function totalPuntos(pred, res) {
-        let total = 0;
-        Object.keys(pred).forEach((pid) => {
-          const p = calcPuntos(pred[pid], res[pid]);
-          if (p) total += p;
-        });
-        return total;
-      }
-
-      // =============================================
-      // GUARDAR
-      // =============================================
       async function guardar(tipo) {
         const msgEl = document.getElementById(
           `save-msg-${tipo === "grupos" ? "grupos" : "32"}`,
@@ -1474,9 +1417,6 @@
         .getElementById("btn-save-32")
         .addEventListener("click", () => guardar("32"));
 
-      // =============================================
-      // RANKING
-      // =============================================
       async function renderRanking() {
         const container = document.getElementById("ranking-container");
         try {
@@ -1484,6 +1424,7 @@
           const jugadores = [];
           snap.forEach((d) => {
             const data = d.data();
+            if (d.id === "_init") return;
             const pts = totalPuntos(
               { ...data.grupos, ...data.fase32 },
               resultados,
@@ -1502,11 +1443,7 @@
             const posClass =
               i === 0 ? "gold" : i === 1 ? "silver" : i === 2 ? "bronze" : "";
             const esYo = j.uid === currentUser.uid;
-            html += `<tr>
-            <td class="rank-pos ${posClass}">${i + 1}</td>
-            <td><span class="rank-nombre ${esYo ? "rank-yo" : ""}">${j.nombre}${esYo ? " (vos)" : ""}</span></td>
-            <td class="rank-pts">${j.pts}</td>
-          </tr>`;
+            html += `<tr><td class="rank-pos ${posClass}">${i + 1}</td><td><span class="rank-nombre ${esYo ? "rank-yo" : ""}">${j.nombre}${esYo ? " (vos)" : ""}</span></td><td class="rank-pts">${j.pts}</td></tr>`;
           });
           html += "</tbody></table>";
           container.innerHTML = html;
@@ -1516,9 +1453,6 @@
         }
       }
 
-      // =============================================
-      // TABS
-      // =============================================
       document.querySelectorAll(".prode-tab").forEach((tab) => {
         tab.addEventListener("click", () => {
           document
@@ -1528,8 +1462,9 @@
             .querySelectorAll(".prode-panel")
             .forEach((p) => p.classList.remove("active"));
           tab.classList.add("active");
-          const panel = document.getElementById(`panel-${tab.dataset.tab}`);
-          panel.classList.add("active");
+          document
+            .getElementById(`panel-${tab.dataset.tab}`)
+            .classList.add("active");
           if (tab.dataset.tab === "ranking") renderRanking();
           window.scrollTo({ top: 0, behavior: "smooth" });
         });

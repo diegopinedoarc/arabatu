@@ -2027,6 +2027,9 @@
             return;
           }
           const name = snap.data().name || user.email;
+          // Guardamos en sessionStorage para que prode.html pueda acceder
+          sessionStorage.setItem("arabatu_uid", user.uid);
+          sessionStorage.setItem("arabatu_name", name);
           document.getElementById("user-name-pill").textContent =
             `Hola, ${name.split(" ")[0]}`;
           document.getElementById("loading-screen").style.opacity = "0";
@@ -2045,6 +2048,8 @@
       document
         .getElementById("btn-logout")
         .addEventListener("click", async () => {
+          sessionStorage.removeItem("arabatu_uid");
+          sessionStorage.removeItem("arabatu_name");
           await signOut(auth);
           window.location.href = "./login.html";
         });

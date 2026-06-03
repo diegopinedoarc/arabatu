@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+  <title>Control Caja · Arabatu Bloco</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --yellow: #FFE500;
+      --yellow-dim: rgba(255,229,0,0.08);
+      --yellow-border: rgba(255,229,0,0.18);
+      --dark: #080808;
+      --dark-2: #111;
+      --dark-3: #181818;
+      --dark-4: #242424;
+      --white: #F5F0E8;
+      --gray: #555;
+      --gray-light: #888;
+      --green: #4CAF50;
+      --green-dim: rgba(76,175,80,0.1);
+      --red: #F44336;
+      --red-dim: rgba(244,67,54,0.1);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --top-h: 62px;
+      --ease: cubic-bezier(0.16,1,0.3,1);
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-body);background:var(--dark);background-image:url('./assets/images/fondobody.jpg');background-attachment:fixed;background-size:cover;color:var(--white);min-height:100svh}
+    a{text-decoration:none;color:inherit}
+
+    /* LOADING */
+    #loading-screen{position:fixed;inset:0;background:var(--dark);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .4s ease}
+    #loading-screen img{height:48px;filter:drop-shadow(0 0 16px rgba(255,229,0,.5))}
+    .loading-dots{display:flex;gap:8px}
+    .loading-dots span{width:8px;height:8px;background:var(--yellow);border-radius:50%;animation:pulse 1.2s ease-in-out infinite}
+    .loading-dots span:nth-child(2){animation-delay:.2s}
+    .loading-dots span:nth-child(3){animation-delay:.4s}
+    @keyframes pulse{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+
+    /* TOP BAR */
+    .top-bar{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--top-h);display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(8,8,8,.97);border-bottom:1px solid rgba(255,229,0,.1);backdrop-filter:blur(20px)}
+    .top-bar-left{display:flex;align-items:center;gap:10px}
+    .top-bar-logo{height:34px;filter:drop-shadow(0 0 8px rgba(255,229,0,.3))}
+    .top-bar-badge{font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dark);background:var(--yellow);padding:3px 10px;border-radius:100px}
+    .top-bar-right{display:flex;align-items:center;gap:10px}
+    .user-pill{font-size:.75rem;color:var(--gray-light);background:var(--dark-3);border:1px solid rgba(255,255,255,.06);padding:5px 12px;border-radius:100px}
+    .btn-logout{font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--gray-light);padding:8px 14px;border:1px solid rgba(255,255,255,.08);border-radius:10px;transition:all .2s;cursor:pointer;background:none;font-family:var(--font-body)}
+    .btn-logout:hover{border-color:var(--yellow);color:var(--yellow)}
+
+    /* PAGE */
+    .page-wrap{max-width:960px;margin:0 auto;padding:calc(var(--top-h) + 24px) 20px 60px}
+
+    /* DASHBOARD */
+    .dashboard{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:28px}
+    .dash-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:18px 20px}
+    .dash-card.verde{border-color:rgba(76,175,80,.25);background:rgba(76,175,80,.05)}
+    .dash-card.rojo{border-color:rgba(244,67,54,.25);background:rgba(244,67,54,.05)}
+    .dash-card.amarillo{border-color:var(--yellow-border);background:var(--yellow-dim)}
+    .dash-label{font-size:.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gray-light);margin-bottom:6px}
+    .dash-card.verde .dash-label{color:var(--green)}
+    .dash-card.rojo .dash-label{color:var(--red)}
+    .dash-card.amarillo .dash-label{color:var(--yellow)}
+    .dash-value{font-family:var(--font-display);font-size:1.6rem;letter-spacing:.03em;color:var(--white)}
+    .dash-card.verde .dash-value{color:var(--green)}
+    .dash-card.rojo .dash-value{color:var(--red)}
+    .dash-card.amarillo .dash-value{color:var(--yellow)}
+
+    /* TABS */
+    .tabs{display:flex;gap:0;margin-bottom:24px;border-bottom:1px solid rgba(255,229,0,.1);overflow-x:auto;scrollbar-width:none}
+    .tabs::-webkit-scrollbar{display:none}
+    .tab-btn{padding:12px 18px;font-family:var(--font-display);font-size:.95rem;letter-spacing:.06em;cursor:pointer;border:none;background:transparent;color:var(--gray-light);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s,border-color .2s}
+    .tab-btn.active{color:var(--yellow);border-bottom-color:var(--yellow)}
+    .tab-btn:hover{color:var(--white)}
+
+    /* PANELS */
+    .panel{display:none}
+    .panel.active{display:block;animation:fadeUp .3s var(--ease)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* CARDS */
+    .section-title{font-family:var(--font-display);font-size:1.4rem;letter-spacing:.04em;color:var(--white);margin-bottom:16px}
+
+    /* FORM */
+    .form-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:20px;margin-bottom:20px}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+    .form-row.triple{grid-template-columns:1fr 1fr 1fr}
+    .form-row.single{grid-template-columns:1fr}
+    .form-group{display:flex;flex-direction:column;gap:6px}
+    .form-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gray-light)}
+    .form-input,.form-select{background:var(--dark-3);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 14px;font-family:var(--font-body);font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s;width:100%}
+    .form-input:focus,.form-select:focus{border-color:rgba(255,229,0,.4)}
+    .form-input::placeholder{color:var(--gray)}
+    .form-select option{background:#181818;color:var(--white)}
+    .btn-primary{font-family:var(--font-display);font-size:1rem;letter-spacing:.08em;cursor:pointer;background:var(--yellow);color:var(--dark);border:none;padding:11px 28px;border-radius:10px;transition:all .2s;width:100%}
+    .btn-primary:hover{background:#fff}
+    .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+    .btn-danger{font-family:var(--font-body);font-size:.75rem;font-weight:500;cursor:pointer;background:none;color:var(--red);border:1px solid rgba(244,67,54,.3);padding:5px 12px;border-radius:8px;transition:all .2s}
+    .btn-danger:hover{background:var(--red-dim)}
+    .btn-secondary{font-family:var(--font-body);font-size:.75rem;font-weight:500;cursor:pointer;background:none;color:var(--gray-light);border:1px solid rgba(255,255,255,.1);padding:5px 12px;border-radius:8px;transition:all .2s}
+    .btn-secondary:hover{border-color:var(--yellow);color:var(--yellow)}
+
+    /* LISTA INTEGRANTES */
+    .integrante-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:12px;margin-bottom:8px}
+    .integrante-nombre{font-weight:500;font-size:.9rem}
+    .integrante-estado{font-size:.72rem;color:var(--gray-light)}
+    .integrante-acciones{display:flex;gap:8px;align-items:center}
+
+    /* TABLA HISTORIAL */
+    .filter-bar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+    .filter-input,.filter-select-sm{background:var(--dark-3);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 12px;font-family:var(--font-body);font-size:.82rem;color:var(--white);outline:none;transition:border-color .2s}
+    .filter-input{flex:1;min-width:140px}
+    .filter-input:focus,.filter-select-sm:focus{border-color:rgba(255,229,0,.4)}
+    .filter-select-sm option{background:#181818}
+    .btn-clear-filter{font-size:.7rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--gray-light);background:none;border:none;cursor:pointer;font-family:var(--font-body);transition:color .2s;display:none}
+    .btn-clear-filter.visible{display:block}
+    .btn-clear-filter:hover{color:var(--yellow)}
+
+    .tabla{width:100%;border-collapse:collapse}
+    .tabla th{font-family:var(--font-display);font-size:.8rem;letter-spacing:.1em;color:var(--gray-light);text-align:left;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .tabla td{padding:13px 12px;font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.04);color:var(--white)}
+    .tabla tr:last-child td{border-bottom:none}
+    .tabla tr:hover td{background:rgba(255,255,255,.02)}
+    .badge-aporte{display:inline-block;background:var(--green-dim);color:var(--green);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+    .badge-egreso{display:inline-block;background:var(--red-dim);color:var(--red);font-size:.65rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:6px}
+    .monto-positivo{color:var(--green);font-weight:600}
+    .monto-negativo{color:var(--red);font-weight:600}
+
+    /* EMPTY */
+    .empty-state{text-align:center;padding:40px;color:var(--gray-light);font-size:.85rem}
+
+    /* TOAST */
+    .toast{position:fixed;bottom:24px;right:24px;z-index:9998;padding:12px 20px;border-radius:12px;font-size:.82rem;font-weight:500;opacity:0;transform:translateY(10px);transition:all .3s var(--ease);pointer-events:none}
+    .toast.ok{background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.4);color:var(--green)}
+    .toast.err{background:rgba(244,67,54,.1);border:1px solid rgba(244,67,54,.3);color:var(--red)}
+    .toast.show{opacity:1;transform:translateY(0)}
+
+    @media(min-width:600px){
+      .dashboard{grid-template-columns:repeat(4,1fr)}
+      .page-wrap{padding-left:32px;padding-right:32px}
+    }
+    @media(min-width:768px){
+      .top-bar{height:68px}
+      .page-wrap{padding-top:calc(68px + 28px)}
+    }
+  </style>
+</head>
+<body>
+
+<div id="loading-screen">
+  <img src="./assets/images/logo.png" alt="Arabatu" />
+  <div class="loading-dots"><span></span><span></span><span></span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<header class="top-bar">
+  <div class="top-bar-left">
+    <a href="./index.html"><img src="./assets/images/logo.png" alt="Arabatu Bloco" class="top-bar-logo" /></a>
+    <span class="top-bar-badge">💰 Control Caja</span>
+  </div>
+  <div class="top-bar-right">
+    <span class="user-pill" id="user-pill">...</span>
+    <button class="btn-logout" id="btn-logout">Salir</button>
+  </div>
+</header>
+
+<div class="page-wrap">
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard">
+    <div class="dash-card amarillo">
+      <div class="dash-label">Fondo actual</div>
+      <div class="dash-value" id="dash-fondo">$0</div>
+    </div>
+    <div class="dash-card verde">
+      <div class="dash-label">Total aportado</div>
+      <div class="dash-value" id="dash-aportes">$0</div>
+    </div>
+    <div class="dash-card rojo">
+      <div class="dash-label">Total egresado</div>
+      <div class="dash-value" id="dash-egresos">$0</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label">Integrantes</div>
+      <div class="dash-value" id="dash-integrantes">0</div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="aportes">💚 Nuevo Aporte</button>
+    <button class="tab-btn" data-tab="egresos">🔴 Nuevo Egreso</button>
+    <button class="tab-btn" data-tab="historial">📋 Historial</button>
+    <button class="tab-btn" data-tab="integrantes">👥 Integrantes</button>
+  </div>
+
+  <!-- PANEL: APORTES -->
+  <div class="panel active" id="panel-aportes">
+    <div class="form-card">
+      <p class="section-title">Registrar Aporte</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Integrante</label>
+          <select class="form-select" id="aporte-integrante"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Monto ($)</label>
+          <input class="form-input" type="number" id="aporte-monto" placeholder="Ej: 5000" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input class="form-input" type="date" id="aporte-fecha" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nota (opcional)</label>
+          <input class="form-input" type="text" id="aporte-nota" placeholder="Ej: Cuota junio" />
+        </div>
+      </div>
+      <button class="btn-primary" id="btn-guardar-aporte">Guardar aporte</button>
+    </div>
+
+    <p class="section-title">Últimos aportes</p>
+    <div id="lista-aportes-recientes"><div class="empty-state">Cargando...</div></div>
+  </div>
+
+  <!-- PANEL: EGRESOS -->
+  <div class="panel" id="panel-egresos">
+    <div class="form-card">
+      <p class="section-title">Registrar Egreso</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Categoría</label>
+          <select class="form-select" id="egreso-categoria">
+            <option value="Dirección">Dirección</option>
+            <option value="Sala de ensayo">Sala de ensayo</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Monto ($)</label>
+          <input class="form-input" type="number" id="egreso-monto" placeholder="Ej: 15000" min="0" />
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha</label>
+          <input class="form-input" type="date" id="egreso-fecha" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Descripción</label>
+          <input class="form-input" type="text" id="egreso-descripcion" placeholder="Descripción del gasto" />
+        </div>
+      </div>
+      <button class="btn-primary" id="btn-guardar-egreso">Guardar egreso</button>
+    </div>
+
+    <p class="section-title">Últimos egresos</p>
+    <div id="lista-egresos-recientes"><div class="empty-state">Cargando...</div></div>
+  </div>
+
+  <!-- PANEL: HISTORIAL -->
+  <div class="panel" id="panel-historial">
+    <div class="filter-bar">
+      <input class="filter-input" type="text" id="hist-search" placeholder="Buscar..." />
+      <select class="filter-select-sm" id="hist-tipo">
+        <option value="all">Todos</option>
+        <option value="aporte">Aportes</option>
+        <option value="egreso">Egresos</option>
+      </select>
+      <select class="filter-select-sm" id="hist-integrante">
+        <option value="all">Todos los integrantes</option>
+      </select>
+      <input class="filter-select-sm" type="date" id="hist-desde" title="Desde" />
+      <input class="filter-select-sm" type="date" id="hist-hasta" title="Hasta" />
+      <button class="btn-clear-filter" id="hist-clear">Limpiar</button>
+    </div>
+    <div id="historial-container"><div class="empty-state">Cargando...</div></div>
+  </div>
+
+  <!-- PANEL: INTEGRANTES -->
+  <div class="panel" id="panel-integrantes">
+    <div class="form-card">
+      <p class="section-title">Agregar integrante</p>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Nombre</label>
+          <input class="form-input" type="text" id="nuevo-integrante" placeholder="Nombre completo" />
+        </div>
+        <div class="form-group" style="justify-content:flex-end">
+          <button class="btn-primary" id="btn-agregar-integrante">Agregar</button>
+        </div>
+      </div>
+    </div>
+    <p class="section-title">Integrantes activos</p>
+    <div id="lista-integrantes"><div class="empty-state">Cargando...</div></div>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import {
+    getFirestore, doc, getDoc, setDoc, addDoc, deleteDoc,
+    collection, query, orderBy, getDocs, serverTimestamp, where
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEn3XcZ8y1M-HPVTUFOjjZMWGY66OplqU",
+    authDomain: "arabatuweb-1ee65.firebaseapp.com",
+    projectId: "arabatuweb-1ee65",
+    storageBucket: "arabatuweb-1ee65.firebasestorage.app",
+    messagingSenderId: "676384856570",
+    appId: "1:676384856570:web:967cab2e35a39986836c43"
+  };
+
+  const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let integrantes = [];
+  let movimientos = [];
+
+  // ── TOAST ──
+  function toast(msg, tipo = 'ok') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast ${tipo} show`;
+    setTimeout(() => el.className = `toast ${tipo}`, 3000);
+  }
+
+  // ── FORMATO PESOS ──
+  function formatPesos(n) {
+    return '$' + Math.abs(n).toLocaleString('es-AR');
+  }
+
+  function formatFecha(ts) {
+    if (!ts) return '—';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('es-AR', {day:'2-digit', month:'2-digit', year:'numeric'});
+  }
+
+  // ── AUTH ──
+  const user = await new Promise(resolve => {
+    const unsub = onAuthStateChanged(auth, u => { unsub(); resolve(u); });
+  });
+
+  if (!user) { window.location.href = './login.html'; }
+
+  const snap = await getDoc(doc(db, 'users', user.uid));
+  if (!snap.exists() || snap.data().rol !== 'tesorero') {
+    await signOut(auth);
+    alert('No tenés acceso a esta sección.');
+    window.location.href = './index.html';
+  }
+
+  currentUser = user;
+  document.getElementById('user-pill').textContent = snap.data().name || user.email;
+  document.getElementById('loading-screen').style.opacity = '0';
+  setTimeout(() => document.getElementById('loading-screen').style.display = 'none', 400);
+
+  document.getElementById('btn-logout').addEventListener('click', async () => {
+    await signOut(auth); window.location.href = './login.html';
+  });
+
+  // ── CARGAR INTEGRANTES ──
+  async function cargarIntegrantes() {
+    const q = query(collection(db, 'caja_integrantes'), orderBy('nombre'));
+    const snap = await getDocs(q);
+    integrantes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderIntegrantes();
+    poblarSelectsIntegrantes();
+    actualizarDashboard();
+  }
+
+  function renderIntegrantes() {
+    const el = document.getElementById('lista-integrantes');
+    if (integrantes.length === 0) { el.innerHTML = '<div class="empty-state">No hay integrantes cargados.</div>'; return; }
+    el.innerHTML = integrantes.map(i => `
+      <div class="integrante-item">
+        <div>
+          <div class="integrante-nombre">${i.nombre}</div>
+          <div class="integrante-estado">Activo</div>
+        </div>
+        <div class="integrante-acciones">
+          <button class="btn-danger" onclick="eliminarIntegrante('${i.id}', '${i.nombre}')">Remover</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function poblarSelectsIntegrantes() {
+    const selects = ['aporte-integrante', 'hist-integrante'];
+    selects.forEach(id => {
+      const sel = document.getElementById(id);
+      const prev = sel.value;
+      if (id === 'aporte-integrante') {
+        sel.innerHTML = '<option value="">— Seleccioná —</option>' +
+          integrantes.map(i => `<option value="${i.nombre}">${i.nombre}</option>`).join('');
+      } else {
+        sel.innerHTML = '<option value="all">Todos los integrantes</option>' +
+          integrantes.map(i => `<option value="${i.nombre}">${i.nombre}</option>`).join('');
+      }
+      sel.value = prev;
+    });
+  }
+
+  // ── CARGAR MOVIMIENTOS ──
+  async function cargarMovimientos() {
+    const q = query(collection(db, 'caja_movimientos'), orderBy('fecha', 'desc'));
+    const snap = await getDocs(q);
+    movimientos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderAportesRecientes();
+    renderEgresosRecientes();
+    renderHistorial();
+    actualizarDashboard();
+  }
+
+  function actualizarDashboard() {
+    const totalAportes = movimientos.filter(m => m.tipo === 'aporte').reduce((s, m) => s + m.monto, 0);
+    const totalEgresos = movimientos.filter(m => m.tipo === 'egreso').reduce((s, m) => s + m.monto, 0);
+    const fondo = totalAportes - totalEgresos;
+    document.getElementById('dash-fondo').textContent = formatPesos(fondo);
+    document.getElementById('dash-aportes').textContent = formatPesos(totalAportes);
+    document.getElementById('dash-egresos').textContent = formatPesos(totalEgresos);
+    document.getElementById('dash-integrantes').textContent = integrantes.length;
+  }
+
+  function renderAportesRecientes() {
+    const el = document.getElementById('lista-aportes-recientes');
+    const items = movimientos.filter(m => m.tipo === 'aporte').slice(0, 8);
+    if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay aportes registrados.</div>'; return; }
+    el.innerHTML = `<table class="tabla">
+      <thead><tr><th>Integrante</th><th>Monto</th><th>Fecha</th><th>Nota</th><th></th></tr></thead>
+      <tbody>${items.map(m => `
+        <tr>
+          <td>${m.integrante || '—'}</td>
+          <td class="monto-positivo">${formatPesos(m.monto)}</td>
+          <td>${formatFecha(m.fecha)}</td>
+          <td>${m.nota || '—'}</td>
+          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  }
+
+  function renderEgresosRecientes() {
+    const el = document.getElementById('lista-egresos-recientes');
+    const items = movimientos.filter(m => m.tipo === 'egreso').slice(0, 8);
+    if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay egresos registrados.</div>'; return; }
+    el.innerHTML = `<table class="tabla">
+      <thead><tr><th>Categoría</th><th>Monto</th><th>Fecha</th><th>Descripción</th><th></th></tr></thead>
+      <tbody>${items.map(m => `
+        <tr>
+          <td>${m.categoria || '—'}</td>
+          <td class="monto-negativo">${formatPesos(m.monto)}</td>
+          <td>${formatFecha(m.fecha)}</td>
+          <td>${m.descripcion || '—'}</td>
+          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  }
+
+  // ── HISTORIAL CON FILTROS ──
+  function renderHistorial() {
+    const search = document.getElementById('hist-search').value.toLowerCase();
+    const tipo = document.getElementById('hist-tipo').value;
+    const integrante = document.getElementById('hist-integrante').value;
+    const desde = document.getElementById('hist-desde').value;
+    const hasta = document.getElementById('hist-hasta').value;
+
+    const isFiltering = search || tipo !== 'all' || integrante !== 'all' || desde || hasta;
+    document.getElementById('hist-clear').classList.toggle('visible', !!isFiltering);
+
+    let items = [...movimientos];
+    if (tipo !== 'all') items = items.filter(m => m.tipo === tipo);
+    if (integrante !== 'all') items = items.filter(m => m.integrante === integrante);
+    if (desde) items = items.filter(m => {
+      const d = m.fecha?.toDate ? m.fecha.toDate() : new Date(m.fecha);
+      return d >= new Date(desde);
+    });
+    if (hasta) items = items.filter(m => {
+      const d = m.fecha?.toDate ? m.fecha.toDate() : new Date(m.fecha);
+      return d <= new Date(hasta + 'T23:59:59');
+    });
+    if (search) items = items.filter(m =>
+      (m.integrante||'').toLowerCase().includes(search) ||
+      (m.categoria||'').toLowerCase().includes(search) ||
+      (m.descripcion||'').toLowerCase().includes(search) ||
+      (m.nota||'').toLowerCase().includes(search)
+    );
+
+    const el = document.getElementById('historial-container');
+    if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay movimientos que coincidan.</div>'; return; }
+    el.innerHTML = `<table class="tabla">
+      <thead><tr><th>Tipo</th><th>Integrante / Categoría</th><th>Monto</th><th>Fecha</th><th>Detalle</th><th></th></tr></thead>
+      <tbody>${items.map(m => `
+        <tr>
+          <td><span class="badge-${m.tipo}">${m.tipo}</span></td>
+          <td>${m.tipo === 'aporte' ? (m.integrante||'—') : (m.categoria||'—')}</td>
+          <td class="${m.tipo === 'aporte' ? 'monto-positivo' : 'monto-negativo'}">${m.tipo === 'aporte' ? '+' : '-'}${formatPesos(m.monto)}</td>
+          <td>${formatFecha(m.fecha)}</td>
+          <td>${m.nota || m.descripcion || '—'}</td>
+          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+        </tr>`).join('')}
+      </tbody></table>`;
+  }
+
+  // ── GUARDAR APORTE ──
+  document.getElementById('btn-guardar-aporte').addEventListener('click', async () => {
+    const integrante = document.getElementById('aporte-integrante').value;
+    const monto = parseFloat(document.getElementById('aporte-monto').value);
+    const fechaStr = document.getElementById('aporte-fecha').value;
+    const nota = document.getElementById('aporte-nota').value.trim();
+    if (!integrante || !monto || !fechaStr) { toast('Completá integrante, monto y fecha.', 'err'); return; }
+    try {
+      await addDoc(collection(db, 'caja_movimientos'), {
+        tipo: 'aporte', integrante, monto, nota,
+        fecha: new Date(fechaStr + 'T12:00:00'),
+        creadoPor: currentUser.email,
+        creadoEn: serverTimestamp()
+      });
+      document.getElementById('aporte-monto').value = '';
+      document.getElementById('aporte-nota').value = '';
+      toast('✅ Aporte guardado!');
+      await cargarMovimientos();
+    } catch(e) { toast('Error al guardar.', 'err'); }
+  });
+
+  // ── GUARDAR EGRESO ──
+  document.getElementById('btn-guardar-egreso').addEventListener('click', async () => {
+    const categoria = document.getElementById('egreso-categoria').value;
+    const monto = parseFloat(document.getElementById('egreso-monto').value);
+    const fechaStr = document.getElementById('egreso-fecha').value;
+    const descripcion = document.getElementById('egreso-descripcion').value.trim();
+    if (!monto || !fechaStr) { toast('Completá monto y fecha.', 'err'); return; }
+    try {
+      await addDoc(collection(db, 'caja_movimientos'), {
+        tipo: 'egreso', categoria, monto, descripcion,
+        fecha: new Date(fechaStr + 'T12:00:00'),
+        creadoPor: currentUser.email,
+        creadoEn: serverTimestamp()
+      });
+      document.getElementById('egreso-monto').value = '';
+      document.getElementById('egreso-descripcion').value = '';
+      toast('✅ Egreso guardado!');
+      await cargarMovimientos();
+    } catch(e) { toast('Error al guardar.', 'err'); }
+  });
+
+  // ── AGREGAR INTEGRANTE ──
+  document.getElementById('btn-agregar-integrante').addEventListener('click', async () => {
+    const nombre = document.getElementById('nuevo-integrante').value.trim();
+    if (!nombre) { toast('Escribí un nombre.', 'err'); return; }
+    try {
+      await addDoc(collection(db, 'caja_integrantes'), { nombre, activo: true, creadoEn: serverTimestamp() });
+      document.getElementById('nuevo-integrante').value = '';
+      toast(`✅ ${nombre} agregado!`);
+      await cargarIntegrantes();
+    } catch(e) { toast('Error al agregar.', 'err'); }
+  });
+
+  // ── ELIMINAR INTEGRANTE ──
+  window.eliminarIntegrante = async (id, nombre) => {
+    if (!confirm(`¿Remover a ${nombre}? Sus aportes en el historial no se borran.`)) return;
+    try {
+      await deleteDoc(doc(db, 'caja_integrantes', id));
+      toast(`${nombre} removido.`);
+      await cargarIntegrantes();
+    } catch(e) { toast('Error al remover.', 'err'); }
+  };
+
+  // ── ELIMINAR MOVIMIENTO ──
+  window.eliminarMovimiento = async (id) => {
+    if (!confirm('¿Eliminar este movimiento?')) return;
+    try {
+      await deleteDoc(doc(db, 'caja_movimientos', id));
+      toast('Movimiento eliminado.');
+      await cargarMovimientos();
+    } catch(e) { toast('Error al eliminar.', 'err'); }
+  };
+
+  // ── FILTROS HISTORIAL ──
+  ['hist-search','hist-tipo','hist-integrante','hist-desde','hist-hasta'].forEach(id => {
+    document.getElementById(id).addEventListener('input', renderHistorial);
+    document.getElementById(id).addEventListener('change', renderHistorial);
+  });
+  document.getElementById('hist-clear').addEventListener('click', () => {
+    ['hist-search'].forEach(id => document.getElementById(id).value = '');
+    ['hist-tipo','hist-integrante'].forEach(id => document.getElementById(id).value = id === 'hist-tipo' ? 'all' : 'all');
+    ['hist-desde','hist-hasta'].forEach(id => document.getElementById(id).value = '');
+    renderHistorial();
+  });
+
+  // ── TABS ──
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`panel-${btn.dataset.tab}`).classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  // ── FECHA HOY POR DEFAULT ──
+  const hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('aporte-fecha').value = hoy;
+  document.getElementById('egreso-fecha').value = hoy;
+
+  // ── INIT ──
+  await cargarIntegrantes();
+  await cargarMovimientos();
+</script>
+
+</body>
+</html>

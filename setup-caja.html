@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup Caja · Arabatu</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:#080808;color:#F5F0E8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{max-width:520px;width:100%;background:#111;border:1px solid rgba(255,229,0,.15);border-radius:20px;padding:36px}
+    h1{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#FFE500;margin-bottom:8px}
+    p{font-size:.85rem;color:#888;margin-bottom:24px;line-height:1.6}
+    .btn{width:100%;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;background:#FFE500;color:#080808;border:none;border-radius:12px;cursor:pointer;transition:all .2s}
+    .btn:hover{background:#fff}
+    .btn:disabled{opacity:.4;cursor:not-allowed}
+    .log{margin-top:20px;background:#0a0a0a;border-radius:10px;padding:16px;max-height:300px;overflow-y:auto;font-size:.78rem;font-family:monospace;line-height:1.9;display:none}
+    .log.visible{display:block}
+    .ok{color:#4CAF50}
+    .err{color:#f44336}
+    .info{color:#888}
+    .done{color:#FFE500;font-weight:600}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚙️ Setup Caja</h1>
+  <p>Carga los integrantes iniciales y crea las colecciones necesarias en Firestore. Corré esto <strong style="color:#FFE500">una sola vez</strong>.</p>
+  <button class="btn" id="btn">Inicializar Caja en Firestore</button>
+  <div class="log" id="log"></div>
+</div>
+
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBEn3XcZ8y1M-HPVTUFOjjZMWGY66OplqU",
+    authDomain: "arabatuweb-1ee65.firebaseapp.com",
+    projectId: "arabatuweb-1ee65",
+    storageBucket: "arabatuweb-1ee65.firebasestorage.app",
+    messagingSenderId: "676384856570",
+    appId: "1:676384856570:web:967cab2e35a39986836c43"
+  };
+
+  const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+  const db = getFirestore(app);
+
+  const INTEGRANTES = [
+    'Diego', 'Paula Mono', 'Rodri Santorelli', 'Pedro',
+    'Mauro', 'Paul', 'Gise', 'Guille', 'Bochi', 'Juani', 'Fer'
+  ];
+
+  const logEl = document.getElementById('log');
+  function log(msg, type='info') {
+    logEl.classList.add('visible');
+    const line = document.createElement('div');
+    line.className = type;
+    line.textContent = (type==='ok'?'✅ ':type==='err'?'❌ ':type==='done'?'🏆 ':'→ ') + msg;
+    logEl.appendChild(line);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  document.getElementById('btn').addEventListener('click', async () => {
+    const btn = document.getElementById('btn');
+    btn.disabled = true; btn.textContent = 'Inicializando...';
+    try {
+      // Verificar si ya hay integrantes
+      log('Verificando colección caja_integrantes...');
+      const existing = await getDocs(collection(db, 'caja_integrantes'));
+      if (existing.size > 0) {
+        log(`Ya hay ${existing.size} integrantes cargados. No se duplica.`, 'info');
+      } else {
+        log('Cargando integrantes...');
+        for (const nombre of INTEGRANTES) {
+          await addDoc(collection(db, 'caja_integrantes'), {
+            nombre, activo: true, creadoEn: serverTimestamp()
+          });
+          log(`${nombre} agregado`, 'ok');
+        }
+      }
+      // Crear colección caja_movimientos si no existe
+      log('Verificando caja_movimientos...');
+      const movSnap = await getDocs(collection(db, 'caja_movimientos'));
+      if (movSnap.size === 0) {
+        log('Colección caja_movimientos lista (vacía)', 'ok');
+      } else {
+        log(`caja_movimientos ya tiene ${movSnap.size} registros`, 'info');
+      }
+      log('¡Todo listo! Podés eliminar este archivo.', 'done');
+      btn.textContent = '✅ Listo!';
+    } catch(err) {
+      log(`Error: ${err.message}`, 'err');
+      btn.disabled = false; btn.textContent = 'Reintentar';
+    }
+  });
+</script>
+</body>
+</html>

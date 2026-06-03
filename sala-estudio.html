@@ -801,6 +801,33 @@
           >¡NUEVO!</span
         >
       </a>
+
+      <a
+        href="./caja.html"
+        id="btn-caja"
+        style="
+          display: none;
+          align-items: center;
+          gap: 10px;
+          background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+          color: #FFE500;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 1.1rem;
+          letter-spacing: 0.06em;
+          padding: 12px 24px;
+          border-radius: 12px;
+          margin-bottom: 28px;
+          margin-left: 12px;
+          border: 1px solid rgba(255,229,0,0.3);
+          box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+          transition: transform 0.2s, box-shadow 0.2s;
+          text-decoration: none;
+        "
+        onmouseover="this.style.transform='translateY(-2px)';this.style.borderColor='rgba(255,229,0,0.6)'"
+        onmouseout="this.style.transform='';this.style.borderColor='rgba(255,229,0,0.3)'"
+      >
+        💰 Control Caja
+      </a>
     </div>
 
     <!-- DESKTOP TABS -->
@@ -2116,6 +2143,10 @@
           sessionStorage.setItem("arabatu_name", name);
           document.getElementById("user-name-pill").textContent =
             `Hola, ${name.split(" ")[0]}`;
+          // Mostrar botón caja solo si es tesorero
+          if (snap.data().rol === 'tesorero') {
+            document.getElementById('btn-caja').style.display = 'inline-flex';
+          }
           document.getElementById("loading-screen").style.opacity = "0";
           setTimeout(
             () =>

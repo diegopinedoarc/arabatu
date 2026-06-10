@@ -212,54 +212,6 @@
       </div>
     </section>
 
-    <!-- PRÓXIMOS EVENTOS -->
-    <section class="proximos-eventos">
-      <div class="proximos-inner">
-        <div class="proximos-header">
-          <span class="proximos-eyebrow">📅 En la agenda</span>
-          <h2 class="proximos-title">Próximos eventos</h2>
-          <a href="./red.html" class="proximos-ver-todos">Ver todos →</a>
-        </div>
-        <div class="proximos-grid">
-
-          <div class="proximo-card">
-            <div class="proximo-flyer">
-              <img src="./assets/images/eventos/domingazo.png" alt="Domingazo" />
-              <div class="proximo-date-badge">
-                <span class="proximo-day">26</span>
-                <span class="proximo-month">ABR</span>
-              </div>
-            </div>
-            <div class="proximo-info">
-              <h3 class="proximo-nombre">Domingazo — Ensayo Abierto</h3>
-              <p class="proximo-lugar">📍 Parque de la Isla de Paternal · 15hs</p>
-              <p class="proximo-blocos">Arabatu · Zonko · Batería Roja y Negra</p>
-              <div class="proximo-countdown" id="idx-countdown-domingazo"></div>
-              <a href="https://www.instagram.com/arabatu.bloco/" target="_blank" class="proximo-link">Más info →</a>
-            </div>
-          </div>
-
-          <div class="proximo-card">
-            <div class="proximo-flyer">
-              <img src="./assets/images/eventos/viniciussilva.png" alt="Vinicius Silva" />
-              <div class="proximo-date-badge">
-                <span class="proximo-day">24</span>
-                <span class="proximo-month">MAY</span>
-              </div>
-            </div>
-            <div class="proximo-info">
-              <h3 class="proximo-nombre">Vinicius Silva (Ilê Aiyê) en Argentina</h3>
-              <p class="proximo-lugar">📍 Galpón B · A la gorra</p>
-              <p class="proximo-blocos">Roda de Timbal · Ginga de Ramiro</p>
-              <div class="proximo-countdown" id="idx-countdown-vinicius"></div>
-              <a href="https://www.instagram.com/p/DXPRTbKDgxy/" target="_blank" class="proximo-link">Más info →</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
     <!-- EVENTOS CTA -->
     <section class="eventos">
       <div class="eventos-grid">
@@ -561,38 +513,6 @@
     /* ============================================
        PRÓXIMOS EVENTOS
        ============================================ */
-    .proximos-eventos {
-      padding: 64px 24px;
-      background: linear-gradient(180deg, rgba(8,8,8,0) 0%, rgba(255,229,0,0.03) 50%, rgba(8,8,8,0) 100%);
-      border-top: 1px solid rgba(255,229,0,0.08);
-      border-bottom: 1px solid rgba(255,229,0,0.08);
-    }
-    .proximos-inner { max-width: 1100px; margin: 0 auto; }
-    .proximos-header {
-      display: flex; align-items: center; gap: 16px;
-      flex-wrap: wrap; margin-bottom: 32px;
-    }
-    .proximos-eyebrow {
-      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: rgba(255,229,0,0.7);
-    }
-    .proximos-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(1.6rem, 5vw, 2.4rem);
-      letter-spacing: 0.04em; color: #F5F0E8;
-      flex: 1;
-    }
-    .proximos-ver-todos {
-      font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em;
-      text-transform: uppercase; color: #FFE500;
-      text-decoration: none; transition: letter-spacing 0.2s;
-    }
-    .proximos-ver-todos:hover { letter-spacing: 0.14em; }
-    .proximos-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
     .proximo-card {
       display: grid;
       grid-template-columns: 120px 1fr;
@@ -678,11 +598,9 @@
     .proximo-link:hover { letter-spacing: 0.14em; }
 
     @media (min-width: 600px) {
-      .proximos-grid { grid-template-columns: repeat(2, 1fr); }
       .proximo-card { grid-template-columns: 140px 1fr; }
     }
     @media (min-width: 1024px) {
-      .proximos-eventos { padding: 80px 48px; }
       .proximo-card { grid-template-columns: 160px 1fr; }
     }
   </style>
@@ -717,30 +635,6 @@
     }
 
     // Countdowns en index
-    function renderCountdownIdx(containerId, targetDate) {
-      const el = document.getElementById(containerId);
-      if (!el) return;
-      function update() {
-        const diff = new Date(targetDate) - new Date();
-        if (diff <= 0) {
-          el.innerHTML = '<span style="font-size:0.75rem;color:#FFE500;font-weight:500;">¡Hoy! 🥁</span>';
-          return;
-        }
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        el.innerHTML = `
-          <div class="countdown-unit"><span class="countdown-num">${d}</span><span class="countdown-label">días</span></div>
-          <div class="countdown-unit"><span class="countdown-num">${String(h).padStart(2,'0')}</span><span class="countdown-label">hs</span></div>
-          <div class="countdown-unit"><span class="countdown-num">${String(m).padStart(2,'0')}</span><span class="countdown-label">min</span></div>
-          <div class="countdown-unit"><span class="countdown-num">${String(s).padStart(2,'0')}</span><span class="countdown-label">seg</span></div>`;
-      }
-      update();
-      setInterval(update, 1000);
-    }
-    renderCountdownIdx('idx-countdown-domingazo', '2026-04-26T15:00:00-03:00');
-    renderCountdownIdx('idx-countdown-vinicius',  '2026-05-24T00:00:00-03:00');
   </script>
 
 </body>

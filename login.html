@@ -681,11 +681,12 @@
             await setDoc(doc(db, "users", cred.user.uid), {
               name,
               email,
-              approved: false, // ← admin cambia esto a true
+              approved: false,
               role: "member",
               createdAt: serverTimestamp(),
             });
-            await auth.signOut(); // no dejar entrar hasta aprobación
+            // Cerrar sesión DESPUÉS de que Firestore confirme el guardado
+            await signOut(auth);
             showMsg(
               msg,
               "✅ ¡Solicitud enviada! El admin la va a revisar y te va a avisar cuando esté lista.",
@@ -693,6 +694,10 @@
             );
             document.getElementById("form-register").reset();
           } catch (err) {
+            // Si Firestore falló pero Auth sí creó el usuario, lo borramos
+            if (auth.currentUser) {
+              try { await auth.currentUser.delete(); } catch(e) {}
+            }
             showMsg(msg, firebaseError(err.code), "error");
           } finally {
             setLoading(btn, false);

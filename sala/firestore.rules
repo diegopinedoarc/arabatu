@@ -1,0 +1,65 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ---------- Ayudas para la sala de estudio ----------
+    function salaPerfil() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+    function salaAprobado() {
+      return request.auth != null
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && salaPerfil().approved == true;
+    }
+    function salaAdmin() {
+      return salaAprobado()
+        && (salaPerfil().get('admin', false) == true || salaPerfil().get('rol', '') == 'admin');
+    }
+
+    // Predicciones del prode
+    match /predicciones/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      allow read: if request.auth != null;
+    }
+
+    // Resultados y config del prode — solo lectura para autenticados
+    match /resultados/{doc} {
+      allow read: if request.auth != null;
+    }
+    match /config/{doc} {
+      allow read: if request.auth != null;
+    }
+
+    // Usuarios — cada uno lee el suyo y puede crear SU perfil al registrarse,
+    // siempre pendiente y sin permisos. Aprobar, dar admin o tesorero se hace
+    // solo desde la consola de Firebase.
+    match /users/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow create: if request.auth != null && request.auth.uid == userId
+        && request.resource.data.approved == false
+        && !('admin' in request.resource.data)
+        && !('rol' in request.resource.data);
+    }
+
+    // Control Caja — solo tesoreros
+    match /caja_integrantes/{doc} {
+      allow read, write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.rol == 'tesorero';
+    }
+    match /caja_movimientos/{doc} {
+      allow read, write: if request.auth != null &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.rol == 'tesorero';
+    }
+
+    // Sala de estudio — leen los aprobados, escribe solo el admin
+    match /guiones/{id} {
+      allow read: if salaAprobado();
+      allow write: if salaAdmin();
+    }
+    match /materiales/{id} {
+      allow read: if salaAprobado();
+      allow write: if salaAdmin();
+    }
+
+  }
+}

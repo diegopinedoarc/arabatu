@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#090909" />
+    <meta name="robots" content="noindex" />
+    <title>Administrar sala · Arabatu Bloco</title>
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./sala/sala.css" />
+  </head>
+  <body>
+    <div id="loading-screen">
+      <img src="./assets/images/logo.png" alt="Arabatu" />
+      <div class="dots"><span></span><span></span><span></span></div>
+    </div>
+
+    <aside class="sidebar">
+      <a class="brand" href="./index.html" aria-label="Arabatu Bloco"><img src="./assets/images/logo.png" alt="Arabatu Bloco" /></a>
+      <nav class="nav-list" aria-label="Secciones">
+        <a class="nav-link" href="./sala-estudio.html#audios"><span data-icon="note"></span>Audios</a>
+        <a class="nav-link" href="./sala-estudio.html#videos"><span data-icon="film"></span>Videos</a>
+        <a class="nav-link active" href="./sala-admin.html"><span data-icon="shield"></span>Administrar</a>
+      </nav>
+      <div class="side-foot">
+        <div class="user-chip" id="user-chip"></div>
+        <button class="btn btn-ghost btn-sm" data-logout type="button">Salir</button>
+      </div>
+    </aside>
+
+    <header class="mobile-top">
+      <a class="brand" href="./index.html" aria-label="Arabatu Bloco"><img src="./assets/images/logo.png" alt="Arabatu Bloco" /></a>
+      <button class="btn btn-ghost btn-sm" data-logout type="button">Salir</button>
+    </header>
+
+    <main class="main">
+      <section class="hero">
+        <span class="eyebrow">Solo administradores</span>
+        <h1>Administrar sala</h1>
+        <p>Cargá material pegando links de YouTube o Drive. No hace falta tocar el código.</p>
+      </section>
+
+      <div class="admin-tabs" role="tablist">
+        <button class="active" data-tab="cargar" role="tab">Cargar material</button>
+        <button data-tab="material" role="tab">Material <span class="count" id="count-material" style="background:var(--card-hi);color:var(--muted)">0</span></button>
+        <button data-tab="guiones" role="tab">Guiones</button>
+      </div>
+
+      <!-- IMPORTAR CONTENIDO ANTERIOR (solo si todavía no hay material) -->
+      <section class="panel" id="import-panel" hidden>
+        <h2>Importar el contenido de la sala anterior</h2>
+        <p class="hint" id="import-text" style="margin-bottom: 14px"></p>
+        <div class="actions" style="margin-top: 0">
+          <button class="btn btn-primary" id="btn-import" type="button">Importar ahora</button>
+        </div>
+        <p class="error-msg" id="import-error" role="alert"></p>
+      </section>
+
+      <!-- CARGAR / EDITAR -->
+      <section class="panel" id="tab-cargar">
+        <h2 id="form-title">Nuevo material</h2>
+        <p class="hint">Pegá el link, completá los datos y guardá. Podés cargar varios seguidos: se conservan tipo, guion e instrumento.</p>
+
+        <form id="mat-form" novalidate>
+          <div class="field">
+            <label for="f-link">Link de YouTube o Google Drive</label>
+            <input class="input" id="f-link" type="url" inputmode="url" placeholder="https://www.youtube.com/watch?v=…  o  https://drive.google.com/file/d/…" autocomplete="off" />
+            <p class="error-msg" id="link-error"></p>
+          </div>
+
+          <div class="preview" id="preview" hidden>
+            <div class="cover" id="preview-cover"></div>
+            <div class="info">
+              <span class="tag tag-violet" id="preview-service"></span>
+              <b id="preview-title" style="margin-top: 6px"></b>
+              <span class="hint" id="preview-hint"></span>
+            </div>
+          </div>
+
+          <div class="field">
+            <span class="label">Tipo</span>
+            <div class="radio-row">
+              <label><input type="radio" name="tipo" value="audio" /><span>🎧 Audio</span></label>
+              <label><input type="radio" name="tipo" value="video" checked /><span>🎬 Video</span></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-titulo">Título</label>
+            <input class="input" id="f-titulo" type="text" maxlength="120" placeholder="Ej: Xangô — Maqueta" autocomplete="off" />
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="f-guion">Guion</label>
+              <select class="select" id="f-guion"></select>
+            </div>
+            <div class="field">
+              <label for="f-inst">Instrumento <span style="font-weight: 400">(opcional)</span></label>
+              <input class="input" id="f-inst" type="text" maxlength="40" list="inst-list" placeholder="Ej: Surdo, Repique, Caixa…" autocomplete="off" />
+              <datalist id="inst-list"></datalist>
+            </div>
+          </div>
+
+          <div class="field" id="new-guion-field" hidden>
+            <label for="f-new-guion">Nombre del guion nuevo</label>
+            <input class="input" id="f-new-guion" type="text" maxlength="60" placeholder="Ej: Xangô" autocomplete="off" />
+          </div>
+
+          <p class="hint" style="margin-bottom: 16px">
+            Drive: el archivo tiene que estar compartido como <b>“Cualquier persona con el enlace”</b>. YouTube: podés usar videos <b>no listados</b>.
+          </p>
+          <p class="error-msg" id="form-error" role="alert"></p>
+          <div class="actions">
+            <button class="btn btn-primary" id="btn-save" type="submit">Guardar material</button>
+            <button class="btn btn-ghost" id="btn-cancel-edit" type="button" hidden>Cancelar edición</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- LISTA DE MATERIAL -->
+      <section class="panel wide" id="tab-material" hidden>
+        <h2>Material cargado</h2>
+        <p class="hint">Las flechas cambian el orden en que lo ven los miembros (arriba = primero).</p>
+        <div class="list-filter">
+          <select class="select" id="l-tipo" aria-label="Tipo"><option value="all">Audios y videos</option><option value="audio">Solo audios</option><option value="video">Solo videos</option></select>
+          <select class="select" id="l-guion" aria-label="Guion"></select>
+          <input class="input" id="l-q" type="search" placeholder="Buscar…" style="max-width: 220px" />
+        </div>
+        <div class="list" id="mat-list"></div>
+      </section>
+
+      <!-- GUIONES -->
+      <section class="panel" id="tab-guiones" hidden>
+        <h2>Guiones</h2>
+        <p class="hint">Son las categorías por las que filtran los miembros (cada pieza o ritmo que se estudia).</p>
+        <form id="guion-form" class="actions" style="margin: 0 0 16px">
+          <input class="input" id="g-nombre" type="text" maxlength="60" placeholder="Nombre del guion nuevo" style="flex: 1; min-width: 200px" />
+          <button class="btn btn-primary" type="submit">Agregar</button>
+        </form>
+        <div class="list" id="guion-list"></div>
+      </section>
+
+    </main>
+
+    <nav class="bottom-nav" aria-label="Secciones">
+      <a class="nav-link" href="./sala-estudio.html#audios"><span data-icon="note"></span>Audios</a>
+      <a class="nav-link" href="./sala-estudio.html#videos"><span data-icon="film"></span>Videos</a>
+      <a class="nav-link active" href="./sala-admin.html"><span data-icon="shield"></span>Admin</a>
+    </nav>
+
+    <script type="module" src="./sala/js/admin.js"></script>
+  </body>
+</html>

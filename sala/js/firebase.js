@@ -6,7 +6,7 @@ import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebase
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, collection,
-  serverTimestamp, query, where, writeBatch,
+  serverTimestamp, query, where, writeBatch, deleteField,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
 
@@ -71,4 +71,15 @@ export async function importSeed({ guiones, materiales }, uid) {
   guiones.forEach((g) => batch.set(doc(db, "guiones", g.id), { nombre: g.nombre, orden: g.orden }));
   materiales.forEach((m) => batch.set(doc(collection(db, "materiales")), { ...m, creadoEn: serverTimestamp(), creadoPor: uid }));
   await batch.commit();
+}
+
+// ---------- Usuarios (solo el superadmin; lo exigen las reglas) ----------
+export const listUsers = async () => rows(await getDocs(collection(db, "users")));
+// roles: { approved: bool, admin: bool, tesorero: bool }
+export function updateUserRoles(uid, { approved, admin, tesorero }) {
+  return updateDoc(doc(db, "users", uid), {
+    approved: !!approved,
+    admin: !!admin,
+    rol: tesorero ? "tesorero" : deleteField(),
+  });
 }

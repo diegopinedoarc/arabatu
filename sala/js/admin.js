@@ -22,7 +22,7 @@ function renderAll() { renderGuionSelects(); renderInstList(); renderMateriales(
 // ---------- Pestañas ----------
 function showTab(name) {
   $$("[data-tab]").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
-  ["cargar", "material", "guiones"].forEach((t) => ($(`#tab-${t}`).hidden = t !== name));
+  ["cargar", "material", "guiones", "usuarios"].forEach((t) => ($(`#tab-${t}`).hidden = t !== name));
 }
 $$("[data-tab]").forEach((b) => b.addEventListener("click", () => showTab(b.dataset.tab)));
 
@@ -300,6 +300,56 @@ $("#btn-import").addEventListener("click", async () => {
     btn.disabled = false; btn.textContent = "Importar ahora";
   }
 });
+
+// ---------- Usuarios (solo superadmin) ----------
+const isSuper = profile.superadmin === true;
+let users = [];
+function renderUsers() {
+  const f = $("#u-filter").value, q = $("#u-q").value.trim().toLowerCase();
+  const isAdm = (u) => u.admin === true || u.rol === "admin";
+  const list = users
+    .filter((u) => f === "all" || (f === "pend" && !u.approved) || (f === "admin" && isAdm(u)) || (f === "tes" && u.rol === "tesorero"))
+    .filter((u) => !q || `${u.name || ""} ${u.email || ""}`.toLowerCase().includes(q))
+    .sort((a, b) => (a.approved === b.approved ? (a.name || "").localeCompare(b.name || "") : a.approved ? 1 : -1));
+  const pend = users.filter((u) => !u.approved).length;
+  $("#count-pend").hidden = !pend; $("#count-pend").textContent = pend;
+  $("#user-list").innerHTML = list.length ? list.map((u) => {
+    const me = u.id === user.uid;
+    return `<div class="item" data-uid="${esc(u.id)}">
+      <div class="item-main"><b>${esc(u.name || "(sin nombre)")}${me ? " · vos" : ""}</b><span>${esc(u.email || "")}${u.approved ? "" : " · pendiente"}</span></div>
+      <div class="item-actions" style="gap:14px;flex-wrap:wrap;justify-content:flex-end">
+        <label class="switch"><input type="checkbox" data-k="approved" ${u.approved ? "checked" : ""} ${me ? "disabled" : ""}> Aprobado</label>
+        <label class="switch"><input type="checkbox" data-k="admin" ${isAdm(u) ? "checked" : ""} ${me ? "disabled" : ""}> Admin</label>
+        <label class="switch"><input type="checkbox" data-k="tesorero" ${u.rol === "tesorero" ? "checked" : ""} ${me ? "disabled" : ""}> Tesorero</label>
+      </div></div>`;
+  }).join("") : `<p class="hint">No hay usuarios con ese filtro.</p>`;
+}
+async function loadUsers() { users = await fb.listUsers(); renderUsers(); }
+if (isSuper) {
+  $("#tab-btn-usuarios").hidden = false;
+  $("#u-filter").addEventListener("change", renderUsers);
+  $("#u-q").addEventListener("input", renderUsers);
+  $("#user-list").addEventListener("change", async (e) => {
+    const box = e.target.closest("input[data-k]");
+    if (!box) return;
+    const row = box.closest("[data-uid]");
+    const u = users.find((x) => x.id === row.dataset.uid);
+    const val = (k) => row.querySelector(`[data-k="${k}"]`).checked;
+    const next = { approved: val("approved"), admin: val("admin"), tesorero: val("tesorero") };
+    const rowBoxes = row.querySelectorAll("input"); rowBoxes.forEach((b) => (b.disabled = true));
+    try {
+      await fb.updateUserRoles(u.id, next);
+      u.approved = next.approved; u.admin = next.admin;
+      if (next.tesorero) u.rol = "tesorero"; else delete u.rol;
+      toast(`Guardado: ${u.name || u.email}`);
+    } catch (err) {
+      console.error(err);
+      toast(err?.code === "permission-denied" ? "Firestore rechazó el cambio. Revisá las reglas nuevas y que tengas superadmin: true." : "No se pudo guardar.", true);
+    }
+    renderUsers();
+  });
+  try { await loadUsers(); } catch (err) { console.error(err); toast("No se pudo cargar la lista de usuarios (¿publicaste las reglas nuevas?).", true); }
+}
 
 // ---------- Inicio ----------
 try { await loadAll(); } catch (err) { console.error(err); toast("No se pudieron cargar los datos. Revisá las reglas de Firestore.", true); }

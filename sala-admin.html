@@ -47,6 +47,7 @@
         <button class="active" data-tab="cargar" role="tab">Cargar material</button>
         <button data-tab="material" role="tab">Material <span class="count" id="count-material" style="background:var(--card-hi);color:var(--muted)">0</span></button>
         <button data-tab="guiones" role="tab">Guiones</button>
+        <button data-tab="usuarios" role="tab" id="tab-btn-usuarios" hidden>Usuarios <span class="count" id="count-pend" hidden>0</span></button>
       </div>
 
       <!-- IMPORTAR CONTENIDO ANTERIOR (solo si todavía no hay material) -->
@@ -142,6 +143,23 @@
           <button class="btn btn-primary" type="submit">Agregar</button>
         </form>
         <div class="list" id="guion-list"></div>
+      </section>
+
+      <!-- USUARIOS (solo superadmin) -->
+      <section class="panel wide" id="tab-usuarios" hidden>
+        <h2>Usuarios y permisos</h2>
+        <p class="hint">
+          <b>Aprobado</b>: entra a la sala. <b>Admin</b>: puede subir y editar material. <b>Tesorero</b>: accede a Control Caja.
+          Los cambios se guardan al tocar cada casilla.
+        </p>
+        <div class="list-filter">
+          <select class="select" id="u-filter" aria-label="Filtrar usuarios">
+            <option value="all">Todos</option><option value="pend">Pendientes</option>
+            <option value="admin">Admins</option><option value="tes">Tesoreros</option>
+          </select>
+          <input class="input" id="u-q" type="search" placeholder="Buscar por nombre o email…" style="max-width: 260px" />
+        </div>
+        <div class="list" id="user-list"></div>
       </section>
 
     </main>

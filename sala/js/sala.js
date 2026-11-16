@@ -44,7 +44,7 @@ function render() {
   $("#hero-title").textContent = state.tipo === "audio" ? "Audios" : "Videos";
   $("#hero-sub").textContent = `${items.length} ${items.length === 1 ? label.slice(0, -1) : label} para estudiar`;
   $$("[data-tipo]").forEach((b) => b.classList.toggle("active", b.dataset.tipo === state.tipo));
-  document.title = `${state.tipo === "audio" ? "Audios" : "Videos"} · Vibra`;
+  document.title = `${state.tipo === "audio" ? "Audios" : "Videos"} · Arabatu Bloco`;
 
   // Chips de guion (solo los que tienen material de este tipo)
   const counts = new Map();

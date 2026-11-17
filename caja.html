@@ -147,7 +147,34 @@
       .top-bar{height:68px}
       .page-wrap{padding-top:calc(68px + 28px)}
     }
-  </style>
+  
+.matriz-wrap{overflow-x:auto;border:1px solid rgba(255,255,255,.07);border-radius:12px}
+.matriz{border-collapse:collapse;font-size:.78rem;min-width:100%}
+.matriz th,.matriz td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);text-align:right;white-space:nowrap}
+.matriz th{color:var(--gray-light);font-weight:500;background:var(--dark-2)}
+.matriz th:first-child,.matriz td:first-child{text-align:left;position:sticky;left:0;background:var(--dark-2);z-index:1}
+.matriz td.vacio{color:#444}
+.matriz tr.total td{font-weight:700;color:var(--yellow);border-top:1px solid var(--yellow-border)}
+.badge-caja{font-size:.68rem;padding:2px 8px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--gray-light);white-space:nowrap}
+.saldo-col{color:var(--gray-light);font-size:.8rem;white-space:nowrap}
+.hint{font-size:.78rem;color:var(--gray-light);margin:0 0 14px;line-height:1.5}
+.ref-row{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.ref-row .form-input:first-child{flex:2}.ref-row .form-input:nth-child(2){flex:1}
+.btn-sec{font-family:var(--font-body);font-size:.82rem;cursor:pointer;background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.18);padding:9px 16px;border-radius:10px}
+.btn-sec:hover{border-color:var(--yellow);color:var(--yellow)}
+.row-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.row-actions .btn-primary{width:auto}
+.msg-line{font-size:.8rem;margin-top:10px;color:var(--gray-light)}
+@media(min-width:720px){.dashboard{grid-template-columns:repeat(3,1fr)}}
+
+.dlg-bg{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;z-index:9000;padding:16px}
+.dlg-bg.open{display:flex}
+.dlg{background:var(--dark-2);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:22px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.btn-edit{font-family:var(--font-body);font-size:.75rem;font-weight:500;cursor:pointer;background:none;color:var(--yellow);border:1px solid var(--yellow-border);padding:5px 10px;border-radius:8px;margin-right:6px}
+.btn-edit:hover{background:var(--yellow-dim)}
+.cell-item{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.85rem}
+.matriz td[data-n]{cursor:pointer}.matriz td[data-n]:hover{background:var(--yellow-dim)}
+</style>
 </head>
 <body>
 
@@ -174,8 +201,16 @@
   <!-- DASHBOARD -->
   <div class="dashboard" id="dashboard">
     <div class="dash-card amarillo">
-      <div class="dash-label">Fondo actual</div>
+      <div class="dash-label">Fondo total</div>
       <div class="dash-value" id="dash-fondo">$0</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label">Mercado Pago</div>
+      <div class="dash-value" id="dash-mp">$0</div>
+    </div>
+    <div class="dash-card">
+      <div class="dash-label">Efectivo</div>
+      <div class="dash-value" id="dash-efectivo">$0</div>
     </div>
     <div class="dash-card verde">
       <div class="dash-label">Total aportado</div>
@@ -196,7 +231,9 @@
     <button class="tab-btn active" data-tab="aportes">💚 Nuevo Aporte</button>
     <button class="tab-btn" data-tab="egresos">🔴 Nuevo Egreso</button>
     <button class="tab-btn" data-tab="historial">📋 Historial</button>
+    <button class="tab-btn" data-tab="cuotas">🗓️ Cuotas</button>
     <button class="tab-btn" data-tab="integrantes">👥 Integrantes</button>
+    <button class="tab-btn" data-tab="ajustes">⚙️ Ajustes</button>
   </div>
 
   <!-- PANEL: APORTES -->
@@ -205,13 +242,36 @@
       <p class="section-title">Registrar Aporte</p>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Integrante</label>
+          <label class="form-label">Concepto</label>
+          <select class="form-select" id="aporte-concepto">
+            <option>Sala</option><option>Dirección</option><option>Grabación</option>
+            <option>Taller Mestre Gordo</option><option>Cuotas (varias)</option>
+            <option>Shows</option><option>Rendimientos</option><option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Caja</label>
+          <select class="form-select" id="aporte-caja">
+            <option value="mp">Mercado Pago</option><option value="efectivo">Efectivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Integrante <span id="aporte-int-opt">(opcional)</span></label>
           <select class="form-select" id="aporte-integrante"></select>
         </div>
         <div class="form-group">
           <label class="form-label">Monto ($)</label>
-          <input class="form-input" type="number" id="aporte-monto" placeholder="Ej: 5000" min="0" />
+          <input class="form-input" type="number" id="aporte-monto" placeholder="Ej: 5000" min="0" step="0.01" />
         </div>
+      </div>
+      <div class="form-row" id="aporte-mes-row">
+        <div class="form-group">
+          <label class="form-label">Mes que paga</label>
+          <input class="form-input" type="month" id="aporte-mes" />
+        </div>
+        <div class="form-group"></div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -240,13 +300,25 @@
           <select class="form-select" id="egreso-categoria">
             <option value="Dirección">Dirección</option>
             <option value="Sala de ensayo">Sala de ensayo</option>
+            <option value="Grabación">Grabación</option>
+            <option value="Taller Mestre Gordo">Taller Mestre Gordo</option>
+            <option value="Transporte">Transporte</option>
             <option value="Otro">Otro</option>
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Monto ($)</label>
-          <input class="form-input" type="number" id="egreso-monto" placeholder="Ej: 15000" min="0" />
+          <label class="form-label">Caja</label>
+          <select class="form-select" id="egreso-caja">
+            <option value="mp">Mercado Pago</option><option value="efectivo">Efectivo</option>
+          </select>
         </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Monto ($)</label>
+          <input class="form-input" type="number" id="egreso-monto" placeholder="Ej: 15000" min="0" step="0.01" />
+        </div>
+        <div class="form-group"></div>
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -274,6 +346,11 @@
         <option value="aporte">Aportes</option>
         <option value="egreso">Egresos</option>
       </select>
+      <select class="filter-select-sm" id="hist-caja">
+        <option value="all">Ambas cajas</option>
+        <option value="mp">Mercado Pago</option>
+        <option value="efectivo">Efectivo</option>
+      </select>
       <select class="filter-select-sm" id="hist-integrante">
         <option value="all">Todos los integrantes</option>
       </select>
@@ -282,6 +359,18 @@
       <button class="btn-clear-filter" id="hist-clear">Limpiar</button>
     </div>
     <div id="historial-container"><div class="empty-state">Cargando...</div></div>
+  </div>
+
+  <!-- PANEL: CUOTAS -->
+  <div class="panel" id="panel-cuotas">
+    <div class="filter-bar">
+      <select class="filter-select-sm" id="cuo-concepto">
+        <option>Sala</option><option>Dirección</option><option>Grabación</option><option>Taller Mestre Gordo</option>
+      </select>
+      <select class="filter-select-sm" id="cuo-anio"></select>
+    </div>
+    <p class="hint" id="cuo-ref"></p>
+    <div class="matriz-wrap" id="cuo-tabla"><div class="empty-state">Cargando...</div></div>
   </div>
 
   <!-- PANEL: INTEGRANTES -->
@@ -302,14 +391,83 @@
     <div id="lista-integrantes"><div class="empty-state">Cargando...</div></div>
   </div>
 
+  <!-- PANEL: AJUSTES -->
+  <div class="panel" id="panel-ajustes">
+    <div class="form-card">
+      <p class="section-title">Saldo inicial de cada caja</p>
+      <p class="hint">Es el dinero que había antes del primer movimiento cargado. El fondo se calcula a partir de este número.</p>
+      <div class="form-row">
+        <div class="form-group"><label class="form-label">Mercado Pago ($)</label><input class="form-input" type="number" step="0.01" id="saldo-mp" /></div>
+        <div class="form-group"><label class="form-label">Efectivo ($)</label><input class="form-input" type="number" step="0.01" id="saldo-efectivo" /></div>
+      </div>
+      <div class="row-actions"><button class="btn-primary" id="btn-guardar-saldos">Guardar saldos</button></div>
+    </div>
+
+    <div class="form-card">
+      <p class="section-title">Valores de cuota (referencia)</p>
+      <p class="hint">Los escribís vos: valor mensual de la sala, valor hora, cuota de dirección, etc. Se muestran arriba de la tabla de Cuotas.</p>
+      <div id="ref-lista"></div>
+      <div class="row-actions">
+        <button class="btn-sec" id="btn-ref-add" type="button">+ Agregar valor</button>
+        <button class="btn-primary" id="btn-ref-save" type="button">Guardar valores</button>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <p class="section-title">Importar historial</p>
+      <p class="hint">Elegí el archivo <b>caja-historial.json</b> (queda en tu computadora, no se sube a la web). Carga los movimientos de Mercado Pago, los integrantes y las cuotas de cada mes. Hacelo una sola vez.</p>
+      <input class="form-input" type="file" id="imp-file" accept="application/json,.json" />
+      <div class="row-actions">
+        <button class="btn-primary" id="btn-importar" type="button">Importar</button>
+        <button class="btn-danger" id="btn-borrar-import" type="button">Borrar lo importado</button>
+      </div>
+      <p class="msg-line" id="imp-msg"></p>
+    </div>
+  </div>
+
 </div><!-- /page-wrap -->
+
+<div class="dlg-bg" id="dlg-edit">
+  <div class="dlg">
+    <p class="section-title" id="ed-title">Editar movimiento</p>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Fecha</label><input class="form-input" type="date" id="ed-fecha" /></div>
+      <div class="form-group"><label class="form-label">Caja</label>
+        <select class="form-select" id="ed-caja"><option value="mp">Mercado Pago</option><option value="efectivo">Efectivo</option></select></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Monto ($)</label><input class="form-input" type="number" step="0.01" min="0" id="ed-monto" /></div>
+      <div class="form-group"><label class="form-label" id="ed-conc-label">Concepto</label><select class="form-select" id="ed-concepto"></select></div>
+    </div>
+    <div class="form-row" id="ed-int-row">
+      <div class="form-group"><label class="form-label">Integrante</label><select class="form-select" id="ed-integrante"></select></div>
+      <div class="form-group" id="ed-mes-group"><label class="form-label">Mes que paga</label><input class="form-input" type="month" id="ed-mes" /></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Detalle</label><input class="form-input" type="text" id="ed-detalle" /></div>
+    </div>
+    <p class="msg-line" id="ed-aviso"></p>
+    <div class="row-actions">
+      <button class="btn-primary" id="ed-guardar" type="button">Guardar cambios</button>
+      <button class="btn-sec" id="ed-cancelar" type="button">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<div class="dlg-bg" id="dlg-cell">
+  <div class="dlg">
+    <p class="section-title" id="cell-title"></p>
+    <div id="cell-list"></div>
+    <div class="row-actions"><button class="btn-sec" id="cell-close" type="button">Cerrar</button></div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
   import {
     getFirestore, doc, getDoc, setDoc, addDoc, deleteDoc,
-    collection, query, orderBy, getDocs, serverTimestamp, where
+    collection, query, orderBy, getDocs, serverTimestamp, where, writeBatch, Timestamp, updateDoc, deleteField
   } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -412,57 +570,98 @@
     });
   }
 
+  // ── UTILIDADES ──
+  const esc = (v) => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const CUOTA_CONCEPTOS = ['Sala', 'Dirección', 'Grabación', 'Taller Mestre Gordo'];
+  const CAJAS = { mp: 'Mercado Pago', efectivo: 'Efectivo' };
+  const MESES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const fechaDe = (m) => m.fecha?.toDate ? m.fecha.toDate() : (m.fecha ? new Date(m.fecha) : null);
+  const cajaDe = (m) => m.caja === 'efectivo' ? 'efectivo' : 'mp';   // los movimientos viejos sin caja cuentan como Mercado Pago
+  const esLibro = (m) => !m.soloCuotas;                               // las cuotas importadas de la planilla no mueven el saldo
+  const diaKey = (m) => { const d = fechaDe(m); return d ? d.toISOString().slice(0, 10) : '0000-00-00'; };
+  const pesos2 = (n) => { const a = Math.abs(n); const c = Math.abs(a - Math.round(a)) > 0.004; return '$' + a.toLocaleString('es-AR', { minimumFractionDigits: c ? 2 : 0, maximumFractionDigits: c ? 2 : 0 }); };
+
+  let saldos = { mp: 0, efectivo: 0 };
+  let referencias = [];
+
+  async function cargarConfig() {
+    const s = await getDoc(doc(db, 'caja_config', 'saldos'));
+    if (s.exists()) saldos = { mp: Number(s.data().mp) || 0, efectivo: Number(s.data().efectivo) || 0 };
+    const r = await getDoc(doc(db, 'caja_config', 'referencias'));
+    referencias = r.exists() ? (r.data().items || []) : [];
+    document.getElementById('saldo-mp').value = saldos.mp;
+    document.getElementById('saldo-efectivo').value = saldos.efectivo;
+    renderReferencias();
+  }
+
   // ── CARGAR MOVIMIENTOS ──
   async function cargarMovimientos() {
-    const q = query(collection(db, 'caja_movimientos'), orderBy('fecha', 'desc'));
-    const snap = await getDocs(q);
+    const snap = await getDocs(collection(db, 'caja_movimientos'));
     movimientos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    // orden cronológico (más viejo primero) para calcular el saldo corrido de cada caja
+    const asc = [...movimientos].filter(esLibro).sort((a, b) =>
+      diaKey(a).localeCompare(diaKey(b)) ||
+      (a.orden ?? 1e9) - (b.orden ?? 1e9) ||
+      (a.creadoEn?.seconds ?? 0) - (b.creadoEn?.seconds ?? 0));
+    const run = { mp: saldos.mp, efectivo: saldos.efectivo };
+    asc.forEach(m => { const c = cajaDe(m); run[c] += (m.tipo === 'aporte' ? 1 : -1) * (m.monto || 0); m._saldo = run[c]; });
+    // más nuevo primero para mostrar
+    movimientos.sort((a, b) =>
+      diaKey(b).localeCompare(diaKey(a)) ||
+      (b.orden ?? 1e9) - (a.orden ?? 1e9) ||
+      (b.creadoEn?.seconds ?? 0) - (a.creadoEn?.seconds ?? 0));
     renderAportesRecientes();
     renderEgresosRecientes();
     renderHistorial();
+    renderCuotas();
     actualizarDashboard();
   }
 
   function actualizarDashboard() {
-    const totalAportes = movimientos.filter(m => m.tipo === 'aporte').reduce((s, m) => s + m.monto, 0);
-    const totalEgresos = movimientos.filter(m => m.tipo === 'egreso').reduce((s, m) => s + m.monto, 0);
-    const fondo = totalAportes - totalEgresos;
-    document.getElementById('dash-fondo').textContent = formatPesos(fondo);
-    document.getElementById('dash-aportes').textContent = formatPesos(totalAportes);
-    document.getElementById('dash-egresos').textContent = formatPesos(totalEgresos);
+    const libro = movimientos.filter(esLibro);
+    const suma = (tipo, caja) => libro.filter(m => m.tipo === tipo && (!caja || cajaDe(m) === caja)).reduce((s, m) => s + (m.monto || 0), 0);
+    const fondoMp = saldos.mp + suma('aporte', 'mp') - suma('egreso', 'mp');
+    const fondoEf = saldos.efectivo + suma('aporte', 'efectivo') - suma('egreso', 'efectivo');
+    const signo = (n) => (n < 0 ? '-' : '') + pesos2(n);
+    document.getElementById('dash-fondo').textContent = signo(fondoMp + fondoEf);
+    document.getElementById('dash-mp').textContent = signo(fondoMp);
+    document.getElementById('dash-efectivo').textContent = signo(fondoEf);
+    document.getElementById('dash-aportes').textContent = pesos2(suma('aporte'));
+    document.getElementById('dash-egresos').textContent = pesos2(suma('egreso'));
     document.getElementById('dash-integrantes').textContent = integrantes.length;
   }
 
   function renderAportesRecientes() {
     const el = document.getElementById('lista-aportes-recientes');
-    const items = movimientos.filter(m => m.tipo === 'aporte').slice(0, 8);
+    const items = movimientos.filter(m => esLibro(m) && m.tipo === 'aporte').slice(0, 8);
     if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay aportes registrados.</div>'; return; }
     el.innerHTML = `<table class="tabla">
-      <thead><tr><th>Integrante</th><th>Monto</th><th>Fecha</th><th>Nota</th><th></th></tr></thead>
+      <thead><tr><th>Integrante / Concepto</th><th>Monto</th><th>Fecha</th><th>Caja</th><th></th></tr></thead>
       <tbody>${items.map(m => `
         <tr>
-          <td>${m.integrante || '—'}</td>
-          <td class="monto-positivo">${formatPesos(m.monto)}</td>
+          <td>${esc(m.integrante || m.concepto || '—')}${m.integrante && m.concepto ? ` <span class="badge-caja">${esc(m.concepto)}${m.mes ? ' ' + esc(m.mes) : ''}</span>` : ''}</td>
+          <td class="monto-positivo">${pesos2(m.monto)}</td>
           <td>${formatFecha(m.fecha)}</td>
-          <td>${m.nota || '—'}</td>
-          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+          <td><span class="badge-caja">${CAJAS[cajaDe(m)]}</span></td>
+          <td style="white-space:nowrap"><button class="btn-edit" onclick="editarMovimiento('${esc(m.id)}')">Editar</button><button class="btn-danger" onclick="eliminarMovimiento('${esc(m.id)}')">✕</button></td>
         </tr>`).join('')}
       </tbody></table>`;
   }
 
   function renderEgresosRecientes() {
     const el = document.getElementById('lista-egresos-recientes');
-    const items = movimientos.filter(m => m.tipo === 'egreso').slice(0, 8);
+    const items = movimientos.filter(m => esLibro(m) && m.tipo === 'egreso').slice(0, 8);
     if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay egresos registrados.</div>'; return; }
     el.innerHTML = `<table class="tabla">
-      <thead><tr><th>Categoría</th><th>Monto</th><th>Fecha</th><th>Descripción</th><th></th></tr></thead>
+      <thead><tr><th>Categoría</th><th>Monto</th><th>Fecha</th><th>Caja</th><th>Descripción</th><th></th></tr></thead>
       <tbody>${items.map(m => `
         <tr>
-          <td>${m.categoria || '—'}</td>
-          <td class="monto-negativo">${formatPesos(m.monto)}</td>
+          <td>${esc(m.categoria || '—')}</td>
+          <td class="monto-negativo">${pesos2(m.monto)}</td>
           <td>${formatFecha(m.fecha)}</td>
-          <td>${m.descripcion || '—'}</td>
-          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+          <td><span class="badge-caja">${CAJAS[cajaDe(m)]}</span></td>
+          <td>${esc(m.descripcion || '—')}</td>
+          <td style="white-space:nowrap"><button class="btn-edit" onclick="editarMovimiento('${esc(m.id)}')">Editar</button><button class="btn-danger" onclick="eliminarMovimiento('${esc(m.id)}')">✕</button></td>
         </tr>`).join('')}
       </tbody></table>`;
   }
@@ -471,27 +670,24 @@
   function renderHistorial() {
     const search = document.getElementById('hist-search').value.toLowerCase();
     const tipo = document.getElementById('hist-tipo').value;
+    const caja = document.getElementById('hist-caja').value;
     const integrante = document.getElementById('hist-integrante').value;
     const desde = document.getElementById('hist-desde').value;
     const hasta = document.getElementById('hist-hasta').value;
 
-    const isFiltering = search || tipo !== 'all' || integrante !== 'all' || desde || hasta;
+    const isFiltering = search || tipo !== 'all' || caja !== 'all' || integrante !== 'all' || desde || hasta;
     document.getElementById('hist-clear').classList.toggle('visible', !!isFiltering);
 
-    let items = [...movimientos];
+    let items = movimientos.filter(esLibro);
     if (tipo !== 'all') items = items.filter(m => m.tipo === tipo);
+    if (caja !== 'all') items = items.filter(m => cajaDe(m) === caja);
     if (integrante !== 'all') items = items.filter(m => m.integrante === integrante);
-    if (desde) items = items.filter(m => {
-      const d = m.fecha?.toDate ? m.fecha.toDate() : new Date(m.fecha);
-      return d >= new Date(desde);
-    });
-    if (hasta) items = items.filter(m => {
-      const d = m.fecha?.toDate ? m.fecha.toDate() : new Date(m.fecha);
-      return d <= new Date(hasta + 'T23:59:59');
-    });
+    if (desde) items = items.filter(m => diaKey(m) >= desde);
+    if (hasta) items = items.filter(m => diaKey(m) <= hasta);
     if (search) items = items.filter(m =>
       (m.integrante||'').toLowerCase().includes(search) ||
       (m.categoria||'').toLowerCase().includes(search) ||
+      (m.concepto||'').toLowerCase().includes(search) ||
       (m.descripcion||'').toLowerCase().includes(search) ||
       (m.nota||'').toLowerCase().includes(search)
     );
@@ -499,50 +695,112 @@
     const el = document.getElementById('historial-container');
     if (items.length === 0) { el.innerHTML = '<div class="empty-state">No hay movimientos que coincidan.</div>'; return; }
     el.innerHTML = `<table class="tabla">
-      <thead><tr><th>Tipo</th><th>Integrante / Categoría</th><th>Monto</th><th>Fecha</th><th>Detalle</th><th></th></tr></thead>
+      <thead><tr><th>Fecha</th><th>Tipo</th><th>Integrante / Concepto</th><th>Monto</th><th>Caja</th><th>Saldo caja</th><th>Detalle</th><th></th></tr></thead>
       <tbody>${items.map(m => `
         <tr>
-          <td><span class="badge-${m.tipo}">${m.tipo}</span></td>
-          <td>${m.tipo === 'aporte' ? (m.integrante||'—') : (m.categoria||'—')}</td>
-          <td class="${m.tipo === 'aporte' ? 'monto-positivo' : 'monto-negativo'}">${m.tipo === 'aporte' ? '+' : '-'}${formatPesos(m.monto)}</td>
-          <td>${formatFecha(m.fecha)}</td>
-          <td>${m.nota || m.descripcion || '—'}</td>
-          <td><button class="btn-danger" onclick="eliminarMovimiento('${m.id}')">✕</button></td>
+          <td>${formatFecha(m.fecha)}${m.fechaEstimada ? ' <span class="badge-caja" title="La planilla no tenía fecha en esta fila">aprox.</span>' : ''}</td>
+          <td><span class="badge-${esc(m.tipo)}">${esc(m.tipo)}</span></td>
+          <td>${m.tipo === 'aporte' ? esc(m.integrante || m.concepto || '—') : esc(m.categoria || '—')}${m.tipo === 'aporte' && m.integrante && m.concepto ? ` <span class="badge-caja">${esc(m.concepto)}${m.mes ? ' ' + esc(m.mes) : ''}</span>` : ''}</td>
+          <td class="${m.tipo === 'aporte' ? 'monto-positivo' : 'monto-negativo'}">${m.tipo === 'aporte' ? '+' : '-'}${pesos2(m.monto)}</td>
+          <td><span class="badge-caja">${CAJAS[cajaDe(m)]}</span></td>
+          <td class="saldo-col">${m._saldo == null ? '—' : (m._saldo < 0 ? '-' : '') + pesos2(m._saldo)}</td>
+          <td>${esc(m.nota || m.descripcion || '—')}</td>
+          <td style="white-space:nowrap"><button class="btn-edit" onclick="editarMovimiento('${esc(m.id)}')">Editar</button><button class="btn-danger" onclick="eliminarMovimiento('${esc(m.id)}')">✕</button></td>
         </tr>`).join('')}
       </tbody></table>`;
   }
 
-  // ── GUARDAR APORTE ──
+  // ── CUOTAS (matriz integrante × mes) ──
+  function renderCuotas() {
+    const selAnio = document.getElementById('cuo-anio');
+    const concepto = document.getElementById('cuo-concepto').value;
+    const aportes = movimientos.filter(m => m.tipo === 'aporte' && m.integrante && m.concepto === concepto);
+    const anios = [...new Set([new Date().getFullYear(), ...aportes.filter(m => m.mes).map(m => Number(m.mes.slice(0, 4)))])].sort();
+    const prevAnio = selAnio.value || String(new Date().getFullYear());
+    selAnio.innerHTML = anios.map(a => `<option value="${a}">${a}</option>`).join('');
+    selAnio.value = anios.map(String).includes(prevAnio) ? prevAnio : String(anios[anios.length - 1]);
+    const anio = selAnio.value;
+
+    const refs = referencias.filter(r => (r.label || '').toLowerCase().startsWith(concepto.toLowerCase().split(' ')[0]));
+    document.getElementById('cuo-ref').textContent = refs.length
+      ? 'Referencia: ' + refs.map(r => `${r.label} ${pesos2(r.monto)}`).join(' · ')
+      : 'Cargá los valores de cuota en la pestaña Ajustes.';
+
+    const tieneSinMes = aportes.some(m => !m.mes);
+    const nombres = [...new Set([...integrantes.map(i => i.nombre), ...aportes.map(m => m.integrante)])].sort((a, b) => a.localeCompare(b, 'es'));
+    const celda = {};
+    aportes.forEach(m => {
+      const col = m.mes ? (m.mes.startsWith(anio) ? Number(m.mes.slice(5, 7)) - 1 : null) : 12;
+      if (col === null) return;
+      const k = m.integrante + '|' + col;
+      celda[k] = (celda[k] || 0) + (m.monto || 0);
+    });
+    const cols = tieneSinMes ? 13 : 12;
+    const totalCol = Array(cols).fill(0);
+    const filas = nombres.map(n => {
+      let tot = 0;
+      const tds = Array.from({ length: cols }, (_, c) => {
+        const v = celda[n + '|' + c] || 0; tot += v; totalCol[c] += v;
+        return v ? `<td data-n="${esc(n)}" data-c="${c}" title="Ver y corregir los pagos">${pesos2(v)}</td>` : '<td class="vacio">·</td>';
+      }).join('');
+      return `<tr><td>${esc(n)}</td>${tds}<td><b>${tot ? pesos2(tot) : '·'}</b></td></tr>`;
+    }).join('');
+    const head = MESES.map(m => `<th>${m}</th>`).join('') + (tieneSinMes ? '<th>Pago</th>' : '');
+    document.getElementById('cuo-tabla').innerHTML = nombres.length
+      ? `<table class="matriz"><thead><tr><th>Integrante</th>${head}<th>Total</th></tr></thead>
+         <tbody>${filas}<tr class="total"><td>Total</td>${totalCol.map(v => `<td>${v ? pesos2(v) : '·'}</td>`).join('')}<td>${pesos2(totalCol.reduce((a, b) => a + b, 0))}</td></tr></tbody></table>`
+      : '<div class="empty-state">Todavía no hay integrantes ni pagos.</div>';
+  }
+  ['cuo-concepto', 'cuo-anio'].forEach(id => document.getElementById(id).addEventListener('change', renderCuotas));
+
+  // ── FORMULARIO DE APORTE ──
+  function ajustarFormAporte() {
+    const c = document.getElementById('aporte-concepto').value;
+    const esCuota = CUOTA_CONCEPTOS.includes(c);
+    document.getElementById('aporte-mes-row').style.display = esCuota ? '' : 'none';
+    document.getElementById('aporte-int-opt').textContent = esCuota ? '' : '(opcional)';
+  }
+  document.getElementById('aporte-concepto').addEventListener('change', ajustarFormAporte);
+
   document.getElementById('btn-guardar-aporte').addEventListener('click', async () => {
+    const concepto = document.getElementById('aporte-concepto').value;
+    const caja = document.getElementById('aporte-caja').value;
     const integrante = document.getElementById('aporte-integrante').value;
     const monto = parseFloat(document.getElementById('aporte-monto').value);
     const fechaStr = document.getElementById('aporte-fecha').value;
+    const mes = document.getElementById('aporte-mes').value;
     const nota = document.getElementById('aporte-nota').value.trim();
-    if (!integrante || !monto || !fechaStr) { toast('Completá integrante, monto y fecha.', 'err'); return; }
+    const esCuota = CUOTA_CONCEPTOS.includes(concepto);
+    if (!monto || !fechaStr) { toast('Completá monto y fecha.', 'err'); return; }
+    if (esCuota && !integrante) { toast('Elegí el integrante que pagó.', 'err'); return; }
     try {
-      await addDoc(collection(db, 'caja_movimientos'), {
-        tipo: 'aporte', integrante, monto, nota,
+      const data = {
+        tipo: 'aporte', concepto, caja, monto, nota,
         fecha: new Date(fechaStr + 'T12:00:00'),
         creadoPor: currentUser.email,
         creadoEn: serverTimestamp()
-      });
+      };
+      if (integrante) data.integrante = integrante;
+      if (esCuota && mes) data.mes = mes;
+      await addDoc(collection(db, 'caja_movimientos'), data);
       document.getElementById('aporte-monto').value = '';
       document.getElementById('aporte-nota').value = '';
       toast('✅ Aporte guardado!');
       await cargarMovimientos();
-    } catch(e) { toast('Error al guardar.', 'err'); }
+    } catch(e) { console.error(e); toast('Error al guardar.', 'err'); }
   });
 
   // ── GUARDAR EGRESO ──
   document.getElementById('btn-guardar-egreso').addEventListener('click', async () => {
     const categoria = document.getElementById('egreso-categoria').value;
+    const caja = document.getElementById('egreso-caja').value;
     const monto = parseFloat(document.getElementById('egreso-monto').value);
     const fechaStr = document.getElementById('egreso-fecha').value;
     const descripcion = document.getElementById('egreso-descripcion').value.trim();
     if (!monto || !fechaStr) { toast('Completá monto y fecha.', 'err'); return; }
     try {
       await addDoc(collection(db, 'caja_movimientos'), {
-        tipo: 'egreso', categoria, monto, descripcion,
+        tipo: 'egreso', categoria, caja, monto, descripcion,
         fecha: new Date(fechaStr + 'T12:00:00'),
         creadoPor: currentUser.email,
         creadoEn: serverTimestamp()
@@ -551,7 +809,7 @@
       document.getElementById('egreso-descripcion').value = '';
       toast('✅ Egreso guardado!');
       await cargarMovimientos();
-    } catch(e) { toast('Error al guardar.', 'err'); }
+    } catch(e) { console.error(e); toast('Error al guardar.', 'err'); }
   });
 
   // ── AGREGAR INTEGRANTE ──
@@ -563,6 +821,7 @@
       document.getElementById('nuevo-integrante').value = '';
       toast(`✅ ${nombre} agregado!`);
       await cargarIntegrantes();
+      renderCuotas();
     } catch(e) { toast('Error al agregar.', 'err'); }
   });
 
@@ -573,6 +832,7 @@
       await deleteDoc(doc(db, 'caja_integrantes', id));
       toast(`${nombre} removido.`);
       await cargarIntegrantes();
+      renderCuotas();
     } catch(e) { toast('Error al remover.', 'err'); }
   };
 
@@ -587,16 +847,219 @@
   };
 
   // ── FILTROS HISTORIAL ──
-  ['hist-search','hist-tipo','hist-integrante','hist-desde','hist-hasta'].forEach(id => {
+  ['hist-search','hist-tipo','hist-caja','hist-integrante','hist-desde','hist-hasta'].forEach(id => {
     document.getElementById(id).addEventListener('input', renderHistorial);
     document.getElementById(id).addEventListener('change', renderHistorial);
   });
   document.getElementById('hist-clear').addEventListener('click', () => {
-    ['hist-search'].forEach(id => document.getElementById(id).value = '');
-    ['hist-tipo','hist-integrante'].forEach(id => document.getElementById(id).value = id === 'hist-tipo' ? 'all' : 'all');
+    document.getElementById('hist-search').value = '';
+    ['hist-tipo','hist-caja','hist-integrante'].forEach(id => document.getElementById(id).value = 'all');
     ['hist-desde','hist-hasta'].forEach(id => document.getElementById(id).value = '');
     renderHistorial();
   });
+
+  // ── AJUSTES: saldos ──
+  document.getElementById('btn-guardar-saldos').addEventListener('click', async () => {
+    const mp = parseFloat(document.getElementById('saldo-mp').value) || 0;
+    const efectivo = parseFloat(document.getElementById('saldo-efectivo').value) || 0;
+    try {
+      await setDoc(doc(db, 'caja_config', 'saldos'), { mp, efectivo, actualizadoPor: currentUser.email, actualizadoEn: serverTimestamp() });
+      saldos = { mp, efectivo };
+      toast('✅ Saldos guardados.');
+      await cargarMovimientos();
+    } catch(e) { console.error(e); toast('Error al guardar los saldos.', 'err'); }
+  });
+
+  // ── AJUSTES: valores de cuota ──
+  function renderReferencias() {
+    const el = document.getElementById('ref-lista');
+    el.innerHTML = referencias.length ? referencias.map((r, i) => `
+      <div class="ref-row" data-i="${i}">
+        <input class="form-input" type="text" value="${esc(r.label)}" placeholder="Ej: Sala · valor mensual" />
+        <input class="form-input" type="number" step="0.01" value="${esc(r.monto)}" placeholder="Monto" />
+        <button class="btn-danger" type="button" data-del="${i}">✕</button>
+      </div>`).join('') : '<p class="hint">Todavía no hay valores cargados.</p>';
+  }
+  const leerReferencias = () => [...document.querySelectorAll('#ref-lista .ref-row')].map(row => {
+    const [a, b] = row.querySelectorAll('input');
+    return { label: a.value.trim(), monto: parseFloat(b.value) || 0 };
+  }).filter(r => r.label);
+  document.getElementById('btn-ref-add').addEventListener('click', () => { referencias = [...leerReferencias(), { label: '', monto: 0 }]; renderReferencias(); });
+  document.getElementById('ref-lista').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-del]'); if (!b) return;
+    const keep = leerReferencias(); const all = [...document.querySelectorAll('#ref-lista .ref-row')];
+    all[Number(b.dataset.del)].remove();
+    referencias = [...document.querySelectorAll('#ref-lista .ref-row')].map(row => { const [x, y] = row.querySelectorAll('input'); return { label: x.value.trim(), monto: parseFloat(y.value) || 0 }; });
+    renderReferencias();
+  });
+  document.getElementById('btn-ref-save').addEventListener('click', async () => {
+    const items = leerReferencias();
+    try {
+      await setDoc(doc(db, 'caja_config', 'referencias'), { items, actualizadoPor: currentUser.email, actualizadoEn: serverTimestamp() });
+      referencias = items; renderReferencias(); renderCuotas();
+      toast('✅ Valores guardados.');
+    } catch(e) { console.error(e); toast('Error al guardar los valores.', 'err'); }
+  });
+
+  // ── AJUSTES: importar historial ──
+  const impMsg = (t) => { document.getElementById('imp-msg').textContent = t; };
+  async function commitEnLotes(ops) {
+    for (let i = 0; i < ops.length; i += 400) {
+      const batch = writeBatch(db);
+      ops.slice(i, i + 400).forEach(fn => fn(batch));
+      await batch.commit();
+    }
+  }
+  document.getElementById('btn-importar').addEventListener('click', async () => {
+    const file = document.getElementById('imp-file').files[0];
+    if (!file) { toast('Elegí primero el archivo caja-historial.json.', 'err'); return; }
+    let data;
+    try { data = JSON.parse(await file.text()); } catch { toast('El archivo no es un JSON válido.', 'err'); return; }
+    if (!Array.isArray(data.movimientos) || !Array.isArray(data.cuotas) || !Array.isArray(data.integrantes)) { toast('El archivo no tiene el formato esperado.', 'err'); return; }
+    const previa = await getDoc(doc(db, 'caja_config', 'importacion'));
+    if (previa.exists() && !confirm('Ya se importó un historial antes. Si seguís, se van a duplicar los datos (usá "Borrar lo importado" primero). ¿Continuar igual?')) return;
+    if (!confirm(`Se van a cargar ${data.movimientos.length} movimientos, ${data.cuotas.length} pagos de cuotas y los integrantes que falten. ¿Importar?`)) return;
+    const btn = document.getElementById('btn-importar'); btn.disabled = true; impMsg('Importando…');
+    try {
+      const ops = [];
+      const existentes = new Set(integrantes.map(i => i.nombre.trim().toLowerCase()));
+      let nuevos = 0;
+      data.integrantes.forEach(n => {
+        if (existentes.has(n.trim().toLowerCase())) return;
+        nuevos++;
+        ops.push(b => b.set(doc(collection(db, 'caja_integrantes')), { nombre: n.trim(), activo: true, importado: true, creadoEn: serverTimestamp() }));
+      });
+      const base = { importado: true, creadoPor: currentUser.email, creadoEn: serverTimestamp() };
+      data.movimientos.forEach(m => {
+        const { fecha, ...rest } = m;
+        ops.push(b => b.set(doc(collection(db, 'caja_movimientos')), { ...rest, fecha: Timestamp.fromDate(new Date(fecha + 'T12:00:00')), ...base }));
+      });
+      data.cuotas.forEach(c => {
+        const row = { tipo: 'aporte', integrante: c.integrante, concepto: c.concepto, monto: c.monto, caja: c.caja || 'mp', soloCuotas: true, ...base };
+        if (c.mes) { row.mes = c.mes; row.fecha = Timestamp.fromDate(new Date(c.mes + '-15T12:00:00')); }
+        ops.push(b => b.set(doc(collection(db, 'caja_movimientos')), row));
+      });
+      await commitEnLotes(ops);
+      if (data.saldos) await setDoc(doc(db, 'caja_config', 'saldos'), { mp: Number(data.saldos.mp) || 0, efectivo: Number(data.saldos.efectivo) || 0, actualizadoPor: currentUser.email, actualizadoEn: serverTimestamp() });
+      if (!referencias.length && Array.isArray(data.referencias)) await setDoc(doc(db, 'caja_config', 'referencias'), { items: data.referencias, actualizadoPor: currentUser.email, actualizadoEn: serverTimestamp() });
+      await setDoc(doc(db, 'caja_config', 'importacion'), { por: currentUser.email, en: serverTimestamp(), movimientos: data.movimientos.length, cuotas: data.cuotas.length });
+      impMsg(`Listo: ${data.movimientos.length} movimientos, ${data.cuotas.length} pagos de cuotas y ${nuevos} integrantes nuevos.`);
+      toast('✅ Historial importado.');
+      await cargarConfig(); await cargarIntegrantes(); await cargarMovimientos();
+    } catch(e) {
+      console.error(e);
+      impMsg('Falló la importación. Si quedó a medias, usá "Borrar lo importado" y probá de nuevo.');
+      toast('Error al importar.', 'err');
+    }
+    btn.disabled = false;
+  });
+  document.getElementById('btn-borrar-import').addEventListener('click', async () => {
+    if (!confirm('Se borran SOLO los movimientos, cuotas e integrantes que vinieron de la importación. Lo que cargaste a mano queda. ¿Seguir?')) return;
+    impMsg('Borrando…');
+    try {
+      const ops = [];
+      for (const col of ['caja_movimientos', 'caja_integrantes']) {
+        const snap = await getDocs(query(collection(db, col), where('importado', '==', true)));
+        snap.docs.forEach(d => ops.push(b => b.delete(d.ref)));
+      }
+      await commitEnLotes(ops);
+      await deleteDoc(doc(db, 'caja_config', 'importacion'));
+      impMsg(`Se borraron ${ops.length} documentos importados.`);
+      await cargarIntegrantes(); await cargarMovimientos();
+    } catch(e) { console.error(e); impMsg('No se pudo borrar.'); }
+  });
+
+  // ── EDITAR MOVIMIENTOS ──
+  const APORTE_CONC = ['Sala', 'Dirección', 'Grabación', 'Taller Mestre Gordo', 'Cuotas (varias)', 'Shows', 'Rendimientos', 'Otro'];
+  const EGRESO_CAT = ['Dirección', 'Sala de ensayo', 'Grabación', 'Taller Mestre Gordo', 'Transporte', 'Otro'];
+  let editando = null;
+  const $id = (x) => document.getElementById(x);
+
+  function ajustarEditor() {
+    const m = editando; if (!m) return;
+    const esCuota = m.tipo === 'aporte' && CUOTA_CONCEPTOS.includes($id('ed-concepto').value);
+    $id('ed-mes-group').style.display = esCuota ? '' : 'none';
+  }
+  $id('ed-concepto').addEventListener('change', ajustarEditor);
+
+  window.editarMovimiento = (id) => {
+    const m = movimientos.find(x => x.id === id); if (!m) return;
+    editando = m;
+    $id('dlg-cell').classList.remove('open');
+    const esAporte = m.tipo === 'aporte';
+    $id('ed-title').textContent = esAporte ? 'Editar aporte' : 'Editar egreso';
+    $id('ed-conc-label').textContent = esAporte ? 'Concepto' : 'Categoría';
+    const actual = esAporte ? m.concepto : m.categoria;
+    const lista = esAporte ? APORTE_CONC : EGRESO_CAT;
+    const opts = actual && !lista.includes(actual) ? [actual, ...lista] : lista;
+    $id('ed-concepto').innerHTML = opts.map(o => `<option>${esc(o)}</option>`).join('');
+    $id('ed-concepto').value = actual || opts[0];
+    const f = fechaDe(m); $id('ed-fecha').value = f ? f.toISOString().slice(0, 10) : '';
+    $id('ed-caja').value = cajaDe(m);
+    $id('ed-monto').value = m.monto ?? '';
+    $id('ed-detalle').value = (esAporte ? (m.nota || m.descripcion) : m.descripcion) || '';
+    $id('ed-int-row').style.display = esAporte ? '' : 'none';
+    const nombres = [...new Set([...integrantes.map(i => i.nombre), ...(m.integrante ? [m.integrante] : [])])].sort((a, b) => a.localeCompare(b, 'es'));
+    $id('ed-integrante').innerHTML = '<option value="">— ninguno —</option>' + nombres.map(n => `<option value="${esc(n)}">${esc(n)}</option>`).join('');
+    $id('ed-integrante').value = m.integrante || '';
+    $id('ed-mes').value = m.mes || '';
+    $id('ed-aviso').textContent = m.soloCuotas ? 'Este pago viene de la planilla de cuotas: corregirlo cambia la tabla de Cuotas, no el saldo de la caja.' : (m.fechaEstimada ? 'La planilla original no tenía fecha en este movimiento: confirmá la fecha correcta.' : '');
+    ajustarEditor();
+    $id('dlg-edit').classList.add('open');
+  };
+  const cerrarEditor = () => { $id('dlg-edit').classList.remove('open'); editando = null; };
+  $id('ed-cancelar').addEventListener('click', cerrarEditor);
+  $id('dlg-edit').addEventListener('click', (e) => { if (e.target.id === 'dlg-edit') cerrarEditor(); });
+
+  $id('ed-guardar').addEventListener('click', async () => {
+    const m = editando; if (!m) return;
+    const esAporte = m.tipo === 'aporte';
+    const monto = parseFloat($id('ed-monto').value);
+    const fechaStr = $id('ed-fecha').value;
+    const concepto = $id('ed-concepto').value;
+    const integrante = $id('ed-integrante').value;
+    const mes = $id('ed-mes').value;
+    const detalle = $id('ed-detalle').value.trim();
+    const esCuota = esAporte && CUOTA_CONCEPTOS.includes(concepto);
+    if (!monto || monto <= 0) { toast('Poné un monto válido.', 'err'); return; }
+    if (!fechaStr && !m.soloCuotas) { toast('Poné la fecha.', 'err'); return; }
+    if (esCuota && !integrante) { toast('Elegí el integrante que pagó.', 'err'); return; }
+    const upd = { monto, caja: $id('ed-caja').value, editadoPor: currentUser.email, editadoEn: serverTimestamp() };
+    if (fechaStr) { upd.fecha = new Date(fechaStr + 'T12:00:00'); upd.fechaEstimada = deleteField(); }
+    if (esAporte) {
+      upd.concepto = concepto;
+      upd.integrante = integrante || deleteField();
+      upd.mes = esCuota && mes ? mes : deleteField();
+      if (m.descripcion !== undefined && !m.nota) upd.descripcion = detalle; else upd.nota = detalle;
+    } else {
+      upd.categoria = concepto;
+      upd.descripcion = detalle;
+    }
+    try {
+      await updateDoc(doc(db, 'caja_movimientos', m.id), upd);
+      toast('✅ Cambios guardados.');
+      cerrarEditor();
+      await cargarMovimientos();
+    } catch (e) { console.error(e); toast('No se pudo guardar el cambio.', 'err'); }
+  });
+
+  // Click en una celda de la tabla de Cuotas: ver / corregir los pagos de esa celda
+  document.getElementById('cuo-tabla').addEventListener('click', (e) => {
+    const td = e.target.closest('td[data-n]'); if (!td) return;
+    const nombre = td.dataset.n, col = Number(td.dataset.c);
+    const concepto = $id('cuo-concepto').value, anio = $id('cuo-anio').value;
+    const mesKey = col === 12 ? null : `${anio}-${String(col + 1).padStart(2, '0')}`;
+    const items = movimientos.filter(m => m.tipo === 'aporte' && m.integrante === nombre && m.concepto === concepto && (mesKey ? m.mes === mesKey : !m.mes));
+    $id('cell-title').textContent = `${nombre} · ${concepto} · ${mesKey || 'sin mes'}`;
+    $id('cell-list').innerHTML = items.map(m => `
+      <div class="cell-item">
+        <div><b>${pesos2(m.monto)}</b> <span class="badge-caja">${CAJAS[cajaDe(m)]}</span><br><span class="saldo-col">${formatFecha(m.fecha)}${m.soloCuotas ? ' · de la planilla' : ''}</span></div>
+        <div style="white-space:nowrap"><button class="btn-edit" onclick="editarMovimiento('${esc(m.id)}')">Editar</button><button class="btn-danger" onclick="document.getElementById('dlg-cell').classList.remove('open');eliminarMovimiento('${esc(m.id)}')">✕</button></div>
+      </div>`).join('') || '<div class="empty-state">Sin pagos.</div>';
+    $id('dlg-cell').classList.add('open');
+  });
+  $id('cell-close').addEventListener('click', () => $id('dlg-cell').classList.remove('open'));
+  $id('dlg-cell').addEventListener('click', (e) => { if (e.target.id === 'dlg-cell') $id('dlg-cell').classList.remove('open'); });
 
   // ── TABS ──
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -609,14 +1072,18 @@
     });
   });
 
-  // ── FECHA HOY POR DEFAULT ──
+  // ── VALORES POR DEFECTO ──
   const hoy = new Date().toISOString().split('T')[0];
   document.getElementById('aporte-fecha').value = hoy;
   document.getElementById('egreso-fecha').value = hoy;
+  document.getElementById('aporte-mes').value = hoy.slice(0, 7);
+  ajustarFormAporte();
 
   // ── INIT ──
+  try { await cargarConfig(); } catch (e) { console.error(e); toast('No se pudo leer la configuración de la caja. ¿Publicaste las reglas nuevas?', 'err'); }
   await cargarIntegrantes();
   await cargarMovimientos();
+
 </script>
 
 </body>

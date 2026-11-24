@@ -28,3 +28,15 @@ Pasa a Firestore los 9 videos, 30 videos de timbal y 8 audios de la sala anterio
 - La sección "Recursos" (que decía "Próximamente") se quitó.
 - El material se carga desde `/sala-admin.html` pegando links de YouTube o Drive.
 - Los usuarios se siguen aprobando como siempre.
+
+## Sala renovada (noviembre 2026)
+
+La sala de estudio (`sala-estudio.html`) se rediseñó con las mismas mejoras que Vibra, manteniendo la marca de Arabatu:
+
+- **Celular:** menú de cuenta con la inicial (el logo sigue llevando al inicio), buscador a todo el ancho y botón *Filtros* con panel inferior; los filtros aplicados se ven como chips con ×.
+- **Videos:** tarjetas 16:9, lista de una columna en celular, búsqueda por palabras sueltas ("timbal epab").
+- **Por guion / Todos los videos:** cada guion es un álbum con su página, el botón *Escuchar audio del guion* y *Siguiente en el guion*.
+- **Vista de video** (reemplaza al modal): botón Atrás que conserva filtros y scroll, barra propia de YouTube (−10 s, +10 s, velocidad, pantalla completa), audio del guion y otros videos del guion.
+- **Orden de práctica:** en `sala-admin.html` → Material, elegí un guion en el filtro y acomodá con las flechas.
+
+No cambiaron las reglas de Firestore ni los datos: los guiones existentes se usan directamente como álbumes.

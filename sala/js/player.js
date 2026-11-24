@@ -10,7 +10,22 @@ const fillRange = (el) => {
   el.style.setProperty("--pct", max ? `${(Number(el.value) / max) * 100}%` : "0%");
 };
 
-export function createPlayer({ onChange, onError } = {}) {
+let apiPromise = null;
+export function loadYouTubeApi() {
+  if (window.YT?.Player) return Promise.resolve();
+  if (apiPromise) return apiPromise;
+  apiPromise = new Promise((resolve, reject) => {
+    const prevCb = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => { prevCb?.(); resolve(); };
+    const s = document.createElement("script");
+    s.src = "https://www.youtube.com/iframe_api";
+    s.onerror = () => { apiPromise = null; reject(new Error("No se pudo cargar YouTube")); };
+    document.head.appendChild(s);
+  });
+  return apiPromise;
+}
+
+export function createPlayer({ onChange, onError, onProgress, onPlayState } = {}) {
   const bar = $("#player");
   const els = {
     title: $("#pl-title"), sub: $("#pl-sub"), cover: $("#pl-cover"),
@@ -18,25 +33,14 @@ export function createPlayer({ onChange, onError } = {}) {
     seek: $("#pl-seek"), cur: $("#pl-cur"), dur: $("#pl-dur"), vol: $("#pl-vol"),
     host: $("#yt-host"), drive: $("#drive-frame"), label: $("#stage-label"), close: $("#stage-close"),
   };
-  let yt = null, apiPromise = null, timer = null, dragging = false, token = 0;
+  let yt = null, timer = null, dragging = false, token = 0;
   let current = null, queue = [], playing = false, mode = null;
 
-  const loadApi = () => {
-    if (window.YT?.Player) return Promise.resolve();
-    if (apiPromise) return apiPromise;
-    apiPromise = new Promise((resolve, reject) => {
-      const prevCb = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => { prevCb?.(); resolve(); };
-      const s = document.createElement("script");
-      s.src = "https://www.youtube.com/iframe_api";
-      s.onerror = () => { apiPromise = null; reject(new Error("No se pudo cargar YouTube")); };
-      document.head.appendChild(s);
-    });
-    return apiPromise;
-  };
+  const loadApi = loadYouTubeApi;
 
   function setPlaying(v) {
     playing = v;
+    onPlayState?.(v);
     els.play.innerHTML = v ? ICON.pause : ICON.play;
     els.play.setAttribute("aria-label", v ? "Pausar" : "Reproducir");
   }
@@ -49,6 +53,7 @@ export function createPlayer({ onChange, onError } = {}) {
       const cur = yt.getCurrentTime() || 0, dur = yt.getDuration() || 0;
       els.seek.max = dur; els.seek.value = cur; fillRange(els.seek);
       els.cur.textContent = fmtTime(cur); els.dur.textContent = fmtTime(dur);
+      onProgress?.(cur, dur);
     }, 400);
   }
 
@@ -173,5 +178,9 @@ export function createPlayer({ onChange, onError } = {}) {
   els.prev.innerHTML = ICON.prev; els.next.innerHTML = ICON.next; els.play.innerHTML = ICON.play;
   els.vol.value = 80; fillRange(els.vol);
 
-  return { play, stop, toggle, next, prev, get current() { return current; } };
+  // Para la tarjeta de audio de la vista de video
+  function pause() { if (mode === "youtube" && yt && playing) yt.pauseVideo(); }
+  function seek(t) { if (mode === "youtube") yt?.seekTo?.(t, true); }
+
+  return { play, stop, toggle, next, prev, pause, seek, get current() { return current; }, get playing() { return playing; } };
 }

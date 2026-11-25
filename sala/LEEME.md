@@ -31,7 +31,7 @@ Pasa a Firestore los 9 videos, 30 videos de timbal y 8 audios de la sala anterio
 
 ## Sala renovada (noviembre 2026)
 
-La sala de estudio (`sala-estudio.html`) se rediseñó con una interfaz nueva, manteniendo la marca de Arabatu:
+La sala de estudio (`sala-estudio.html`) se rediseñó con las mismas mejoras que Vibra, manteniendo la marca de Arabatu:
 
 - **Celular:** menú de cuenta con la inicial (el logo sigue llevando al inicio), buscador a todo el ancho y botón *Filtros* con panel inferior; los filtros aplicados se ven como chips con ×.
 - **Videos:** tarjetas 16:9, lista de una columna en celular, búsqueda por palabras sueltas ("timbal epab").
@@ -43,5 +43,5 @@ No cambiaron las reglas de Firestore ni los datos: los guiones existentes se usa
 
 ## Favoritos y guiones con audios
 
-- **Favoritos:** cada miembro marca con la estrella audios y videos (tarjetas, filas de audio y página del video) y filtra con el botón *Favoritos*. Se guardan en `users/{uid}/favoritos/{materialId}`. **Hay que publicar las reglas nuevas** (`sala/firestore.rules`, bloque "Favoritos de la sala"); mientras no estén, las estrellas quedan ocultas y el resto de la sala funciona igual.
+- **Favoritos:** cada miembro marca con la estrella audios y videos (tarjetas, filas de audio y página del video) y los ve juntos en la sección *Favoritos* del menú. Se guardan en `users/{uid}/favoritos/{materialId}`. **Hay que publicar las reglas nuevas** (`sala/firestore.rules`, bloque "Favoritos de la sala"); mientras no estén, las estrellas quedan ocultas y el resto de la sala funciona igual.
 - **Audios y videos del mismo guion:** en *Por guion* aparecen todos los guiones con material (también los que solo tienen audios, como Xango o Rocky). La página del guion muestra sus audios arriba y sus videos abajo, y el nombre del guion en cualquier tarjeta (también en Audios) lleva a esa página.

@@ -28,6 +28,7 @@
       <nav class="nav-list" aria-label="Secciones">
         <button class="nav-link active" data-tipo="audio"><span data-icon="note"></span>Audios</button>
         <button class="nav-link" data-tipo="video"><span data-icon="film"></span>Videos</button>
+        <button class="nav-link" data-tipo="fav"><span data-icon="star"></span>Favoritos</button>
         <a class="nav-link caja-only" href="./caja.html" hidden><span data-icon="cash"></span>Control Caja</a>
         <a class="nav-link admin-only" href="./sala-admin.html" hidden><span data-icon="shield"></span>Administrar</a>
       </nav>
@@ -68,8 +69,6 @@
           <input class="input" id="q" type="search" placeholder="Buscar por título, guion o instrumento" aria-label="Buscar por título, guion o instrumento" autocomplete="off" />
         </div>
 
-        <button class="btn-favs" id="btn-favs" type="button" aria-pressed="false"><span data-icon="star"></span>Favoritos</button>
-
         <button class="btn-filters" id="btn-filters" type="button" aria-expanded="false" aria-controls="filters">
           <span data-icon="filter"></span>Filtros<span class="badge" id="filters-badge" hidden></span>
         </button>
@@ -97,6 +96,14 @@
       <div class="sheet-backdrop" id="filters-backdrop" hidden></div>
 
       <div class="active-filters" id="active-filters" aria-live="polite"></div>
+
+      <!-- FAVORITOS: lo que marcó este miembro, videos y audios -->
+      <div id="fav-view">
+        <h2 class="fav-title" id="fav-v-title">Videos</h2>
+        <div class="grid is-video" id="grid-fv"></div>
+        <h2 class="fav-title" id="fav-a-title">Audios</h2>
+        <div class="grid is-audio" id="grid-fa"></div>
+      </div>
 
       <div class="albums" id="albums" hidden></div>
       <div class="grid" id="grid"></div>
@@ -222,6 +229,7 @@
     <nav class="bottom-nav" aria-label="Secciones">
       <button class="nav-link active" data-tipo="audio"><span data-icon="note"></span>Audios</button>
       <button class="nav-link" data-tipo="video"><span data-icon="film"></span>Videos</button>
+        <button class="nav-link" data-tipo="fav"><span data-icon="star"></span>Favoritos</button>
       <a class="nav-link caja-only" href="./caja.html" hidden><span data-icon="cash"></span>Caja</a>
       <a class="nav-link admin-only" href="./sala-admin.html" hidden><span data-icon="shield"></span>Admin</a>
     </nav>

@@ -37,33 +37,68 @@ materiales = materiales.map((m) => ({
 }));
 // Videos o audios de un guion, en orden de práctica (el mismo orden que se ve en la administración: arriba = primero)
 const albumMats = (id, tipo) => materiales.filter((m) => m.guionId === id && (!tipo || m.tipo === tipo));
-const albumsWithVideos = () => guiones.filter((g) => albumMats(g.id, "video").length > 0);
+// Guiones con algún material (video o audio): todos se muestran como álbum en "Por guion"
+const albumsWithMaterial = () => guiones.filter((g) => albumMats(g.id).length > 0);
+
+// ---------- Favoritos (por usuario: users/{uid}/favoritos/{materialId}) ----------
+let favSet = new Set(), favsOk = false;
+try { favSet = await fb.listFavoritos(user.uid); favsOk = true; } catch (err) { console.warn("Favoritos no disponibles (¿reglas de Firestore sin publicar?)", err); }
+if (!favsOk) document.body.classList.add("no-favs");
+const favBtn = (id) => `<button class="fav${favSet.has(id) ? " on" : ""}" type="button" data-fav="${esc(id)}" aria-pressed="${favSet.has(id)}" aria-label="${favSet.has(id) ? "Quitar de favoritos" : "Agregar a favoritos"}">${ICON.star}</button>`;
+function syncFavUI() {
+  $$("[data-fav]").forEach((b) => {
+    const on = favSet.has(b.dataset.fav);
+    b.classList.toggle("on", on);
+    b.setAttribute("aria-pressed", String(on));
+    const l = b.querySelector(".lbl");
+    if (l) l.textContent = on ? "En favoritos" : "Guardar en favoritos";
+    else b.setAttribute("aria-label", on ? "Quitar de favoritos" : "Agregar a favoritos");
+  });
+}
+async function toggleFav(id) {
+  if (!favsOk || !id) return;
+  const on = !favSet.has(id);
+  on ? favSet.add(id) : favSet.delete(id);
+  syncFavUI();
+  try { await fb.setFavorito(user.uid, id, on); }
+  catch (err) {
+    console.error(err);
+    on ? favSet.delete(id) : favSet.add(id);
+    syncFavUI();
+    toast("No se pudo guardar el favorito. Intentá de nuevo.", true);
+    return;
+  }
+  if (state.favs && currentView === "list") render();   // en "Favoritos", al quitar uno desaparece de la lista
+}
 
 // ---------- Estado y filtros ----------
-const state = { tipo: location.hash === "#videos" ? "video" : "audio", vista: "guion", guion: "all", instrumento: "all", q: "" };
+const state = { tipo: location.hash === "#videos" ? "video" : "audio", vista: "guion", guion: "all", instrumento: "all", q: "", favs: false };
 let visible = [];
 
 const norm = (s) => String(s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
-// Por guion: una portada por guion, con su nombre y la cantidad de videos
+// Por guion: una portada por guion, con la cantidad de videos y de audios
+const countText = (n, one, many) => `${n} ${n === 1 ? one : many}`;
 function renderAlbumGrid(words) {
-  const all = albumsWithVideos();
+  const all = albumsWithMaterial();
   const list = all.filter((a) => {
     if (!words.length) return true;
-    const hay = norm(`${a.nombre} ` + albumMats(a.id, "video").map((m) => `${m.titulo} ${m.instrumento || ""} ${m._guion}`).join(" "));
+    const hay = norm(`${a.nombre} ` + albumMats(a.id).map((m) => `${m.titulo} ${m.instrumento || ""}`).join(" "));
     return words.every((w) => hay.includes(w));
   });
   const noun = (n) => (n === 1 ? "guion" : "guiones");
   $("#hero-sub").textContent = words.length ? `${list.length} de ${all.length} ${noun(all.length)}` : `${all.length} ${noun(all.length)}`;
   $("#albums").innerHTML = list
     .map((a) => {
-      const vids = albumMats(a.id, "video");
+      const vids = albumMats(a.id, "video"), auds = albumMats(a.id, "audio");
+      const first = vids[0] || auds[0];
+      const meta = [vids.length && countText(vids.length, "video", "videos"), auds.length && countText(auds.length, "audio", "audios")].filter(Boolean).join(" · ");
       return `
       <a class="acard" href="#guion/${encodeURIComponent(a.id)}" data-aid="${esc(a.id)}">
-        ${coverHTML(vids[0], vids[0]._thumb)}
+        ${coverHTML(first, first._thumb)}
         <div class="card-body">
           <div class="card-title">${esc(a.nombre)}</div>
-          <div class="card-meta">${vids.length} ${vids.length === 1 ? "video" : "videos"}</div>
+          <div class="card-meta">${meta}</div>
         </div>
       </a>`;
     })
@@ -78,9 +113,11 @@ function render() {
   const label = state.tipo === "audio" ? "audios" : "videos";
 
   // Videos: "Por guion" (álbumes) o "Todos los videos" (grilla con filtros). Sin guiones cargados, solo la grilla.
-  const hayGuiones = albumsWithVideos().length > 0;
-  const porGuion = state.tipo === "video" && hayGuiones && state.vista === "guion";
-  $("#vista-seg").hidden = !(state.tipo === "video" && hayGuiones);
+  const hayGuiones = albumsWithMaterial().length > 0;
+  const porGuion = state.tipo === "video" && hayGuiones && state.vista === "guion" && !state.favs;
+  $("#vista-seg").hidden = !(state.tipo === "video" && hayGuiones) || state.favs;
+  const bf = $("#btn-favs");
+  bf.setAttribute("aria-pressed", String(state.favs));
   $$("#vista-seg [data-vista]").forEach((b) => {
     b.classList.toggle("active", b.dataset.vista === state.vista);
     b.setAttribute("aria-selected", String(b.dataset.vista === state.vista));
@@ -126,12 +163,13 @@ function render() {
     const okI = state.instrumento === "all" || (m.instrumento || "").trim() === state.instrumento;
     const hay = norm(`${m.titulo} ${m._guion} ${m.instrumento}`);
     const okQ = words.every((w) => hay.includes(w));
-    return okG && okI && okQ;
+    const okF = !state.favs || favSet.has(m.id);
+    return okG && okI && okQ && okF;
   });
 
   // Encabezado: el número se actualiza al filtrar
   const noun = (n) => (n === 1 ? label.slice(0, -1) : label);
-  const filtering = state.guion !== "all" || state.instrumento !== "all" || words.length > 0;
+  const filtering = state.guion !== "all" || state.instrumento !== "all" || words.length > 0 || state.favs;
   $("#hero-sub").textContent = filtering
     ? `${visible.length} de ${items.length} ${noun(items.length)}`
     : `${items.length} ${noun(items.length)}`;
@@ -140,6 +178,7 @@ function render() {
   const applied = [];
   if (state.guion !== "all") applied.push({ key: "guion", text: state.guion === "" ? "Sin guion" : guionName.get(state.guion) || "Guion" });
   if (state.instrumento !== "all") applied.push({ key: "instrumento", text: state.instrumento });
+  if (state.favs) applied.push({ key: "favs", text: "Favoritos" });
   if (words.length) applied.push({ key: "q", text: `“${state.q.trim()}”` });
   $("#active-filters").innerHTML = applied.length
     ? applied.map((f) => `<button class="fchip" type="button" data-clear="${f.key}" aria-label="Quitar filtro ${esc(f.text)}">${esc(f.text)}<span class="x">${ICON.close}</span></button>`).join("") +
@@ -155,10 +194,11 @@ function render() {
     .map((m) => `
       <div class="card${player.current?.id === m.id ? " is-playing" : ""}" data-id="${esc(m.id)}" role="button" tabindex="0" aria-label="${esc((m.tipo === "video" ? "Ver " : "Reproducir ") + m.titulo)}">
         ${coverHTML(m, m._thumb).replace("</div>", `<span class="play-fab">${ICON.play}</span></div>`)}
+        ${favBtn(m.id)}
         <div class="card-body">
           <div class="card-title">${esc(m.titulo)}</div>
           <div class="card-meta">
-            ${m._guion ? `<span class="meta-guion">${esc(m._guion)}</span>` : ""}
+            ${m._guion ? (m.guionId ? `<a class="meta-guion" href="#guion/${encodeURIComponent(m.guionId)}" data-aid="${esc(m.guionId)}" title="Ver el guion completo">${esc(m._guion)}</a>` : `<span class="meta-guion">${esc(m._guion)}</span>`) : ""}
             ${m.instrumento ? `<span class="tag-inst">${esc(m.instrumento)}</span>` : ""}
           </div>
         </div>
@@ -168,7 +208,9 @@ function render() {
   const empty = $("#empty");
   empty.hidden = visible.length > 0;
   if (!visible.length) {
-    empty.innerHTML = items.length
+    empty.innerHTML = state.favs
+      ? `<div class="big">★</div>${items.length ? "Todavía no marcaste favoritos acá." : "Todavía no hay material."} Tocá la estrella de un ${state.tipo === "audio" ? "audio" : "video"} para guardarlo.`
+      : items.length
       ? `<div class="big">🔍</div>No hay resultados con esos filtros.`
       : `<div class="big">${state.tipo === "audio" ? "🎧" : "🎬"}</div>Todavía no hay ${label} cargados.${isAdmin(profile) ? ' <a class="link-btn" href="./sala-admin.html">Cargá el primero</a>' : ""}`;
   }
@@ -315,6 +357,23 @@ function stopVideoPlayback() {
   vb.frame.src = "about:blank";
 }
 
+// Filas de audio (vista de video y página del guion)
+function audioRowsHTML(list) {
+  return list
+    .map((a) => `
+      <div class="arow${a.servicio === "drive" ? " is-drive" : ""}" data-id="${esc(a.id)}">
+        <button class="arow-play" type="button" aria-label="Escuchar ${esc(a.titulo)}">${ICON.play}</button>
+        <div class="arow-main">
+          <div class="arow-title">${esc(a.titulo)}</div>
+          ${a.instrumento ? `<div class="arow-meta">${esc(a.instrumento)}</div>` : ""}
+          <div class="arow-prog"><span class="time">0:00</span><input type="range" min="0" max="0" step="0.1" value="0" aria-label="Progreso de ${esc(a.titulo)}" /><span class="time r">0:00</span></div>
+          <div class="arow-note">Los controles están en el panel de abajo.</div>
+        </div>
+        ${favBtn(a.id)}
+      </div>`)
+    .join("");
+}
+
 // Relacionados: los demás videos del mismo guion (en orden de práctica) y sus audios
 function renderRelated(m) {
   const albumVids = m.guionId ? albumMats(m.guionId, "video") : [];
@@ -333,18 +392,7 @@ function renderRelated(m) {
     nextEl.href = `#video/${encodeURIComponent(nxt.id)}`;
     $("#watch-next-title").textContent = nxt.titulo;
   }
-  $("#audio-list").innerHTML = relAudios
-    .map((a) => `
-      <div class="arow${a.servicio === "drive" ? " is-drive" : ""}" data-id="${esc(a.id)}">
-        <button class="arow-play" type="button" aria-label="Escuchar ${esc(a.titulo)}">${ICON.play}</button>
-        <div class="arow-main">
-          <div class="arow-title">${esc(a.titulo)}</div>
-          ${a.instrumento ? `<div class="arow-meta">${esc(a.instrumento)}</div>` : ""}
-          <div class="arow-prog"><span class="time">0:00</span><input type="range" min="0" max="0" step="0.1" value="0" aria-label="Progreso de ${esc(a.titulo)}" /><span class="time r">0:00</span></div>
-          <div class="arow-note">Los controles están en el panel de abajo.</div>
-        </div>
-      </div>`)
-    .join("");
+  $("#audio-list").innerHTML = audioRowsHTML(relAudios);
   updateAudioRows();
 
   $("#related").hidden = !vids.length;
@@ -385,6 +433,8 @@ function showWatch(m) {
   $("#watch-back-label").textContent = fromName ? `Volver a ${fromName}` : "Volver a Videos";
   $("#watch-back").setAttribute("href", fromName ? `#guion/${encodeURIComponent(from)}` : "#videos");
   renderRelated(m);
+  $("#vm-fav").dataset.fav = m.id;
+  syncFavUI();
   const was = currentView;
   setView("watch");
   if (was === "watch") window.scrollTo(0, 0);   // de un video a otro: arriba
@@ -404,11 +454,17 @@ function showAlbum(a) {
   if (currentView === "watch") { stopVideoPlayback(); currentVideo = null; }
   currentAlbum = a;
   const vids = albumMats(a.id, "video"), auds = albumMats(a.id, "audio");
+  const first = vids[0] || auds[0];
   document.title = `${a.nombre} · Arabatu Bloco`;
   $("#album-title").textContent = a.nombre;
-  $("#album-count").textContent = `${vids.length} ${vids.length === 1 ? "video" : "videos"}`;
-  $("#album-cover").innerHTML = vids.length ? coverHTML(vids[0], vids[0]._thumb) : "";
+  $("#album-count").textContent = [vids.length && countText(vids.length, "video", "videos"), auds.length && countText(auds.length, "audio", "audios")].filter(Boolean).join(" · ");
+  $("#album-cover").innerHTML = first ? coverHTML(first, first._thumb) : "";
   $("#album-audio").hidden = !auds.length;
+  relAudios = auds;
+  $("#album-audios").hidden = !auds.length;
+  $("#album-audios-title").textContent = auds.length > 1 ? "Audios del guion" : "Audio del guion";
+  $("#album-audio-list").innerHTML = audioRowsHTML(auds);
+  $("#album-videos-title").hidden = !vids.length;
   $("#album-list").innerHTML = vids
     .map((m) => `
       <div class="vrow" data-id="${esc(m.id)}" role="button" tabindex="0" aria-label="Ver ${esc(m.titulo)}">
@@ -420,7 +476,7 @@ function showAlbum(a) {
         <span class="vrow-play" aria-hidden="true">${ICON.play}</span>
       </div>`)
     .join("");
-  updateAlbumAudioBtn();
+  updateAudioRows();
   setView("album");
 }
 
@@ -438,7 +494,7 @@ function route() {
   const mm = h.match(/^#video\/(.+)$/);
   if (am) {
     const a = guiones.find((x) => x.id === decodeURIComponent(am[1]));
-    if (a && albumMats(a.id, "video").length) return showAlbum(a);
+    if (a && albumMats(a.id).length) return showAlbum(a);
     history.replaceState(null, "", "#videos");
     state.tipo = "video";
   } else if (mm) {
@@ -514,7 +570,7 @@ $("#vm-resume").addEventListener("click", () => {
 });
 
 // Filas de audio del guion
-$("#audio-list").addEventListener("click", (e) => {
+$(".main").addEventListener("click", (e) => {
   const btn = e.target.closest(".arow-play");
   if (!btn) return;
   const id = btn.closest(".arow").dataset.id;
@@ -524,15 +580,15 @@ $("#audio-list").addEventListener("click", (e) => {
   pauseVideoForAudio();
   player.play(a, relAudios);
 });
-$("#audio-list").addEventListener("input", (e) => {
-  if (e.target.type !== "range") return;
+$(".main").addEventListener("input", (e) => {
+  if (e.target.type !== "range" || !e.target.closest(".arow")) return;
   audioDrag = true;
   const row = e.target.closest(".arow");
   row.querySelector(".time").textContent = fmtTime(e.target.value);
   setPct(e.target);
 });
-$("#audio-list").addEventListener("change", (e) => {
-  if (e.target.type !== "range") return;
+$(".main").addEventListener("change", (e) => {
+  if (e.target.type !== "range" || !e.target.closest(".arow")) return;
   player.seek(Number(e.target.value));
   audioDrag = false;
 });
@@ -560,6 +616,7 @@ $("#q").addEventListener("input", (e) => { clearTimeout(qTimer); qTimer = setTim
 function clearFilters(key) {
   if (key === "guion" || key === "all") state.guion = "all";
   if (key === "instrumento" || key === "all") state.instrumento = "all";
+  if (key === "favs" || key === "all") state.favs = false;
   if (key === "q" || key === "all") { state.q = ""; $("#q").value = ""; }
   render();
 }
@@ -607,6 +664,23 @@ $$("[data-tipo]").forEach((b) =>
     render();
   }),
 );
+
+// Nombre del guion en una tarjeta → página del guion (donde están sus audios y sus videos)
+$(".main").addEventListener("click", (e) => {
+  const g = e.target.closest("a.meta-guion");
+  if (!g) return;
+  e.preventDefault(); e.stopPropagation();
+  goAlbum(g.dataset.aid);
+}, true);
+
+// Estrellas de favoritos y botón "Favoritos" (la captura va antes que el clic de la tarjeta)
+$(".main").addEventListener("click", (e) => {
+  const f = e.target.closest("[data-fav]");
+  if (!f) return;
+  e.preventDefault(); e.stopPropagation();
+  toggleFav(f.dataset.fav);
+}, true);
+$("#btn-favs").addEventListener("click", () => { state.favs = !state.favs; render(); });
 
 route();
 hideLoading();

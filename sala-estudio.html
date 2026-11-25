@@ -68,6 +68,8 @@
           <input class="input" id="q" type="search" placeholder="Buscar por título, guion o instrumento" aria-label="Buscar por título, guion o instrumento" autocomplete="off" />
         </div>
 
+        <button class="btn-favs" id="btn-favs" type="button" aria-pressed="false"><span data-icon="star"></span>Favoritos</button>
+
         <button class="btn-filters" id="btn-filters" type="button" aria-expanded="false" aria-controls="filters">
           <span data-icon="filter"></span>Filtros<span class="badge" id="filters-badge" hidden></span>
         </button>
@@ -115,6 +117,11 @@
             <button class="btn btn-line album-audio" id="album-audio" type="button" hidden><span class="ico"></span><span class="lbl">Escuchar audio del guion</span></button>
           </div>
         </div>
+        <section class="watch-card album-audios" id="album-audios" hidden>
+          <h2 id="album-audios-title">Audios del guion</h2>
+          <div id="album-audio-list"></div>
+        </section>
+        <h2 class="vlist-title" id="album-videos-title">Videos</h2>
         <div class="vlist" id="album-list"></div>
       </section>
 
@@ -149,7 +156,10 @@
                 </div>
               </div>
             </div>
-            <a class="btn btn-ghost btn-sm watch-open" id="vm-open" href="#" target="_blank" rel="noopener">Abrir en Drive ↗</a>
+            <div class="watch-actions">
+              <button class="btn btn-line btn-sm" id="vm-fav" type="button" data-fav="" aria-pressed="false"><span class="ico" data-icon="star"></span><span class="lbl">Guardar en favoritos</span></button>
+              <a class="btn btn-ghost btn-sm watch-open" id="vm-open" href="#" target="_blank" rel="noopener">Abrir en Drive ↗</a>
+            </div>
 
             <a class="watch-next" id="watch-next" href="#" data-vid="" hidden>
               <span class="watch-next-lbl">Siguiente en el guion</span><b id="watch-next-title"></b><span class="chev" aria-hidden="true">›</span>

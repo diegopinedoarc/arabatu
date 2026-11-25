@@ -554,3 +554,43 @@ body.has-player .stage { display: block; }
 
 .link-btn { color: var(--violet-lum); font-size: 0.85rem; font-weight: 600; }
 .link-btn:hover { text-decoration: underline; }
+
+/* =========================================================
+   FAVORITOS
+   ========================================================= */
+.fav { position: absolute; top: 8px; right: 8px; z-index: 3; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(0, 0, 0, 0.55); color: #fff; backdrop-filter: blur(4px); transition: background 0.2s, color 0.2s, transform 0.15s; }
+.fav:hover { background: rgba(0, 0, 0, 0.8); }
+.fav:active { transform: scale(0.92); }
+.fav svg { width: 18px; height: 18px; }
+.fav.on { color: var(--violet-lum); }
+.fav.on svg, .btn-favs[aria-pressed="true"] svg, #vm-fav.on svg { fill: currentColor; }
+.arow .fav { position: static; flex: none; background: transparent; backdrop-filter: none; color: var(--muted); }
+.arow .fav:hover { background: var(--card-hi); }
+.arow .fav.on { color: var(--violet-lum); }
+.btn-favs { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 16px; border-radius: 999px;
+  background: var(--card-hi); font-weight: 600; font-size: 0.9rem; color: var(--text); }
+.btn-favs svg { width: 18px; height: 18px; }
+.btn-favs:hover { background: #3a3a3a; }
+.btn-favs[aria-pressed="true"] { background: var(--active-bg); color: var(--violet-lum); }
+.watch-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; }
+.watch-actions .watch-open { margin-top: 0; }
+#vm-fav .ico { display: inline-grid; }
+#vm-fav .ico svg { width: 16px; height: 16px; }
+#vm-fav.on { color: var(--violet-lum); border-color: var(--violet-lum); }
+.meta-guion { color: var(--muted); }
+a.meta-guion { color: var(--violet-lum); font-weight: 600; }
+a.meta-guion:hover { text-decoration: underline; }
+body.no-favs .fav, body.no-favs .btn-favs, body.no-favs #vm-fav { display: none !important; }
+@media (max-width: 899px) {
+  .btn-filters { flex: 1 1 0; width: auto; }
+  .btn-favs { flex: 1 1 0; }
+}
+@media (max-width: 640px) {
+  .card .card-body { padding-right: 34px; }
+}
+
+/* Página del guion: audios arriba, videos abajo */
+.album-audios { margin-top: 22px; }
+.vlist-title { margin-top: 26px; font-size: 1.05rem; font-weight: 700; }
+.vlist-title + .vlist { margin-top: 12px; }

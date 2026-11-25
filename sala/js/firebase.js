@@ -5,7 +5,7 @@
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
-  getFirestore, doc, getDoc, getDocs, addDoc, updateDoc, deleteDoc, collection,
+  getFirestore, doc, getDoc, getDocs, setDoc, addDoc, updateDoc, deleteDoc, collection,
   serverTimestamp, query, where, writeBatch, deleteField,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { initializeAppCheck, ReCaptchaV3Provider } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check.js";
@@ -83,3 +83,10 @@ export function updateUserRoles(uid, { approved, admin, tesorero }) {
     rol: tesorero ? "tesorero" : deleteField(),
   });
 }
+
+// ---------- Favoritos de cada miembro (users/{uid}/favoritos/{materialId}) ----------
+export const listFavoritos = async (uid) => new Set((await getDocs(collection(db, "users", uid, "favoritos"))).docs.map((d) => d.id));
+export const setFavorito = (uid, materialId, on) => {
+  const ref = doc(db, "users", uid, "favoritos", materialId);
+  return on ? setDoc(ref, { creadoEn: serverTimestamp() }) : deleteDoc(ref);
+};
